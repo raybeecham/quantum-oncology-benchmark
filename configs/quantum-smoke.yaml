@@ -1,0 +1,10 @@
+dataset: breast-cancer
+model_set: quantum
+features: 2
+test_size: 0.25
+seed: 42
+repeats: 1
+max_samples: 40
+quantum_reps: 1
+quantum_shots: null
+output_dir: reports/quantum-smoke

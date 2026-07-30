@@ -1,0 +1,33 @@
+name: Research proposal
+description: Propose a benchmark, dataset adapter, or methodological change
+title: "[Research]: "
+labels: [research]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Research question
+      description: State the falsifiable question and intended evidence level.
+    validations:
+      required: true
+  - type: textarea
+    id: data
+    attributes:
+      label: Data and authorization
+      description: Identify the source, unit of analysis, access level, and privacy constraints.
+    validations:
+      required: true
+  - type: textarea
+    id: controls
+    attributes:
+      label: Classical controls and evaluation
+      description: Describe comparators, splits, metrics, and leakage controls.
+    validations:
+      required: true
+  - type: textarea
+    id: quantum
+    attributes:
+      label: Quantum method and resources
+      description: Describe the algorithm, simulator or hardware, qubits, shots, and resource accounting.
+    validations:
+      required: true

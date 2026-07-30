@@ -1,0 +1,10 @@
+dataset: breast-cancer
+model_set: all
+features: 4
+test_size: 0.25
+seed: 42
+repeats: 3
+max_samples: 160
+quantum_reps: 2
+quantum_shots: null
+output_dir: reports/baseline

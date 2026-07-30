@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Environments
+.venv/
+venv/
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated reports
+reports/*
+!reports/.gitkeep
+
+# Local or sensitive data
+*.parquet
+*.feather
+*.h5
+*.hdf5
+*.vcf
+*.vcf.gz
+*.bam
+*.bai
+*.fastq
+*.fastq.gz
+sample_data/*.csv
+sample_data/*.tsv
+.env
+.env.*
+*.pem
+*.key
+secrets/
+
+# Streamlit
+.streamlit/secrets.toml

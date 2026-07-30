@@ -1,0 +1,10 @@
+dataset: breast-cancer
+model_set: classical
+features: 8
+test_size: 0.25
+seed: 42
+repeats: 5
+max_samples: null
+quantum_reps: 2
+quantum_shots: null
+output_dir: reports/classical
