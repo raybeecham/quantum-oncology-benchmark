@@ -41,22 +41,29 @@ def test_exact_mcnemar_uses_only_discordant_pairs() -> None:
         model_b="b",
         repeat=0,
         seed=42,
+        test_index_hash="a" * 64,
+        test_samples=8,
     )
 
+    assert result["test_index_hash"] == "a" * 64
+    assert result["test_samples"] == 8
     assert result["model_a_correct_model_b_wrong"] == 4
     assert result["model_a_wrong_model_b_correct"] == 0
     assert result["discordant_pairs"] == 4
+    assert result["descriptive_direction"] == "a"
     assert result["exact_p_value"] == 0.125
     assert result["significant"] is False
+    assert result["favored_model"] is None
 
 
-def test_pairwise_summary_does_not_pool_repeated_holdouts() -> None:
+def test_pairwise_summary_separates_direction_from_significance() -> None:
     rows = [
         {
             "model_a": "a",
             "model_b": "b",
             "significant": True,
             "favored_model": "a",
+            "descriptive_direction": "a",
             "exact_p_value": 0.01,
         },
         {
@@ -64,15 +71,29 @@ def test_pairwise_summary_does_not_pool_repeated_holdouts() -> None:
             "model_b": "b",
             "significant": False,
             "favored_model": None,
+            "descriptive_direction": "b",
             "exact_p_value": 0.5,
+        },
+        {
+            "model_a": "a",
+            "model_b": "b",
+            "significant": False,
+            "favored_model": None,
+            "descriptive_direction": "no_direction",
+            "exact_p_value": 1.0,
         },
     ]
 
-    summary = summarize_pairwise_comparisons(rows)
+    summary = summarize_pairwise_comparisons(rows)[0]
 
-    assert summary[0]["pooled_p_value"] is None
-    assert summary[0]["significant_repeats"] == 1
-    assert "No pooled p-value" in summary[0]["aggregation_note"]
+    assert summary["pooled_p_value"] is None
+    assert summary["significant_repeats"] == 1
+    assert summary["model_a_statistically_favored_repeats"] == 1
+    assert summary["model_b_statistically_favored_repeats"] == 0
+    assert summary["model_a_more_correct_repeats"] == 1
+    assert summary["model_b_more_correct_repeats"] == 1
+    assert summary["equal_correctness_repeats"] == 1
+    assert "Descriptive direction counts" in summary["aggregation_note"]
 
 
 def test_evidence_statement_refuses_quantum_advantage_claim() -> None:

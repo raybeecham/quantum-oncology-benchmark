@@ -16,16 +16,32 @@ def test_benchmark_emits_statistical_artifacts(tmp_path) -> None:
 
     payload = run_benchmark(config)
 
-    assert payload["schema_version"] == "1.2"
+    assert payload["schema_version"] == "1.3"
     assert payload["evidence_statement"]["status"] == "classical_only"
     assert payload["statistical_analysis"]["confidence_intervals"]["confidence_level"] == 0.95
     assert payload["statistical_analysis"]["paired_tests"][
         "pooled_repeated_holdout_p_value_reported"
     ] is False
-    assert len(payload["statistical_analysis"]["pairwise_comparisons"]) == 12
-    assert len(payload["statistical_analysis"]["pairwise_summary"]) == 6
+    assert payload["statistical_analysis"]["paired_tests"]["partition_provenance"] == (
+        "test_index_hash_and_test_samples"
+    )
+
+    comparisons = payload["statistical_analysis"]["pairwise_comparisons"]
+    summaries = payload["statistical_analysis"]["pairwise_summary"]
+    assert len(comparisons) == 12
+    assert len(summaries) == 6
+    assert all(len(row["test_index_hash"]) == 64 for row in comparisons)
+    assert all(row["test_samples"] == 30 for row in comparisons)
+    assert all(
+        row["model_a_more_correct_repeats"]
+        + row["model_b_more_correct_repeats"]
+        + row["equal_correctness_repeats"]
+        == row["repeats"]
+        for row in summaries
+    )
     assert all(row["balanced_accuracy_ci_low"] is not None for row in payload["summary"])
     assert (output / "pairwise_comparisons.csv").exists()
     report = (output / "REPORT.md").read_text(encoding="utf-8")
     assert "## Statistical Evaluation" in report
+    assert "A more correct" in report
     assert "## Evidence Statement" in report

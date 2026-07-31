@@ -19,7 +19,7 @@ def test_classical_benchmark_writes_complete_artifacts(tmp_path) -> None:
 
     payload = run_benchmark(config)
 
-    assert payload["schema_version"] == "1.2"
+    assert payload["schema_version"] == "1.3"
     assert payload["quantum_advantage_claimed"] is False
     assert len(payload["summary"]) == 4
     assert len(payload["selected_features"]) == 4
@@ -83,6 +83,38 @@ def test_runtime_fields_are_excluded_from_reproducibility_comparison() -> None:
     }
 
     assert normalize_experiment_for_reproducibility(first) == (
+        normalize_experiment_for_reproducibility(second)
+    )
+
+
+def test_reproducibility_normalization_ignores_machine_precision_noise() -> None:
+    first = {
+        "summary": [
+            {
+                "model": "random_forest",
+                "log_loss_mean": 0.203032398166005,
+            }
+        ]
+    }
+    second = {
+        "summary": [
+            {
+                "model": "random_forest",
+                "log_loss_mean": 0.203032398166006,
+            }
+        ]
+    }
+
+    assert normalize_experiment_for_reproducibility(first) == (
+        normalize_experiment_for_reproducibility(second)
+    )
+
+
+def test_reproducibility_normalization_preserves_meaningful_differences() -> None:
+    first = {"metric": 0.203032398166}
+    second = {"metric": 0.203032399166}
+
+    assert normalize_experiment_for_reproducibility(first) != (
         normalize_experiment_for_reproducibility(second)
     )
 

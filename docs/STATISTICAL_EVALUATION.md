@@ -25,7 +25,33 @@ Models evaluated within a repeat share the same test partition. Every model pair
 
 The exact two-sided p-value is calculated as a binomial test with null probability 0.5.
 
+Each pairwise row records the repeat, seed, test-partition hash, test sample count, discordant counts, descriptive direction, exact p-value, and significance result. The partition hash makes `pairwise_comparisons.csv` independently traceable to the matching split-provenance record without publishing raw row indices.
+
+Descriptive direction and statistical favoring are separate concepts:
+
+- **More correct:** one model was correct on more discordant observations in that repeat.
+- **Statistically favored:** the exact McNemar p-value was below the configured alpha level and the direction favored that model.
+- **Equal correctness:** both models had the same number of uniquely correct predictions.
+
 A separate result is recorded for every repeat. The benchmark does not pool repeated-holdout p-values because the same observations may appear in more than one test partition, violating the independence assumption of a naive pooled test.
+
+## Reproducibility comparison contract
+
+`normalize_experiment_for_reproducibility` prepares two experiment payloads for strict scientific equality checks. It removes operational fields that are expected to vary, including timestamps, output paths, artifact paths, and elapsed-time measurements.
+
+Finite floating-point values are rounded to 12 decimal places during comparison. This canonicalizes sub-picounit aggregation noise such as a one-unit difference at the fifteenth decimal place while preserving materially larger numerical changes. The normalization is applied only to the comparison copy and does not alter stored JSON or CSV artifacts.
+
+The normalized comparison must still preserve and compare:
+
+- dataset fingerprints,
+- configuration and seeds,
+- split and partition hashes,
+- selected features,
+- predictions represented through run metrics and confusion counts,
+- bootstrap intervals,
+- pairwise comparisons,
+- evidence statements,
+- environment provenance other than operational output locations.
 
 ## Evidence statement
 

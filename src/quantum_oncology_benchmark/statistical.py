@@ -141,6 +141,8 @@ def exact_mcnemar_comparison(
     model_b: str,
     repeat: int,
     seed: int,
+    test_index_hash: str,
+    test_samples: int,
     alpha: float = 0.05,
 ) -> dict[str, Any]:
     """Compare two classifiers on one shared test partition using exact McNemar."""
@@ -149,6 +151,10 @@ def exact_mcnemar_comparison(
     second = np.asarray(prediction_b, dtype=int)
     if truth.shape != first.shape or truth.shape != second.shape:
         raise ValueError("paired McNemar inputs must have identical shapes")
+    if test_samples != len(truth):
+        raise ValueError("test_samples must match the paired prediction length")
+    if not test_index_hash:
+        raise ValueError("test_index_hash is required for pairwise provenance")
 
     first_correct = first == truth
     second_correct = second == truth
@@ -176,11 +182,14 @@ def exact_mcnemar_comparison(
     return {
         "repeat": repeat,
         "seed": seed,
+        "test_index_hash": test_index_hash,
+        "test_samples": test_samples,
         "model_a": model_a,
         "model_b": model_b,
         "model_a_correct_model_b_wrong": a_correct_b_wrong,
         "model_a_wrong_model_b_correct": a_wrong_b_correct,
         "discordant_pairs": discordant,
+        "descriptive_direction": direction,
         "exact_p_value": p_value,
         "alpha": alpha,
         "significant": bool(p_value < alpha),
@@ -195,6 +204,8 @@ def compare_repeat_predictions(
     *,
     repeat: int,
     seed: int,
+    test_index_hash: str,
+    test_samples: int,
     alpha: float = 0.05,
 ) -> list[dict[str, Any]]:
     """Create all pairwise exact McNemar comparisons for one repeat."""
@@ -209,6 +220,8 @@ def compare_repeat_predictions(
                 model_b=model_b,
                 repeat=repeat,
                 seed=seed,
+                test_index_hash=test_index_hash,
+                test_samples=test_samples,
                 alpha=alpha,
             )
         )
@@ -223,22 +236,36 @@ def summarize_pairwise_comparisons(rows: list[dict[str, Any]]) -> list[dict[str,
 
     summaries: list[dict[str, Any]] = []
     for (model_a, model_b), pair_rows in sorted(grouped.items()):
+        model_a_statistically_favored = sum(
+            row["favored_model"] == model_a for row in pair_rows
+        )
+        model_b_statistically_favored = sum(
+            row["favored_model"] == model_b for row in pair_rows
+        )
         summaries.append(
             {
                 "model_a": model_a,
                 "model_b": model_b,
                 "repeats": len(pair_rows),
                 "significant_repeats": sum(bool(row["significant"]) for row in pair_rows),
-                "model_a_favored_repeats": sum(
-                    row["favored_model"] == model_a for row in pair_rows
+                "model_a_favored_repeats": model_a_statistically_favored,
+                "model_b_favored_repeats": model_b_statistically_favored,
+                "model_a_statistically_favored_repeats": model_a_statistically_favored,
+                "model_b_statistically_favored_repeats": model_b_statistically_favored,
+                "model_a_more_correct_repeats": sum(
+                    row["descriptive_direction"] == model_a for row in pair_rows
                 ),
-                "model_b_favored_repeats": sum(
-                    row["favored_model"] == model_b for row in pair_rows
+                "model_b_more_correct_repeats": sum(
+                    row["descriptive_direction"] == model_b for row in pair_rows
+                ),
+                "equal_correctness_repeats": sum(
+                    row["descriptive_direction"] == "no_direction" for row in pair_rows
                 ),
                 "minimum_exact_p_value": min(float(row["exact_p_value"]) for row in pair_rows),
                 "pooled_p_value": None,
                 "aggregation_note": (
-                    "No pooled p-value is reported because repeated holdouts can reuse observations."
+                    "No pooled p-value is reported because repeated holdouts can reuse observations. "
+                    "Descriptive direction counts do not imply statistical significance."
                 ),
             }
         )
