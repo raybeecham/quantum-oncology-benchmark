@@ -98,13 +98,15 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
         if not selected_features:
             selected_features = split.selected_features
 
+        train_index_hash = _index_hash(split.train_indices)
+        test_index_hash = _index_hash(split.test_indices)
         split_provenance.append(
             {
                 "repeat": repeat_index,
                 "seed": repeat_seed,
                 "selected_features": list(split.selected_features),
-                "train_index_hash": _index_hash(split.train_indices),
-                "test_index_hash": _index_hash(split.test_indices),
+                "train_index_hash": train_index_hash,
+                "test_index_hash": test_index_hash,
                 "train_samples": len(split.y_train),
                 "test_samples": len(split.y_test),
                 "training_class_counts": _binary_class_counts(split.y_train),
@@ -165,6 +167,8 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
                 repeat_predictions,
                 repeat=repeat_index,
                 seed=repeat_seed,
+                test_index_hash=test_index_hash,
+                test_samples=len(split.y_test),
                 alpha=_SIGNIFICANCE_LEVEL,
             )
         )
@@ -180,7 +184,7 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
     pairwise_summary = summarize_pairwise_comparisons(pairwise_rows)
     evidence_statement = build_evidence_statement(summary, pairwise_summary)
     payload: dict[str, Any] = {
-        "schema_version": "1.2",
+        "schema_version": "1.3",
         "project_version": "0.1.0",
         "generated_at": utc_now(),
         "research_use_only": True,
@@ -213,6 +217,7 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
                 "method": "exact_mcnemar_binomial",
                 "alpha": _SIGNIFICANCE_LEVEL,
                 "unit": "shared_test_partition_within_repeat",
+                "partition_provenance": "test_index_hash_and_test_samples",
                 "pooled_repeated_holdout_p_value_reported": False,
             },
             "pairwise_comparisons": pairwise_rows,
