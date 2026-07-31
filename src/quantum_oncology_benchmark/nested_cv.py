@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 import time
 from collections import defaultdict
 from dataclasses import dataclass
@@ -69,6 +68,10 @@ def _preprocessing_steps(feature_count: int) -> list[tuple[str, Any]]:
     ]
 
 
+def _model_pipeline(feature_count: int, model: Any) -> Pipeline:
+    return Pipeline([*_preprocessing_steps(feature_count), ("model", model)])
+
+
 def build_nested_model_specs(
     *,
     seed: int,
@@ -82,19 +85,14 @@ def build_nested_model_specs(
 
     if "logistic_regression" in models:
         specs["logistic_regression"] = NestedModelSpec(
-            estimator=Pipeline(
-                _preprocessing_steps(feature_count)
-                + [
-                    (
-                        "model",
-                        LogisticRegression(
-                            max_iter=5000,
-                            class_weight="balanced",
-                            solver="liblinear",
-                            random_state=seed,
-                        ),
-                    )
-                ]
+            estimator=_model_pipeline(
+                feature_count,
+                LogisticRegression(
+                    max_iter=5000,
+                    class_weight="balanced",
+                    solver="liblinear",
+                    random_state=seed,
+                ),
             ),
             param_grid={"model__C": [0.1, 1.0, 10.0]},
         )
@@ -106,19 +104,14 @@ def build_nested_model_specs(
             random_state=seed,
         )
         specs["rbf_svm"] = NestedModelSpec(
-            estimator=Pipeline(
-                _preprocessing_steps(feature_count)
-                + [
-                    (
-                        "model",
-                        CalibratedClassifierCV(
-                            estimator=base_svc,
-                            method="sigmoid",
-                            cv=calibration_cv,
-                            ensemble=False,
-                        ),
-                    )
-                ]
+            estimator=_model_pipeline(
+                feature_count,
+                CalibratedClassifierCV(
+                    estimator=base_svc,
+                    method="sigmoid",
+                    cv=calibration_cv,
+                    ensemble=False,
+                ),
             ),
             param_grid={
                 "model__estimator__C": [0.1, 1.0, 10.0],
@@ -128,19 +121,14 @@ def build_nested_model_specs(
 
     if "random_forest" in models:
         specs["random_forest"] = NestedModelSpec(
-            estimator=Pipeline(
-                _preprocessing_steps(feature_count)
-                + [
-                    (
-                        "model",
-                        RandomForestClassifier(
-                            class_weight="balanced_subsample",
-                            min_samples_leaf=2,
-                            n_jobs=1,
-                            random_state=seed,
-                        ),
-                    )
-                ]
+            estimator=_model_pipeline(
+                feature_count,
+                RandomForestClassifier(
+                    class_weight="balanced_subsample",
+                    min_samples_leaf=2,
+                    n_jobs=1,
+                    random_state=seed,
+                ),
             ),
             param_grid={
                 "model__n_estimators": [200, 500],
@@ -150,18 +138,13 @@ def build_nested_model_specs(
 
     if "hist_gradient_boosting" in models:
         specs["hist_gradient_boosting"] = NestedModelSpec(
-            estimator=Pipeline(
-                _preprocessing_steps(feature_count)
-                + [
-                    (
-                        "model",
-                        HistGradientBoostingClassifier(
-                            max_iter=250,
-                            l2_regularization=1.0,
-                            random_state=seed,
-                        ),
-                    )
-                ]
+            estimator=_model_pipeline(
+                feature_count,
+                HistGradientBoostingClassifier(
+                    max_iter=250,
+                    l2_regularization=1.0,
+                    random_state=seed,
+                ),
             ),
             param_grid={
                 "model__learning_rate": [0.05, 0.1],
@@ -178,7 +161,7 @@ def _index_hash(indices: IntArray) -> str:
 
 
 def _sample_index_hash(dataset_fingerprint: str, index: int) -> str:
-    return sha256(f"{dataset_fingerprint}:{index}".encode("utf-8")).hexdigest()
+    return sha256(f"{dataset_fingerprint}:{index}".encode()).hexdigest()
 
 
 def _binary_class_counts(target: IntArray) -> dict[str, int]:
@@ -436,9 +419,9 @@ def run_nested_cv(
             )
             started = time.perf_counter()
             search.fit(x_train, y_train)
+            fit_seconds = time.perf_counter() - started
             prediction = np.asarray(search.predict(x_test), dtype=int)
             score = _positive_scores(search, x_test)
-            fit_seconds = time.perf_counter() - started
             metrics = evaluate_binary_classifier(y_test, prediction, score)
             fold_predictions[model_name] = prediction
 
