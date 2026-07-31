@@ -127,7 +127,7 @@ def fetch_manifest_metadata(
         method="POST",
     )
     try:
-        with urlopen(request, timeout=timeout_seconds) as response:  # noqa: S310
+        with urlopen(request, timeout=timeout_seconds) as response:
             raw = response.read()
     except HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")[:500]
@@ -192,7 +192,7 @@ def fetch_manifest_metadata(
         "query": asdict(query),
         "request_payload": payload,
         "response_pagination": decoded.get("data", {}).get("pagination", {}),
-        "rows_written": int(len(manifest)),
+        "rows_written": len(manifest),
         "downloads_performed": False,
         "controlled_data_downloaded": False,
     }
