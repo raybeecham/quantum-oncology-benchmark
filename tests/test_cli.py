@@ -36,6 +36,10 @@ def test_nested_cv_cli_builds_locked_configuration(monkeypatch, capsys, tmp_path
             "2",
             "--inner-folds",
             "2",
+            "--search-profile",
+            "sensitivity-v1",
+            "--calibration-bins",
+            "8",
             "--model",
             "logistic_regression",
             "--max-samples",
@@ -49,7 +53,11 @@ def test_nested_cv_cli_builds_locked_configuration(monkeypatch, capsys, tmp_path
     config = captured["config"]
     assert isinstance(config, NestedCVConfig)
     assert config.primary_metric == "balanced_accuracy"
+    assert config.search_profile == "sensitivity-v1"
+    assert config.calibration_bins == 8
     assert config.models == ("logistic_regression",)
     assert config.outer_folds == 2
     assert config.inner_folds == 2
-    assert "Nested cross-validation complete" in capsys.readouterr().out
+    stdout = capsys.readouterr().out
+    assert "Nested cross-validation complete" in stdout
+    assert "Search profile: sensitivity-v1" in stdout
