@@ -90,6 +90,12 @@ def _format_interval(row: dict[str, Any], metric: str) -> str:
     return f"{mean:.3f} [{float(low):.3f}, {float(high):.3f}]"
 
 
+def _reproduction_config(search_profile: str) -> str:
+    if search_profile == "sensitivity-v1":
+        return "configs/nested-classical-sensitivity.yaml"
+    return "configs/nested-classical.yaml"
+
+
 def render_nested_cv_report(payload: dict[str, Any]) -> str:
     """Render a bounded Markdown report for nested cross-validation."""
     config = payload["config"]
@@ -97,6 +103,7 @@ def render_nested_cv_report(payload: dict[str, Any]) -> str:
     methodology = payload["methodology"]
     summary = payload["summary"]
     pairwise = payload.get("pairwise_summary", [])
+    calibration = payload.get("calibration_summary", [])
     evidence = payload["evidence_statement"]
 
     lines = [
@@ -109,6 +116,7 @@ def render_nested_cv_report(payload: dict[str, Any]) -> str:
         "",
         f"- Generated: `{payload['generated_at']}`",
         f"- Evaluation mode: `{payload['evaluation_mode']}`",
+        f"- Search profile: **{config['search_profile']}**",
         f"- Dataset: **{dataset['name']}**",
         f"- Dataset fingerprint: `{dataset['fingerprint']}`",
         f"- Samples used: **{dataset['samples_used']}**",
@@ -122,6 +130,7 @@ def render_nested_cv_report(payload: dict[str, Any]) -> str:
         "",
         f"- Primary endpoint: **{methodology['primary_metric']}**",
         f"- Primary endpoint locked: **{methodology['primary_endpoint_locked']}**",
+        f"- Search profile: `{methodology['search_profile']}`",
         f"- Preprocessing scope: `{methodology['preprocessing_scope']}`",
         f"- Outer test usage: `{methodology['outer_test_usage']}`",
         "- Imputation, scaling, feature selection, and model fitting occur inside each search pipeline.",
@@ -162,6 +171,36 @@ def render_nested_cv_report(payload: dict[str, Any]) -> str:
             f"`{_json_column(row['best_params'])}` |"
         )
 
+    if calibration:
+        lines.extend(
+            [
+                "",
+                "## Out-of-Fold Calibration Diagnostics",
+                "",
+                "Diagnostics pool one untouched outer-fold prediction per sample and model.",
+                "Reliability curve points are written to `calibration_bins.csv`.",
+                "",
+                "| Model | ECE | MCE | Calibration-in-the-large | Brier score | Log loss | False negatives | False positives |",
+                "|---|---:|---:|---:|---:|---:|---:|---:|",
+            ]
+        )
+        for row in calibration:
+            lines.append(
+                f"| {row['model']} | "
+                f"{float(row['expected_calibration_error']):.4f} | "
+                f"{float(row['maximum_calibration_error']):.4f} | "
+                f"{float(row['calibration_in_the_large']):.4f} | "
+                f"{float(row['pooled_out_of_fold_brier_score']):.4f} | "
+                f"{float(row['pooled_out_of_fold_log_loss']):.4f} | "
+                f"{row['false_negative_count']} | {row['false_positive_count']} |"
+            )
+        lines.extend(
+            [
+                "",
+                "Expected calibration error and maximum calibration error depend on the configured uniform probability bins. They are descriptive diagnostics, not clinical validation.",
+            ]
+        )
+
     if pairwise:
         lines.extend(
             [
@@ -196,6 +235,7 @@ def render_nested_cv_report(payload: dict[str, Any]) -> str:
             "- Nested cross-validation estimates performance of the model-selection procedure on this dataset.",
             "- Outer folds share training observations and are not independent external replications.",
             "- Fold-level confidence intervals are descriptive, especially with five outer folds.",
+            "- Calibration bins and error rows summarize out-of-fold predictions but do not establish clinical reliability.",
             "- The built-in dataset is an educational benchmark, not a prospective clinical cohort.",
             "- This classical-only mode does not evaluate quantum advantage.",
             "",
@@ -203,7 +243,7 @@ def render_nested_cv_report(payload: dict[str, Any]) -> str:
             "",
             "```bash",
             "python -m pip install -e '.[dev]'",
-            "qob nested-cv --config configs/nested-classical.yaml",
+            f"qob nested-cv --config {_reproduction_config(config['search_profile'])}",
             "```",
             "",
         ]
@@ -253,6 +293,24 @@ def write_nested_artifacts(
     pairwise_path = destination / "nested_pairwise_comparisons.csv"
     pd.DataFrame(payload["pairwise_comparisons"]).to_csv(pairwise_path, index=False)
 
+    calibration_summary_path = destination / "calibration_summary.csv"
+    pd.DataFrame(payload["calibration_summary"]).to_csv(
+        calibration_summary_path,
+        index=False,
+    )
+
+    calibration_bins_path = destination / "calibration_bins.csv"
+    pd.DataFrame(payload["calibration_bins"]).to_csv(calibration_bins_path, index=False)
+
+    distribution_path = destination / "probability_distribution.csv"
+    pd.DataFrame(payload["probability_distribution"]).to_csv(
+        distribution_path,
+        index=False,
+    )
+
+    errors_path = destination / "classification_errors.csv"
+    pd.DataFrame(payload["classification_errors"]).to_csv(errors_path, index=False)
+
     report_path = destination / "NESTED_CV_REPORT.md"
     report_path.write_text(render_nested_cv_report(payload), encoding="utf-8")
 
@@ -263,5 +321,9 @@ def write_nested_artifacts(
         "inner_search_results_csv": inner_path,
         "nested_summary_csv": summary_path,
         "nested_pairwise_comparisons_csv": pairwise_path,
+        "calibration_summary_csv": calibration_summary_path,
+        "calibration_bins_csv": calibration_bins_path,
+        "probability_distribution_csv": distribution_path,
+        "classification_errors_csv": errors_path,
         "report": report_path,
     }
