@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from collections import Counter, defaultdict
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import pandas as pd
 from scipy.stats import binomtest
@@ -17,7 +17,7 @@ def _load_payload(directory: str | Path) -> dict[str, Any]:
     path = Path(directory) / "nested_experiment.json"
     if not path.exists():
         raise FileNotFoundError(f"nested experiment not found: {path}")
-    payload = json.loads(path.read_text(encoding="utf-8"))
+    payload = cast(dict[str, Any], json.loads(path.read_text(encoding="utf-8")))
     if not str(payload.get("schema_version", "")).startswith("nested-cv-"):
         raise ValueError(f"unsupported nested experiment schema in {path}")
     return payload
