@@ -39,7 +39,7 @@ class QuantumKernelClassifier:
     _feature_map: Any | None = field(init=False, default=None, repr=False)
     _x_train: np.ndarray | None = field(init=False, default=None, repr=False)
 
-    def fit(self, x_train: np.ndarray, y_train: np.ndarray) -> "QuantumKernelClassifier":
+    def fit(self, x_train: np.ndarray, y_train: np.ndarray) -> QuantumKernelClassifier:
         """Fit the precomputed-kernel support-vector classifier."""
         if not quantum_dependencies_available():
             raise QuantumDependencyError(
