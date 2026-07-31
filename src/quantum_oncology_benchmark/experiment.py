@@ -7,6 +7,7 @@ from collections import defaultdict
 from typing import Any
 
 import numpy as np
+from numpy.typing import NDArray
 
 from .config import ExperimentConfig
 from .data import load_dataset
@@ -15,6 +16,8 @@ from .models.classical import build_classical_models
 from .models.quantum_kernel import QuantumKernelClassifier
 from .preprocessing import prepare_split
 from .reporting import environment_metadata, utc_now, write_artifacts
+
+FloatArray = NDArray[np.float64]
 
 _METRIC_NAMES = (
     "accuracy",
@@ -31,7 +34,7 @@ _METRIC_NAMES = (
 )
 
 
-def _positive_scores(model: Any, x_test: np.ndarray) -> np.ndarray:
+def _positive_scores(model: Any, x_test: FloatArray) -> FloatArray:
     probabilities = model.predict_proba(x_test)
     if probabilities.ndim != 2 or probabilities.shape[1] != 2:
         raise ValueError("binary classifier must return two probability columns")
@@ -123,7 +126,7 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
             "name": dataset.name,
             "source": dataset.source,
             "positive_class": dataset.positive_class,
-            "samples_used": int(len(dataset.target)),
+            "samples_used": len(dataset.target),
             "feature_count_available": int(dataset.features.shape[1]),
             "fingerprint": dataset.fingerprint,
             "metadata": dataset.metadata,

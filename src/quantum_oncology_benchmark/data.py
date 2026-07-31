@@ -34,7 +34,7 @@ class DatasetBundle:
         digest.update(target_hash.tobytes())
         return digest.hexdigest()
 
-    def subset(self, max_samples: int | None, seed: int) -> "DatasetBundle":
+    def subset(self, max_samples: int | None, seed: int) -> DatasetBundle:
         """Return a reproducible stratified subset."""
         if max_samples is None or max_samples >= len(self.target):
             return self

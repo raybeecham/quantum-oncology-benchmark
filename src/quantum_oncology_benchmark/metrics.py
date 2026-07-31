@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Any
 
 import numpy as np
+from numpy.typing import NDArray
 from sklearn.metrics import (
     accuracy_score,
     average_precision_score,
@@ -18,11 +19,14 @@ from sklearn.metrics import (
     roc_auc_score,
 )
 
+IntArray = NDArray[np.int_]
+FloatArray = NDArray[np.float64]
+
 
 def evaluate_binary_classifier(
-    y_true: np.ndarray,
-    y_pred: np.ndarray,
-    y_score: np.ndarray,
+    y_true: IntArray,
+    y_pred: IntArray,
+    y_score: FloatArray,
 ) -> dict[str, Any]:
     """Calculate metrics where class 1 is the clinically relevant positive class."""
     tn, fp, fn, tp = confusion_matrix(y_true, y_pred, labels=[0, 1]).ravel()

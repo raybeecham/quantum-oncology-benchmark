@@ -6,7 +6,11 @@ from dataclasses import dataclass, field
 from typing import Any
 
 import numpy as np
+from numpy.typing import NDArray
 from sklearn.svm import SVC
+
+FloatArray = NDArray[np.float64]
+IntArray = NDArray[np.int_]
 
 
 class QuantumDependencyError(RuntimeError):
@@ -37,9 +41,9 @@ class QuantumKernelClassifier:
     _kernel: Any | None = field(init=False, default=None, repr=False)
     _classifier: SVC | None = field(init=False, default=None, repr=False)
     _feature_map: Any | None = field(init=False, default=None, repr=False)
-    _x_train: np.ndarray | None = field(init=False, default=None, repr=False)
+    _x_train: FloatArray | None = field(init=False, default=None, repr=False)
 
-    def fit(self, x_train: np.ndarray, y_train: np.ndarray) -> "QuantumKernelClassifier":
+    def fit(self, x_train: FloatArray, y_train: IntArray) -> QuantumKernelClassifier:
         """Fit the precomputed-kernel support-vector classifier."""
         if not quantum_dependencies_available():
             raise QuantumDependencyError(
@@ -78,24 +82,24 @@ class QuantumKernelClassifier:
         self._x_train = np.asarray(x_train, dtype=float)
         return self
 
-    def _test_kernel(self, x_test: np.ndarray) -> np.ndarray:
+    def _test_kernel(self, x_test: FloatArray) -> FloatArray:
         if self._kernel is None or self._x_train is None:
             raise RuntimeError("model has not been fitted")
         return np.asarray(self._kernel.evaluate(x_test, self._x_train), dtype=float)
 
-    def predict(self, x_test: np.ndarray) -> np.ndarray:
+    def predict(self, x_test: FloatArray) -> IntArray:
         """Predict binary labels."""
         if self._classifier is None:
             raise RuntimeError("model has not been fitted")
         return np.asarray(self._classifier.predict(self._test_kernel(x_test)), dtype=int)
 
-    def predict_proba(self, x_test: np.ndarray) -> np.ndarray:
+    def predict_proba(self, x_test: FloatArray) -> FloatArray:
         """Return calibrated class probabilities from SVC Platt scaling."""
         if self._classifier is None:
             raise RuntimeError("model has not been fitted")
         return np.asarray(self._classifier.predict_proba(self._test_kernel(x_test)), dtype=float)
 
-    def predict_with_scores(self, x_test: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    def predict_with_scores(self, x_test: FloatArray) -> tuple[IntArray, FloatArray]:
         """Calculate one test kernel and return predictions plus positive-class scores."""
         if self._classifier is None:
             raise RuntimeError("model has not been fitted")
