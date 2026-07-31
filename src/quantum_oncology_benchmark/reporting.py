@@ -15,6 +15,8 @@ from typing import Any, cast
 
 import pandas as pd
 
+_REPRODUCIBILITY_FLOAT_DECIMALS = 12
+
 
 def utc_now() -> str:
     """Return an ISO-8601 UTC timestamp."""
@@ -79,12 +81,16 @@ def _canonicalize_reproducible_value(value: Any) -> Any:
     if isinstance(value, float):
         if math.isnan(value) or math.isinf(value):
             return None
-        return round(value, 15)
+        return round(value, _REPRODUCIBILITY_FLOAT_DECIMALS)
     return value
 
 
 def normalize_experiment_for_reproducibility(payload: dict[str, Any]) -> dict[str, Any]:
-    """Remove operational variance and canonicalize negligible float differences."""
+    """Remove operational variance and canonicalize machine-precision float noise.
+
+    Finite floats are rounded to 12 decimal places for equality checks only. The
+    original stored artifacts are not modified.
+    """
     normalized: dict[str, Any] = deepcopy(payload)
     normalized.pop("generated_at", None)
     normalized.pop("artifacts", None)
@@ -204,6 +210,7 @@ def render_markdown_report(payload: dict[str, Any]) -> str:
             f"- Bootstrap resamples: **{confidence.get('bootstrap_resamples', 'not recorded')}**",
             f"- Resampling unit: `{confidence.get('resampling_unit', 'not recorded')}`",
             "- Paired classifier test: exact McNemar test within each shared test partition.",
+            "- Descriptive direction counts are reported separately from statistical significance.",
             "- No pooled repeated-holdout p-value is reported because observations may be reused.",
             "- These intervals and tests are descriptive benchmark evidence, not external validation.",
         ]
@@ -215,15 +222,19 @@ def render_markdown_report(payload: dict[str, Any]) -> str:
                 "",
                 "### Pairwise Comparison Summary",
                 "",
-                "| Model A | Model B | Significant repeats | A favored | B favored | Minimum p |",
-                "|---|---|---:|---:|---:|---:|",
+                "| Model A | Model B | Significant repeats | A stat. favored | B stat. favored | A more correct | B more correct | Equal | Minimum p |",
+                "|---|---|---:|---:|---:|---:|---:|---:|---:|",
             ]
         )
         for row in pairwise_summary:
             lines.append(
                 f"| {row['model_a']} | {row['model_b']} | "
                 f"{row['significant_repeats']}/{row['repeats']} | "
-                f"{row['model_a_favored_repeats']} | {row['model_b_favored_repeats']} | "
+                f"{row['model_a_statistically_favored_repeats']} | "
+                f"{row['model_b_statistically_favored_repeats']} | "
+                f"{row['model_a_more_correct_repeats']} | "
+                f"{row['model_b_more_correct_repeats']} | "
+                f"{row['equal_correctness_repeats']} | "
                 f"{float(row['minimum_exact_p_value']):.4f} |"
             )
 
