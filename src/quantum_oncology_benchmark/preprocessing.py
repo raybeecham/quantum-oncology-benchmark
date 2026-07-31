@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import numpy as np
+from numpy.typing import NDArray
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
@@ -13,20 +14,23 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 from .data import DatasetBundle
 
+FloatArray = NDArray[np.float64]
+IntArray = NDArray[np.int_]
+
 
 @dataclass(frozen=True, slots=True)
 class PreparedSplit:
     """Preprocessed train/test arrays sharing the same selected features."""
 
-    x_train_classical: np.ndarray
-    x_test_classical: np.ndarray
-    x_train_quantum: np.ndarray
-    x_test_quantum: np.ndarray
-    y_train: np.ndarray
-    y_test: np.ndarray
+    x_train_classical: FloatArray
+    x_test_classical: FloatArray
+    x_train_quantum: FloatArray
+    x_test_quantum: FloatArray
+    y_train: IntArray
+    y_test: IntArray
     selected_features: tuple[str, ...]
-    train_indices: np.ndarray
-    test_indices: np.ndarray
+    train_indices: IntArray
+    test_indices: IntArray
 
 
 def prepare_split(
