@@ -31,24 +31,25 @@ The project is organized around a narrow, falsifiable question:
 
 > Under a shared and auditable evaluation protocol, when does a quantum model perform differently from strong classical baselines, and what computational resources are required?
 
-The benchmark treats negative and inconclusive results as useful evidence. It is designed to make data leakage, weak classical controls, hidden preprocessing, selective reporting, irreproducible experiments, and unsupported quantum-advantage claims harder to introduce.
+The benchmark treats negative and inconclusive results as useful evidence. It is designed to make data leakage, weak classical controls, hidden preprocessing, selective reporting, uncontrolled tuning, irreproducible experiments, and unsupported quantum-advantage claims harder to introduce.
 
 ## Current project status
 
-The repository has moved beyond its initial software demonstration and now includes a reproducibility and statistical-evaluation foundation suitable for more disciplined benchmark studies.
-
-| Milestone | Status | What is available now |
+| Milestone | Status | Current capability |
 |---|---|---|
-| Reproducible benchmark foundation | Complete | Classical and quantum-kernel runners, dataset fingerprints, configuration capture, environment provenance, and CI |
-| Leakage and calibration hardening | Complete | Training-only preprocessing, selected-feature provenance, deterministic partition hashes, and training-only probability calibration |
-| Statistical evaluation foundation | Complete | Repeat-level bootstrap intervals, exact McNemar comparisons, pairwise artifacts, and bounded evidence statements |
-| Reproducibility contract | Complete | Normalized scientific equality checks that exclude operational variance and machine-precision noise |
-| Classical nested cross-validation | Implemented | Locked balanced-accuracy endpoint, bounded inner search, untouched outer folds, predictions, search results, and reports |
-| Full classical nested-CV reference run | Next | Run and review the five-outer-fold, three-inner-fold four-model reference configuration |
-| Quantum nested cross-validation | Planned | Add a resource-bounded quantum-kernel protocol after the classical reference baseline is established |
-| External oncology cohorts | Planned | Add documented cohort recipes and external validation after the benchmark methodology is stable |
+| Reproducible benchmark foundation | Complete | Classical and quantum-kernel runners, fingerprints, configuration capture, provenance, reports, dashboard, and CI |
+| Leakage and calibration hardening | Complete | Training-only preprocessing, selected-feature provenance, partition hashes, and training-only probability calibration |
+| Statistical evaluation foundation | Complete | Bootstrap intervals, exact paired McNemar comparisons, pairwise artifacts, and bounded evidence statements |
+| Reproducibility contract | Complete | Scientific equality checks excluding timestamps, paths, timing, and machine-precision noise |
+| Classical nested cross-validation | Complete | Locked balanced-accuracy endpoint, bounded inner search, untouched outer folds, predictions, and search artifacts |
+| Full classical reference execution | Complete | Five outer folds, three inner folds, eight selected features, and all four classical comparators executed and reviewed |
+| Classical grid-boundary sensitivity | Implemented | Versioned `sensitivity-v1` profile expands only the identified SVM and boosting boundaries |
+| Out-of-fold calibration diagnostics | Implemented | Reliability bins, ECE, MCE, calibration-in-the-large, Brier score, log loss, probability distributions, and hashed error rows |
+| Full sensitivity execution | Next | Run and compare `sensitivity-v1` against the immutable `reference-v1` result |
+| Quantum nested cross-validation | Planned | Design a resource-bounded protocol after the classical sensitivity conclusions are settled |
+| External oncology cohorts | Planned | Add documented cohorts, grouped splitting, external validation, and independent replication |
 
-The current benchmark supports **exploratory and methodological evidence**. It does not support clinical utility claims, external validity claims, or quantum-advantage claims.
+The current benchmark supports **exploratory and methodological evidence**. It does not support clinical utility, external validity, statistical superiority across independent cohorts, or quantum-advantage claims.
 
 ## Project at a glance
 
@@ -65,7 +66,7 @@ The current benchmark supports **exploratory and methodological evidence**. It d
 - Repeated stratified holdouts
 - Classical nested cross-validation
 - Locked balanced-accuracy endpoint
-- Bounded hyperparameter grids
+- Versioned bounded search profiles
 
 </td>
 <td width="50%" valign="top">
@@ -86,16 +87,16 @@ The current benchmark supports **exploratory and methodological evidence**. It d
 <tr>
 <td width="50%" valign="top">
 
-### Statistical evidence
+### Statistical and calibration evidence
 
 - BCa bootstrap confidence intervals
 - Exact paired McNemar tests
 - Shared-partition comparison hashes
 - Descriptive direction counts
-- No invalid pooled holdout p-value
-- Conservative evidence statements
-- Sensitivity and specificity reporting
-- Probability-quality metrics
+- Calibration-in-the-large
+- Uniform-bin ECE and MCE
+- Pooled out-of-fold Brier score and log loss
+- False-positive and false-negative artifacts
 
 </td>
 <td width="50%" valign="top">
@@ -108,8 +109,8 @@ The current benchmark supports **exploratory and methodological evidence**. It d
 - Dataset and partition fingerprints
 - Selected-feature provenance
 - Fold-level prediction artifacts
+- Hashed sample-level error records
 - Environment and commit metadata
-- Reproducibility normalization
 
 </td>
 </tr>
@@ -117,16 +118,16 @@ The current benchmark supports **exploratory and methodological evidence**. It d
 
 ## Why this project exists
 
-Quantum machine learning in oncology is promising, but early-stage results are easy to overstate. Small datasets, data leakage, weak classical controls, simulator-only experiments, uncontrolled tuning, and selective reporting can make an experimental model appear more useful than it is.
+Quantum machine learning in oncology is promising, but early-stage results are easy to overstate. Small datasets, leakage, weak classical controls, simulator-only experiments, unrestricted optimization, and selective reporting can make an experimental model appear more useful than it is.
 
 This repository establishes a defensible baseline by requiring:
 
-1. Explicitly declared positive classes and evaluation endpoints.
+1. Explicit positive classes and predeclared evaluation endpoints.
 2. Identical evaluation partitions for directly compared models.
-3. Preprocessing and feature selection fitted only on training data.
+3. Preprocessing, feature selection, and calibration fitted only on training data.
 4. Strong classical comparators with documented tuning budgets.
-5. Repeated or nested evaluation with retained prediction-level evidence.
-6. Transparent uncertainty, paired disagreement, and calibration metrics.
+5. Repeated or nested evaluation with prediction-level evidence.
+6. Transparent uncertainty, paired disagreement, calibration, and error metrics.
 7. Machine-readable provenance and deterministic configuration.
 8. Explicit interpretation boundaries and refusal to infer advantage from one score.
 
@@ -134,9 +135,7 @@ A higher score on one split, one simulator run, or one small dataset is not quan
 
 ## Evaluation modes
 
-The repository provides two separate evaluation modes. They answer different methodological questions and produce different artifact schemas.
-
-### 1. Repeated-holdout benchmark
+### Repeated-holdout benchmark
 
 ```bash
 qob benchmark --config configs/classical.yaml
@@ -144,27 +143,25 @@ qob benchmark --config configs/classical.yaml
 
 Use this mode for software verification, exploratory comparisons, quantum-kernel experiments, and sensitivity analysis across deterministic holdout seeds.
 
-It supports:
-
-- classical-only, quantum-only, or combined model sets,
-- shared train/test partitions,
-- training-only preprocessing and calibration,
-- repeated stratified holdouts,
-- repeat-level bootstrap intervals,
-- exact paired McNemar tests within each shared partition,
-- statistical summaries and bounded evidence statements.
+It supports classical-only, quantum-only, or combined model sets with shared partitions, training-only preprocessing and calibration, repeat-level intervals, exact paired comparisons within each partition, and bounded evidence statements.
 
 Repeated holdouts may reuse observations across test partitions. The benchmark therefore does not pool repeat-level p-values.
 
-### 2. Classical nested cross-validation
+### Classical nested cross-validation
+
+Reference profile:
 
 ```bash
 qob nested-cv --config configs/nested-classical.yaml
 ```
 
-Use this mode to estimate the performance of the configured classical model-selection procedure while keeping each outer test fold outside preprocessing, feature selection, calibration, hyperparameter selection, and refitting.
+Grid-boundary sensitivity profile:
 
-The reference protocol uses:
+```bash
+qob nested-cv --config configs/nested-classical-sensitivity.yaml
+```
+
+Both profiles use:
 
 - five stratified outer folds,
 - three stratified inner folds,
@@ -172,40 +169,43 @@ The reference protocol uses:
 - eight selected features,
 - four classical model families,
 - deterministic seeds and single-worker searches,
-- bounded, versioned hyperparameter grids.
+- training-only preprocessing, feature selection, and SVM calibration,
+- one final evaluation of each untouched outer test fold.
 
-For each outer fold, the inner search uses only the outer training partition. The selected pipeline is then refitted on the complete outer training partition and evaluated once on the untouched outer test partition.
+The two profiles differ only where the completed reference run selected a grid boundary:
 
-For the RBF SVM, class predictions come from the selected pipeline. Probability scores come from a separately cross-validated clone fitted only on the outer training partition. Calibration does not replace the predictions used for balanced accuracy or McNemar comparisons.
+| Model | `reference-v1` | `sensitivity-v1` |
+|---|---|---|
+| RBF SVM `C` | `0.1, 1, 10` | `1, 10, 100` |
+| Histogram boosting `max_leaf_nodes` | `15, 31` | `7, 15, 31` |
 
-See [Classical Nested Cross-Validation Protocol](docs/NESTED_CROSS_VALIDATION.md) for the complete method and limitations.
+Logistic regression, random forest, SVM gamma, folds, seeds, feature count, endpoint, preprocessing, calibration, and artifact calculations remain unchanged.
+
+For the RBF SVM, class predictions come from the selected pipeline. Probability scores come from a separately cross-validated clone fitted only on the outer training partition. Calibration does not replace predictions used for balanced accuracy or McNemar comparisons.
+
+See:
+
+- [Classical Nested Cross-Validation Protocol](docs/NESTED_CROSS_VALIDATION.md)
+- [Out-of-Fold Calibration Diagnostics](docs/CALIBRATION_DIAGNOSTICS.md)
+- [Statistical Evaluation](docs/STATISTICAL_EVALUATION.md)
 
 ## Current capabilities
 
-- Built-in public demonstration dataset: Wisconsin Diagnostic Breast Cancer.
+- Wisconsin Diagnostic Breast Cancer public demonstration dataset.
 - Malignant disease explicitly mapped to positive class `1`.
-- CSV adapter for binary tabular cohorts, biomarkers, or externally prepared genomic features.
-- Public GDC metadata manifest generator for reproducible TCGA cohort discovery.
-- Train/test or outer-fold splitting before imputation, scaling, feature selection, or calibration.
+- Binary numeric CSV adapter for externally prepared cohorts and features.
+- Public GDC metadata manifest generator with reproducible query receipts.
 - Four classical baselines and one optional Qiskit fidelity-kernel baseline.
 - Repeated stratified holdouts and classical nested cross-validation.
-- Locked primary endpoint and bounded inner hyperparameter search for nested CV.
-- Per-split or per-fold selected features, partition hashes, class counts, seeds, and predictions.
-- Oncology-oriented metrics:
-  - balanced accuracy
-  - sensitivity
-  - specificity
-  - precision
-  - F1
-  - ROC AUC
-  - average precision
-  - Brier score
-  - log loss
+- Versioned `reference-v1` and `sensitivity-v1` nested search profiles.
+- Per-split or per-fold features, hashes, class counts, seeds, parameters, and predictions.
+- Balanced accuracy, sensitivity, specificity, precision, F1, ROC AUC, average precision, Brier score, and log loss.
 - Repeat-level or outer-fold descriptive bootstrap intervals.
 - Exact McNemar comparisons within shared test partitions.
+- Pooled out-of-fold calibration and classification-error diagnostics.
 - Deterministic reproducibility comparison with operational fields removed.
 - JSON, CSV, Markdown, and Streamlit reporting.
-- CI across Python 3.10 through 3.13, strict mypy, Qiskit smoke testing, and a real nested-CV CLI smoke run.
+- CI across Python 3.10 through 3.13, strict mypy, nested-CV CLI smoke testing, and Qiskit smoke testing.
 
 ## Architecture
 
@@ -224,17 +224,17 @@ Public demo dataset, validated CSV, or GDC-derived cohort metadata
                │                             │
     Training-only preprocessing      Inner search on outer train
                │                             │
-       ┌───────┴────────┐            Locked selected pipeline
+       ┌───────┴────────┐            Selected pipeline + profile
        ▼                ▼                     │
  Classical models   Quantum kernel            ▼
        │                │             One outer-fold evaluation
        └───────┬────────┘                     │
                └──────────────┬───────────────┘
                               ▼
-        Metrics, uncertainty, paired comparisons, and provenance
+     Metrics, intervals, paired tests, calibration, and provenance
                               │
                               ▼
-        JSON, CSV, Markdown, prediction, and dashboard artifacts
+       JSON, CSV, Markdown, prediction, error, and dashboard artifacts
 ```
 
 Detailed design and governance documentation:
@@ -243,13 +243,14 @@ Detailed design and governance documentation:
 - [Research Protocol](RESEARCH_PROTOCOL.md)
 - [Statistical Evaluation](docs/STATISTICAL_EVALUATION.md)
 - [Nested Cross-Validation](docs/NESTED_CROSS_VALIDATION.md)
+- [Calibration Diagnostics](docs/CALIBRATION_DIAGNOSTICS.md)
 - [Model Card](MODEL_CARD.md)
 - [Data Sources](docs/DATA_SOURCES.md)
 - [Data Governance](DATA_GOVERNANCE.md)
 
 ## Quick start
 
-### 1. Create a virtual environment
+### 1. Create and activate a virtual environment
 
 ```bash
 python -m venv .venv
@@ -280,17 +281,19 @@ pip install -e ".[dev]"
 qob benchmark --config configs/classical.yaml
 ```
 
-Artifacts are written to `reports/classical/`.
-
-### 4. Run the classical nested-CV reference protocol
+### 4. Run the classical nested-CV reference profile
 
 ```bash
 qob nested-cv --config configs/nested-classical.yaml
 ```
 
-Artifacts are written to `reports/nested-classical/`.
+### 5. Run the classical sensitivity profile
 
-### 5. Install and run the quantum benchmark
+```bash
+qob nested-cv --config configs/nested-classical-sensitivity.yaml
+```
+
+### 6. Install and run the quantum benchmark
 
 ```bash
 pip install -e ".[dev,quantum]"
@@ -300,7 +303,7 @@ qob benchmark --config configs/baseline.yaml
 
 The default quantum model uses classical simulation. Reports explicitly record whether a physical QPU was used.
 
-### 6. Launch the dashboard
+### 7. Launch the dashboard
 
 ```bash
 pip install -e ".[dashboard]"
@@ -315,18 +318,20 @@ streamlit run app.py
 qob nested-cv --config configs/nested-smoke.yaml
 ```
 
-The smoke configuration uses two outer folds, two inner folds, logistic regression, and RBF SVM. It is intended for command and artifact validation, not substantive scientific interpretation.
+The smoke configuration uses two outer folds, two inner folds, logistic regression, RBF SVM, five calibration bins, and a bounded sample. It validates the command and artifact contract; it is not substantive scientific evidence.
 
-### Select a subset of nested-CV models
+### Select a nested-CV profile and model subset
 
 ```bash
 qob nested-cv \
+  --search-profile sensitivity-v1 \
+  --calibration-bins 10 \
   --model logistic_regression \
   --model rbf_svm \
   --outer-folds 5 \
   --inner-folds 3 \
   --features 8 \
-  --output reports/nested-logistic-svm
+  --output reports/nested-logistic-svm-sensitivity
 ```
 
 ### Compare classical and quantum models on a bounded sample
@@ -340,14 +345,6 @@ qob benchmark \
   --output reports/all-models
 ```
 
-### Run the exact statevector quantum kernel
-
-```bash
-qob benchmark --model-set quantum
-```
-
-Omit `--quantum-shots` for exact statevector fidelity. Set it to a positive integer to simulate finite-shot sampling.
-
 ### Validate a prepared CSV
 
 ```bash
@@ -356,19 +353,7 @@ qob validate-csv cohort.csv \
   --positive-label malignant
 ```
 
-### Run a CSV experiment
-
-```bash
-qob benchmark \
-  --dataset csv \
-  --csv-path cohort.csv \
-  --target-column diagnosis \
-  --positive-label malignant \
-  --model-set all \
-  --features 4
-```
-
-### Create a public GDC manifest for TCGA lung projects
+### Create a public GDC manifest
 
 ```bash
 qob gdc-manifest \
@@ -380,35 +365,35 @@ qob gdc-manifest \
   --output manifests/tcga-lung-star-counts.csv
 ```
 
-This command creates metadata and a `.query.json` receipt. It does not download genomic files.
+This creates metadata and a `.query.json` receipt. It does not download genomic files.
 
 ## Output contracts
 
-### Repeated-holdout artifacts
+### Repeated-holdout schema `1.3`
 
 | Artifact | Purpose |
 |---|---|
-| `experiment.json` | Full configuration, dataset fingerprint, environment, split provenance, statistical analysis, and quantum-resource record |
+| `experiment.json` | Configuration, dataset fingerprint, environment, split provenance, statistical analysis, and quantum-resource record |
 | `summary.csv` | Aggregate metrics and confidence intervals across repeated splits |
 | `runs.csv` | Per-model, per-repeat metrics and confusion counts |
-| `pairwise_comparisons.csv` | Exact McNemar disagreement counts, test hashes, descriptive direction, and significance by repeat |
+| `pairwise_comparisons.csv` | Exact paired disagreement counts, partition hashes, direction, and significance by repeat |
 | `REPORT.md` | Human-readable method, results, evidence statement, and limitations |
 
-The repeated-holdout experiment schema is currently `1.3`.
-
-### Nested cross-validation artifacts
+### Nested-CV schema `nested-cv-1.1`
 
 | Artifact | Purpose |
 |---|---|
-| `nested_experiment.json` | Complete nested-CV configuration, methodology, provenance, results, and environment record |
-| `outer_fold_results.csv` | Selected parameters, selected features, partition hashes, final metrics, and score source by model and outer fold |
-| `outer_fold_predictions.csv` | Hashed sample identifier, truth, class prediction, and positive-class score |
-| `inner_search_results.csv` | Every bounded candidate, inner score, rank, and selected-candidate flag |
-| `nested_summary.csv` | Aggregate outer-fold metrics and descriptive intervals |
+| `nested_experiment.json` | Complete configuration, search profile, methodology, provenance, results, diagnostics, and environment |
+| `outer_fold_results.csv` | Profile, parameters, features, hashes, probability source, and final metrics by model and fold |
+| `outer_fold_predictions.csv` | Profile, hashed sample identifier, truth, prediction, and positive-class probability |
+| `inner_search_results.csv` | Profile, every candidate, inner score, rank, and selected flag |
+| `nested_summary.csv` | Aggregate outer-fold metrics, intervals, and pooled calibration fields |
 | `nested_pairwise_comparisons.csv` | Exact paired disagreement results within each shared outer test fold |
-| `NESTED_CV_REPORT.md` | Human-readable nested protocol, results, evidence statement, and limitations |
-
-The nested-CV experiment schema is currently `nested-cv-1.0`.
+| `calibration_summary.csv` | Calibration-in-the-large, ECE, MCE, pooled Brier score and log loss, and error counts |
+| `calibration_bins.csv` | Occupied reliability-bin coordinates and supporting sample counts |
+| `probability_distribution.csv` | Every configured probability bin by model and true class |
+| `classification_errors.csv` | Hashed out-of-fold false-positive and false-negative rows with probability context |
+| `NESTED_CV_REPORT.md` | Human-readable protocol, results, calibration summary, evidence statement, and limitations |
 
 All experiment payloads retain:
 
@@ -418,67 +403,52 @@ All experiment payloads retain:
 }
 ```
 
-This is intentional. The framework records comparative evidence; it does not convert a small benchmark difference into an advantage claim.
-
 ## Reproducibility contract
 
-The benchmark retains dataset fingerprints, configurations, seeds, selected features, partition hashes, metrics, confidence intervals, paired comparisons, prediction evidence, and environment provenance.
+The benchmark retains fingerprints, configurations, search profiles, seeds, selected features and parameters, partition hashes, metrics, intervals, paired comparisons, prediction evidence, calibration diagnostics, hashed error rows, and environment provenance.
 
-For scientific replay checks, normalization removes fields expected to vary operationally:
+Scientific replay normalization removes only fields expected to vary operationally:
 
 - generation timestamps,
 - output directories,
 - artifact paths,
 - measured execution times.
 
-Finite floating-point values are canonicalized to 12 decimal places during comparison only. Stored JSON and CSV precision is not altered. This excludes meaningless machine-precision aggregation noise while preserving materially larger numerical differences.
+Finite floating-point values are canonicalized to 12 decimal places during comparison only. Stored JSON and CSV precision is unchanged.
 
-## Data strategy
+## Data strategy and boundaries
 
-The built-in dataset is intended for software verification and methodological demonstration, not biomedical conclusions.
+The built-in dataset is for software verification and methodological demonstration, not biomedical conclusions.
 
-For more serious work, prepare a documented cohort outside the public repository and provide a binary tabular CSV containing:
+Externally prepared cohorts should contain:
 
-- One row per independent subject or specimen.
-- Numeric model features only.
-- A binary target with a declared positive class.
-- No names, medical record numbers, dates of birth, free text, or direct identifiers.
-- A cohort-definition record and data dictionary.
-- Documented authorization and an appropriate ethical or legal basis for use.
+- one row per independent subject or specimen,
+- numeric model features only,
+- a binary target with a declared positive class,
+- no direct identifiers or free text,
+- a cohort-definition record and data dictionary,
+- documented authorization and an appropriate ethical or legal basis.
 
-The CSV adapter validates shape and label encoding. It does not certify de-identification, scientific validity, representativeness, independence of rows, or lawful use.
+The CSV adapter validates shape and label encoding. It does not certify de-identification, validity, representativeness, row independence, or lawful use.
 
-Subject-grouped and site-grouped splitting are not yet implemented. Cohorts containing repeated subjects or site effects require an external preparation and validation process until those controls are added.
+Subject-grouped and site-grouped splitting are not yet implemented. Repeated subjects or site effects require an external preparation and validation process until those controls are added.
 
-## What the project does not do yet
+The project does not yet:
 
-- Execute through a production physical-QPU adapter.
-- Perform quantum nested cross-validation.
-- Download controlled-access patient or genomic data.
-- Enforce subject-grouped or site-grouped splitting.
-- Validate a clinical biomarker.
-- Perform prospective clinical evaluation.
-- Provide external-cohort validation.
-- Establish statistical superiority across independent cohorts.
-- Establish quantum or clinical advantage.
-- Recommend treatment, diagnosis, or patient-specific action.
-
-These boundaries are deliberate.
+- execute through a production physical-QPU adapter,
+- perform quantum nested cross-validation,
+- download controlled-access patient or genomic data,
+- enforce subject-grouped or site-grouped splitting,
+- validate a clinical biomarker,
+- provide prospective or external-cohort validation,
+- establish quantum or clinical advantage,
+- recommend treatment, diagnosis, or patient-specific action.
 
 ## Scientific interpretation
 
-A quantum result should be considered credible only when:
+Nested cross-validation improves internal model-selection discipline. Out-of-fold calibration diagnostics improve probability-quality visibility. Neither replaces external validation or independent replication.
 
-1. Quantum and classical models use identical evaluation partitions.
-2. Preprocessing, feature selection, and calibration are fitted only on training data.
-3. Classical baselines receive reasonable and documented tuning budgets.
-4. Results are repeated across seeds or evaluated through a locked nested protocol.
-5. Paired predictions, confidence intervals, and uncertainty are retained.
-6. Circuit resources and execution mode are disclosed.
-7. External or independently held-out data confirm the finding.
-8. Another researcher can reproduce the result from the repository.
-
-Nested cross-validation improves internal model-selection discipline. It does not replace external validation or independent replication.
+A quantum result should be considered credible only when classical and quantum models use identical evaluation partitions, preprocessing and calibration remain training-only, tuning budgets are documented and matched, prediction evidence and uncertainty are retained, resources are disclosed, external data confirm the finding, and an independent researcher can reproduce it.
 
 Until stronger evidence exists, results should be described as exploratory benchmark evidence.
 
@@ -491,32 +461,32 @@ mypy src
 pytest
 ```
 
-The GitHub Actions workflow runs:
+GitHub Actions runs:
 
-- Ruff across Python 3.10, 3.11, 3.12, and 3.13.
-- Strict mypy against the configured Python 3.10 target.
+- Ruff across Python 3.10 through 3.13.
+- Strict mypy against the Python 3.10 target.
 - Core tests across Python 3.10 through 3.13.
 - A real nested-CV command and artifact smoke run on Python 3.12.
-- A dedicated Qiskit quantum test and benchmark smoke run on Python 3.12.
+- A Qiskit test and quantum benchmark smoke run on Python 3.12.
 
 ## Roadmap from the current baseline
 
 | Priority | Objective | Current state |
 |---|---|---|
-| 1 | Merge and run the full classical nested-CV reference protocol | Ready |
-| 2 | Review outer-fold stability, selected parameters, selected features, and paired predictions | Next analysis milestone |
-| 3 | Add subject-grouped and site-grouped split controls | Planned |
-| 4 | Add documented TCGA cohort recipes and data-quality artifacts | Planned |
-| 5 | Design a resource-bounded quantum nested-CV protocol | Planned after the classical reference baseline |
+| 1 | Run and review the full `sensitivity-v1` profile | Next evidence milestone |
+| 2 | Generate calibration and reliability figures from the diagnostic CSV contract | Planned presentation layer |
+| 3 | Add subject-grouped and site-grouped split controls | Planned methodology control |
+| 4 | Add documented TCGA cohort recipes and data-quality artifacts | Planned cohort milestone |
+| 5 | Design a matched, resource-bounded quantum nested-CV protocol | Planned after classical sensitivity review |
 | 6 | Add external-cohort and independent replication workflows | Required before translational claims |
-| 7 | Add physical-QPU execution adapters with backend snapshots and cost records | Future hardware milestone |
+| 7 | Add physical-QPU adapters with backend snapshots and cost records | Future hardware milestone |
 | 8 | Expand into drug-response, multi-omics, radiomics, and molecular workloads | Longer-term research scope |
 
-See [ROADMAP.md](ROADMAP.md) for the broader version plan. The immediate engineering focus is the full classical nested-CV reference run and review of its fold-level evidence.
+See [ROADMAP.md](ROADMAP.md) for the broader version plan.
 
 ## Governance and safety
 
-Read these documents before proposing substantive changes:
+Read before proposing substantive changes:
 
 - [Contributing](CONTRIBUTING.md)
 - [Governance](GOVERNANCE.md)
@@ -528,18 +498,11 @@ Do not submit protected health information, controlled-access data, credentials,
 
 ## Citation
 
-The repository includes a [`CITATION.cff`](CITATION.cff) file. When citing results, record the exact:
-
-- repository commit
-- evaluation mode and configuration
-- dataset or manifest fingerprint
-- random seeds and partition hashes
-- dependency environment
-- simulator or hardware execution mode
+When citing results, record the exact repository commit, evaluation mode, search profile, configuration, dataset fingerprint, seeds, partition hashes, dependency environment, and simulator or hardware execution mode.
 
 ## Contributing
 
-Contributions are welcome when they preserve the project’s scientific and safety boundaries. Methodological changes should include protocol updates, tests, migration notes, and a clear evidence-based rationale.
+Contributions are welcome when they preserve the scientific and safety boundaries. Methodological changes should include protocol updates, tests, migration notes, and an evidence-based rationale.
 
 ## License
 
