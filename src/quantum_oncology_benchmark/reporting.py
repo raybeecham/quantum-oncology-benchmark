@@ -7,10 +7,11 @@ import math
 import platform
 import subprocess
 import sys
+from copy import deepcopy
 from datetime import datetime, timezone
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import pandas as pd
 
@@ -64,6 +65,47 @@ def _clean_json(value: Any) -> Any:
     if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
         return None
     return value
+
+
+def _canonicalize_reproducible_value(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {
+            str(key): _canonicalize_reproducible_value(item)
+            for key, item in value.items()
+        }
+    if isinstance(value, list):
+        return [_canonicalize_reproducible_value(item) for item in value]
+    if isinstance(value, float):
+        if math.isnan(value) or math.isinf(value):
+            return None
+        return round(value, 15)
+    return value
+
+
+def normalize_experiment_for_reproducibility(payload: dict[str, Any]) -> dict[str, Any]:
+    """Remove operational variance and canonicalize negligible float differences."""
+    normalized: dict[str, Any] = deepcopy(payload)
+    normalized.pop("generated_at", None)
+    normalized.pop("artifacts", None)
+
+    config = normalized.get("config")
+    if isinstance(config, dict):
+        config.pop("output_dir", None)
+
+    runs = normalized.get("runs")
+    if isinstance(runs, list):
+        for row in runs:
+            if isinstance(row, dict):
+                row.pop("elapsed_seconds", None)
+
+    summary = normalized.get("summary")
+    if isinstance(summary, list):
+        for row in summary:
+            if isinstance(row, dict):
+                row.pop("elapsed_seconds_mean", None)
+                row.pop("elapsed_seconds_std", None)
+
+    return cast(dict[str, Any], _canonicalize_reproducible_value(normalized))
 
 
 def write_artifacts(payload: dict[str, Any], output_dir: str | Path) -> dict[str, Path]:

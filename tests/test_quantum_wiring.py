@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+import warnings
 from types import ModuleType, SimpleNamespace
 
 import numpy as np
@@ -56,12 +57,17 @@ def test_quantum_classifier_wiring_with_fake_qiskit(monkeypatch) -> None:
     y_train = np.array([0, 0, 1, 1])
     x_test = np.array([[0.1, 0.1], [2.9, 2.9]])
 
-    model = QuantumKernelClassifier(reps=1, seed=7).fit(x_train, y_train)
-    predictions, scores = model.predict_with_scores(x_test)
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", FutureWarning)
+        model = QuantumKernelClassifier(reps=1, seed=7).fit(x_train, y_train)
+        predictions, scores = model.predict_with_scores(x_test)
     resources = model.resource_summary()
 
     assert predictions.tolist() == [0, 1]
     assert scores.shape == (2,)
+    assert np.all((scores >= 0.0) & (scores <= 1.0))
     assert resources["qubits"] == 2
     assert resources["two_qubit_operations"] == 1
     assert resources["physical_qpu"] is False
+    assert resources["calibration_folds"] == 2
+    assert resources["probability_calibration"] == "training_only_stratified_oof_sigmoid"

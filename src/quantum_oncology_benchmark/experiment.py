@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import time
 from collections import defaultdict
+from hashlib import sha256
 from typing import Any
 
 import numpy as np
@@ -18,6 +19,7 @@ from .preprocessing import prepare_split
 from .reporting import environment_metadata, utc_now, write_artifacts
 
 FloatArray = NDArray[np.float64]
+IntArray = NDArray[np.int_]
 
 _METRIC_NAMES = (
     "accuracy",
@@ -41,6 +43,19 @@ def _positive_scores(model: Any, x_test: FloatArray) -> FloatArray:
     return np.asarray(probabilities[:, 1], dtype=float)
 
 
+def _index_hash(indices: IntArray) -> str:
+    """Hash partition membership without exposing raw row indices."""
+    canonical = ",".join(str(int(index)) for index in indices)
+    return sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def _binary_class_counts(target: IntArray) -> dict[str, int]:
+    return {
+        "0": int(np.count_nonzero(target == 0)),
+        "1": int(np.count_nonzero(target == 1)),
+    }
+
+
 def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dict[str, Any]:
     """Run classical and optional quantum benchmarks with shared data splits."""
     config.validate()
@@ -57,6 +72,7 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
     dataset = dataset.subset(effective_max_samples, config.seed)
 
     run_rows: list[dict[str, Any]] = []
+    split_provenance: list[dict[str, Any]] = []
     selected_features: tuple[str, ...] = ()
     quantum_resources: dict[str, Any] | None = None
 
@@ -70,6 +86,21 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
         )
         if not selected_features:
             selected_features = split.selected_features
+
+        split_provenance.append(
+            {
+                "repeat": repeat_index,
+                "seed": repeat_seed,
+                "selected_features": list(split.selected_features),
+                "train_index_hash": _index_hash(split.train_indices),
+                "test_index_hash": _index_hash(split.test_indices),
+                "train_samples": len(split.y_train),
+                "test_samples": len(split.y_test),
+                "training_class_counts": _binary_class_counts(split.y_train),
+                "test_class_counts": _binary_class_counts(split.y_test),
+                "preprocessing_fit_scope": "training_partition_only",
+            }
+        )
 
         if config.model_set in {"classical", "all"}:
             for model_name, model in build_classical_models(repeat_seed).items():
@@ -116,7 +147,7 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
 
     summary = _aggregate_runs(run_rows)
     payload: dict[str, Any] = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "project_version": "0.1.0",
         "generated_at": utc_now(),
         "research_use_only": True,
@@ -132,6 +163,7 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
             "metadata": dataset.metadata,
         },
         "selected_features": list(selected_features),
+        "split_provenance": split_provenance,
         "runs": run_rows,
         "summary": summary,
         "quantum_resources": quantum_resources,
