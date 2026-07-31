@@ -123,7 +123,7 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
             "name": dataset.name,
             "source": dataset.source,
             "positive_class": dataset.positive_class,
-            "samples_used": int(len(dataset.target)),
+            "samples_used": len(dataset.target),
             "feature_count_available": int(dataset.features.shape[1]),
             "fingerprint": dataset.fingerprint,
             "metadata": dataset.metadata,
