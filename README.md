@@ -14,8 +14,8 @@
 
 <p align="center">
   <img
-    src="https://github.com/raybeecham/quantum-oncology-benchmark/blob/main/docs/assets/cancer-cell-dark.webp?raw=1"
-    alt="Detailed dark-mode cancer cell anatomy infographic"
+    src="docs/assets/cancer-cell-dark.png"
+    alt="Quantum Oncology Benchmark Cancer Cell Anatomy"
     width="100%"
   />
 </p>
