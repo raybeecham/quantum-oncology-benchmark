@@ -54,6 +54,12 @@ def _parser() -> argparse.ArgumentParser:
     nested.add_argument("--outer-folds", type=int)
     nested.add_argument("--inner-folds", type=int)
     nested.add_argument(
+        "--search-profile",
+        choices=["reference-v1", "sensitivity-v1"],
+        help="versioned classical hyperparameter search profile",
+    )
+    nested.add_argument("--calibration-bins", type=int)
+    nested.add_argument(
         "--model",
         action="append",
         dest="models",
@@ -132,6 +138,10 @@ def _nested_cv_config(args: argparse.Namespace) -> NestedCVConfig:
         config = replace(config, outer_folds=int(args.outer_folds))
     if args.inner_folds is not None:
         config = replace(config, inner_folds=int(args.inner_folds))
+    if args.search_profile is not None:
+        config = replace(config, search_profile=str(args.search_profile))
+    if args.calibration_bins is not None:
+        config = replace(config, calibration_bins=int(args.calibration_bins))
     if args.models is not None:
         config = replace(config, models=tuple(str(model) for model in args.models))
     if args.max_samples is not None:
@@ -212,6 +222,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             nested_config = _nested_cv_config(args)
             payload = run_nested_cv(nested_config)
             print("Nested cross-validation complete.")
+            print(f"Search profile: {nested_config.search_profile}")
             print(f"Output directory: {nested_config.output_dir}")
             for row in payload["summary"]:
                 print(

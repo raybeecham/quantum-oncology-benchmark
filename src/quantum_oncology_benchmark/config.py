@@ -14,6 +14,7 @@ _CLASSICAL_MODEL_NAMES = (
     "random_forest",
     "hist_gradient_boosting",
 )
+_NESTED_SEARCH_PROFILES = ("reference-v1", "sensitivity-v1")
 
 
 @dataclass(frozen=True, slots=True)
@@ -86,6 +87,8 @@ class NestedCVConfig:
     inner_folds: int = 3
     models: tuple[str, ...] = _CLASSICAL_MODEL_NAMES
     primary_metric: str = "balanced_accuracy"
+    search_profile: str = "reference-v1"
+    calibration_bins: int = 10
     max_samples: int | None = None
     output_dir: str = "reports/nested-classical"
 
@@ -112,6 +115,12 @@ class NestedCVConfig:
             raise ValueError("models must not contain duplicates")
         if self.primary_metric != "balanced_accuracy":
             raise ValueError("primary_metric is locked to 'balanced_accuracy'")
+        if self.search_profile not in _NESTED_SEARCH_PROFILES:
+            raise ValueError(
+                "search_profile must be 'reference-v1' or 'sensitivity-v1'"
+            )
+        if not 2 <= self.calibration_bins <= 50:
+            raise ValueError("calibration_bins must be between 2 and 50")
         if self.max_samples is not None and self.max_samples < 40:
             raise ValueError("max_samples must be at least 40 when provided")
 

@@ -25,3 +25,10 @@ def test_nested_config_rejects_invalid_folds_and_models() -> None:
         NestedCVConfig(outer_folds=1).validate()
     with pytest.raises(ValueError, match="unsupported nested-cv models"):
         NestedCVConfig(models=("unsupported",)).validate()
+
+
+def test_nested_config_rejects_unknown_profile_and_bins() -> None:
+    with pytest.raises(ValueError, match="search_profile"):
+        NestedCVConfig(search_profile="unversioned").validate()
+    with pytest.raises(ValueError, match="calibration_bins"):
+        NestedCVConfig(calibration_bins=1).validate()

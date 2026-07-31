@@ -2,9 +2,9 @@
 
 ## Current focus
 
-The benchmark foundation, statistical evaluation layer, reproducibility contract, and classical nested cross-validation engine are implemented.
+The benchmark foundation, statistical evaluation layer, reproducibility contract, classical nested cross-validation engine, and full classical reference baseline are complete.
 
-The immediate next milestone is to run and review the full classical nested-CV reference configuration using five outer folds, three inner folds, eight selected features, and all four classical comparators.
+The immediate next milestone is to run and review the versioned `sensitivity-v1` profile, determine whether the expanded SVM and boosting grids change the classical conclusions, and assess pooled out-of-fold calibration diagnostics before designing a matched quantum nested-CV protocol.
 
 ## Version 0.1, benchmark foundation
 
@@ -31,11 +31,15 @@ The immediate next milestone is to run and review the full classical nested-CV r
 - [x] Outer-fold prediction artifacts.
 - [x] Inner-search candidate artifacts.
 - [x] End-to-end nested-CV CLI smoke testing.
-- [ ] Full classical nested-CV reference baseline and review.
+- [x] Full classical nested-CV reference baseline and review.
+- [x] Versioned classical reference and grid-boundary sensitivity profiles.
+- [x] Pooled out-of-fold calibration summary and reliability-bin artifacts.
+- [x] Probability-distribution and hashed classification-error artifacts.
+- [ ] Run and review the full `sensitivity-v1` profile.
+- [ ] Calibration and reliability figures generated from the diagnostic CSV contract.
 - [ ] Repeated outer cross-validation.
 - [ ] Subject-grouped and site-grouped splitting.
 - [ ] Missingness and class-imbalance reports.
-- [ ] Calibration and reliability figures.
 
 ## Version 0.3, GDC cohort tooling
 

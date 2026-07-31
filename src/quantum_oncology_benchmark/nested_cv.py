@@ -22,6 +22,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 
+from .calibration import build_calibration_diagnostics
 from .config import NestedCVConfig
 from .data import DatasetBundle, load_dataset
 from .metrics import evaluate_binary_classifier
@@ -73,14 +74,44 @@ def _model_pipeline(feature_count: int, model: Any) -> Pipeline:
     return Pipeline([*_preprocessing_steps(feature_count), ("model", model)])
 
 
+def _profile_grids(search_profile: str) -> dict[str, dict[str, list[Any]]]:
+    if search_profile == "reference-v1":
+        svm_c = [0.1, 1.0, 10.0]
+        boosting_leaves = [15, 31]
+    elif search_profile == "sensitivity-v1":
+        svm_c = [1.0, 10.0, 100.0]
+        boosting_leaves = [7, 15, 31]
+    else:
+        raise ValueError("unsupported nested search profile")
+
+    return {
+        "logistic_regression": {"model__C": [0.1, 1.0, 10.0]},
+        "rbf_svm": {
+            "model__C": svm_c,
+            "model__gamma": ["scale", 0.01, 0.1],
+        },
+        "random_forest": {
+            "model__n_estimators": [200, 500],
+            "model__max_depth": [None, 5, 10],
+        },
+        "hist_gradient_boosting": {
+            "model__learning_rate": [0.05, 0.1],
+            "model__max_leaf_nodes": boosting_leaves,
+        },
+    }
+
+
 def build_nested_model_specs(
     *,
     seed: int,
     feature_count: int,
     models: tuple[str, ...],
     calibration_folds: int,
+    search_profile: str = "reference-v1",
 ) -> dict[str, NestedModelSpec]:
-    """Return deterministic classical pipelines and locked parameter grids."""
+    """Return deterministic classical pipelines and versioned parameter grids."""
+    del calibration_folds
+    grids = _profile_grids(search_profile)
     specs: dict[str, NestedModelSpec] = {}
 
     if "logistic_regression" in models:
@@ -94,7 +125,7 @@ def build_nested_model_specs(
                     random_state=seed,
                 ),
             ),
-            param_grid={"model__C": [0.1, 1.0, 10.0]},
+            param_grid=grids["logistic_regression"],
         )
 
     if "rbf_svm" in models:
@@ -107,10 +138,7 @@ def build_nested_model_specs(
                     random_state=seed,
                 ),
             ),
-            param_grid={
-                "model__C": [0.1, 1.0, 10.0],
-                "model__gamma": ["scale", 0.01, 0.1],
-            },
+            param_grid=grids["rbf_svm"],
         )
 
     if "random_forest" in models:
@@ -124,10 +152,7 @@ def build_nested_model_specs(
                     random_state=seed,
                 ),
             ),
-            param_grid={
-                "model__n_estimators": [200, 500],
-                "model__max_depth": [None, 5, 10],
-            },
+            param_grid=grids["random_forest"],
         )
 
     if "hist_gradient_boosting" in models:
@@ -140,10 +165,7 @@ def build_nested_model_specs(
                     random_state=seed,
                 ),
             ),
-            param_grid={
-                "model__learning_rate": [0.05, 0.1],
-                "model__max_leaf_nodes": [15, 31],
-            },
+            param_grid=grids["hist_gradient_boosting"],
         )
 
     return {name: specs[name] for name in models}
@@ -217,6 +239,7 @@ def _inner_search_rows(
     *,
     outer_fold: int,
     model: str,
+    search_profile: str,
 ) -> list[dict[str, Any]]:
     results = search.cv_results_
     rows: list[dict[str, Any]] = []
@@ -224,6 +247,7 @@ def _inner_search_rows(
         rows.append(
             {
                 "outer_fold": outer_fold,
+                "search_profile": search_profile,
                 "model": model,
                 "candidate_index": candidate_index,
                 "selected": candidate_index == int(search.best_index_),
@@ -272,6 +296,28 @@ def _aggregate_outer_results(
     return summary
 
 
+def _attach_calibration_summary(
+    summary: list[dict[str, Any]],
+    calibration_summary: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    by_model = {str(row["model"]): row for row in calibration_summary}
+    for row in summary:
+        diagnostics = by_model[str(row["model"])]
+        for key in (
+            "prevalence",
+            "mean_predicted_probability",
+            "calibration_in_the_large",
+            "expected_calibration_error",
+            "maximum_calibration_error",
+            "pooled_out_of_fold_brier_score",
+            "pooled_out_of_fold_log_loss",
+            "false_positive_count",
+            "false_negative_count",
+        ):
+            row[key] = diagnostics[key]
+    return summary
+
+
 def _nested_pairwise_rows(
     y_true: IntArray,
     predictions: dict[str, IntArray],
@@ -280,6 +326,7 @@ def _nested_pairwise_rows(
     seed: int,
     test_index_hash: str,
     test_samples: int,
+    search_profile: str,
 ) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for model_a, model_b in combinations(sorted(predictions), 2):
@@ -296,6 +343,7 @@ def _nested_pairwise_rows(
             alpha=_SIGNIFICANCE_LEVEL,
         )
         comparison["outer_fold"] = comparison.pop("repeat")
+        comparison["search_profile"] = search_profile
         rows.append(comparison)
     return rows
 
@@ -330,22 +378,35 @@ def _nested_pairwise_summary(rows: list[dict[str, Any]]) -> list[dict[str, Any]]
     return summaries
 
 
-def _evidence_statement(summary: list[dict[str, Any]]) -> dict[str, Any]:
+def _evidence_statement(
+    summary: list[dict[str, Any]],
+    *,
+    search_profile: str,
+) -> dict[str, Any]:
     if not summary:
         raise ValueError("nested summary must contain at least one model")
     best = summary[0]
     runner_up = summary[1] if len(summary) > 1 else None
+    profile_note = (
+        "This is the locked classical reference profile."
+        if search_profile == "reference-v1"
+        else (
+            "This sensitivity profile tests grid-boundary assumptions and does not replace "
+            "the locked reference profile."
+        )
+    )
     return {
         "status": "classical_nested_cv",
         "primary_metric": "balanced_accuracy",
         "primary_endpoint_locked": True,
+        "search_profile": search_profile,
         "best_model": str(best["model"]),
         "runner_up_model": None if runner_up is None else str(runner_up["model"]),
         "statement": (
             f"Among the evaluated classical models, {best['model']} had the highest mean "
             "outer-fold balanced accuracy. Hyperparameters were selected only within outer "
-            "training partitions. Fold-level intervals are descriptive and do not replace "
-            "external validation."
+            f"training partitions. {profile_note} Fold-level intervals and calibration "
+            "diagnostics are descriptive and do not replace external validation."
         ),
         "claim_boundary": "No clinical utility or quantum advantage is claimed.",
     }
@@ -421,6 +482,7 @@ def run_nested_cv(
             feature_count=feature_count,
             models=config.models,
             calibration_folds=config.inner_folds,
+            search_profile=config.search_profile,
         )
         fold_predictions: dict[str, IntArray] = {}
 
@@ -458,6 +520,7 @@ def run_nested_cv(
             outer_rows.append(
                 {
                     "outer_fold": outer_fold,
+                    "search_profile": config.search_profile,
                     "seed": fold_seed,
                     "inner_seed": inner_seed,
                     "model": model_name,
@@ -484,6 +547,7 @@ def run_nested_cv(
                     search,
                     outer_fold=outer_fold,
                     model=model_name,
+                    search_profile=config.search_profile,
                 )
             )
 
@@ -491,6 +555,7 @@ def run_nested_cv(
                 prediction_rows.append(
                     {
                         "outer_fold": outer_fold,
+                        "search_profile": config.search_profile,
                         "model": model_name,
                         "fold_sample_order": fold_sample_order,
                         "sample_index_hash": _sample_index_hash(
@@ -511,19 +576,26 @@ def run_nested_cv(
                 seed=fold_seed,
                 test_index_hash=test_hash,
                 test_samples=len(test_indices),
+                search_profile=config.search_profile,
             )
         )
 
+    calibration = build_calibration_diagnostics(
+        prediction_rows,
+        bins=config.calibration_bins,
+    )
     summary = _aggregate_outer_results(outer_rows, seed=config.seed)
+    summary = _attach_calibration_summary(summary, calibration["summary"])
     pairwise_summary = _nested_pairwise_summary(pairwise_rows)
     search_spaces = build_nested_model_specs(
         seed=config.seed,
         feature_count=feature_count,
         models=config.models,
         calibration_folds=config.inner_folds,
+        search_profile=config.search_profile,
     )
     payload: dict[str, Any] = {
-        "schema_version": "nested-cv-1.0",
+        "schema_version": "nested-cv-1.1",
         "project_version": "0.1.0",
         "evaluation_mode": "classical_nested_cross_validation",
         "generated_at": utc_now(),
@@ -534,6 +606,8 @@ def run_nested_cv(
         "methodology": {
             "primary_metric": config.primary_metric,
             "primary_endpoint_locked": True,
+            "search_profile": config.search_profile,
+            "reference_profile_immutable": True,
             "outer_splitter": "StratifiedKFold(shuffle=True)",
             "inner_splitter": "StratifiedKFold(shuffle=True)",
             "outer_folds": config.outer_folds,
@@ -563,6 +637,13 @@ def run_nested_cv(
                 "unit": "shared_outer_test_fold",
                 "pooled_outer_fold_p_value_reported": False,
             },
+            "calibration_diagnostics": {
+                "scope": "pooled_out_of_fold_predictions",
+                "binning_strategy": "uniform_probability_width",
+                "configured_bins": config.calibration_bins,
+                "each_sample_predicted_once_per_model": True,
+                "interpretation": "descriptive_not_clinical_validation",
+            },
         },
         "outer_fold_results": outer_rows,
         "outer_fold_predictions": prediction_rows,
@@ -570,7 +651,14 @@ def run_nested_cv(
         "summary": summary,
         "pairwise_comparisons": pairwise_rows,
         "pairwise_summary": pairwise_summary,
-        "evidence_statement": _evidence_statement(summary),
+        "calibration_summary": calibration["summary"],
+        "calibration_bins": calibration["reliability_bins"],
+        "probability_distribution": calibration["probability_distribution"],
+        "classification_errors": calibration["classification_errors"],
+        "evidence_statement": _evidence_statement(
+            summary,
+            search_profile=config.search_profile,
+        ),
         "environment": environment_metadata(),
     }
     if write_output:

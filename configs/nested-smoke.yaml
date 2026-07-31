@@ -7,5 +7,7 @@ models:
   - logistic_regression
   - rbf_svm
 primary_metric: balanced_accuracy
+search_profile: reference-v1
+calibration_bins: 5
 max_samples: 80
 output_dir: reports/nested-smoke
