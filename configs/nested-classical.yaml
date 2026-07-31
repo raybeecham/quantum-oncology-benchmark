@@ -9,5 +9,7 @@ models:
   - random_forest
   - hist_gradient_boosting
 primary_metric: balanced_accuracy
+search_profile: reference-v1
+calibration_bins: 10
 max_samples: null
 output_dir: reports/nested-classical
