@@ -36,8 +36,8 @@ def test_nested_model_specs_keep_preprocessing_inside_locked_pipelines() -> None
         assert list(spec.estimator.named_steps) == ["imputer", "scaler", "selector", "model"]
 
     assert specs["logistic_regression"].param_grid == {"model__C": [0.1, 1.0, 10.0]}
-    assert len(specs["rbf_svm"].param_grid["model__estimator__C"]) == 3
-    assert len(specs["rbf_svm"].param_grid["model__estimator__gamma"]) == 3
+    assert len(specs["rbf_svm"].param_grid["model__C"]) == 3
+    assert len(specs["rbf_svm"].param_grid["model__gamma"]) == 3
     assert specs["random_forest"].param_grid["model__n_estimators"] == [200, 500]
     assert specs["hist_gradient_boosting"].param_grid["model__max_leaf_nodes"] == [15, 31]
 
@@ -96,6 +96,29 @@ def test_nested_cv_writes_complete_fold_level_artifacts(tmp_path) -> None:
     assert "## Locked Evaluation Protocol" in report
     assert "single_final_evaluation_after_inner_selection" in report
     assert "No pooled p-value" in report
+
+
+def test_nested_svm_calibrates_scores_only_on_outer_training(tmp_path) -> None:
+    config = NestedCVConfig(
+        features=4,
+        outer_folds=2,
+        inner_folds=2,
+        models=("rbf_svm",),
+        max_samples=80,
+        output_dir=str(tmp_path / "svm"),
+    )
+
+    payload = run_nested_cv(config, write_output=False)
+
+    assert payload["methodology"]["svm_calibration_changes_class_predictions"] is False
+    assert payload["methodology"]["svm_probability_calibration"] == (
+        "sigmoid_cv_on_outer_training_after_selection"
+    )
+    assert all(
+        row["probability_score_source"] == "sigmoid_cv_2_fold_outer_training_only"
+        for row in payload["outer_fold_results"]
+    )
+    assert len(payload["outer_fold_predictions"]) == 80
 
 
 def test_nested_cv_same_configuration_reproduces_scientific_results(tmp_path) -> None:
