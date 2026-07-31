@@ -155,3 +155,22 @@ The benchmark reports repeat-level BCa bootstrap confidence intervals for model 
 - Statistical outputs are exploratory benchmark evidence and do not establish external validity, clinical utility, or quantum advantage.
 
 See `docs/STATISTICAL_EVALUATION.md` for implementation details and deferred methods.
+
+## 13. Classical nested cross-validation layer
+
+The `qob nested-cv` mode provides a stronger classical model-selection baseline while preserving the repeated-holdout mode as a separate evaluation design.
+
+- Balanced accuracy is the locked primary endpoint.
+- The reference protocol uses five stratified outer folds and three stratified inner folds.
+- Median imputation, standardization, feature selection, calibration, and estimator fitting remain inside the model pipeline.
+- Bounded hyperparameter selection uses only the outer training partition.
+- The selected pipeline is refit on the complete outer training partition.
+- The outer test fold is evaluated once and never influences preprocessing or model selection.
+- Each sample receives one outer-fold prediction per evaluated model.
+- Exact McNemar tests are calculated only within one shared outer test fold.
+- Outer-fold p-values are not pooled.
+- Fold-level bootstrap intervals remain descriptive and do not represent external validation.
+
+The first implementation is classical-only. Quantum nested cross-validation requires a separate, resource-bounded protocol.
+
+See `docs/NESTED_CROSS_VALIDATION.md` for search spaces, artifacts, reproducibility controls, and limitations.
