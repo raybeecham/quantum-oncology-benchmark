@@ -10,6 +10,13 @@ All notable changes to this project will be documented here.
 - Exact paired McNemar comparisons within shared test partitions.
 - Pairwise comparison CSV output and bounded evidence statements.
 - Statistical evaluation methods documentation and regression tests.
+- Self-contained pairwise test-partition hashes, sample counts, and descriptive direction fields.
+- Separate descriptive direction counts and statistically favored counts in pairwise summaries.
+
+### Changed
+
+- Reproducibility normalization now canonicalizes finite floats to 12 decimal places for equality checks while preserving the original stored artifacts.
+- Experiment artifact schema advanced to `1.3` for the expanded pairwise statistical contract.
 
 ## 0.1.0, 2026-07-30
 
