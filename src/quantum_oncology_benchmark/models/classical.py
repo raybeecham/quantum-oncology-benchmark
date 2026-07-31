@@ -15,7 +15,6 @@ def build_classical_models(seed: int) -> dict[str, Any]:
     rbf_svm = SVC(
         kernel="rbf",
         class_weight="balanced",
-        probability=False,
         random_state=seed,
     )
     return {
