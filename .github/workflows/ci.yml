@@ -29,6 +29,9 @@ jobs:
         if: matrix.python-version == '3.10'
         run: mypy src
       - run: pytest -m "not quantum" --cov=quantum_oncology_benchmark --cov-report=term-missing
+      - name: Nested cross-validation CLI smoke
+        if: matrix.python-version == '3.12'
+        run: qob nested-cv --config configs/nested-smoke.yaml
 
   quantum:
     name: Quantum smoke test
