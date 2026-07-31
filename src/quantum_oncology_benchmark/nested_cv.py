@@ -11,6 +11,7 @@ from typing import Any
 
 import numpy as np
 from numpy.typing import NDArray
+from sklearn.base import clone
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassifier
 from sklearn.feature_selection import SelectKBest, f_classif
@@ -81,7 +82,6 @@ def build_nested_model_specs(
 ) -> dict[str, NestedModelSpec]:
     """Return deterministic classical pipelines and locked parameter grids."""
     specs: dict[str, NestedModelSpec] = {}
-    calibration_cv = max(2, min(3, calibration_folds))
 
     if "logistic_regression" in models:
         specs["logistic_regression"] = NestedModelSpec(
@@ -98,24 +98,18 @@ def build_nested_model_specs(
         )
 
     if "rbf_svm" in models:
-        base_svc = SVC(
-            kernel="rbf",
-            class_weight="balanced",
-            random_state=seed,
-        )
         specs["rbf_svm"] = NestedModelSpec(
             estimator=_model_pipeline(
                 feature_count,
-                CalibratedClassifierCV(
-                    estimator=base_svc,
-                    method="sigmoid",
-                    cv=calibration_cv,
-                    ensemble=False,
+                SVC(
+                    kernel="rbf",
+                    class_weight="balanced",
+                    random_state=seed,
                 ),
             ),
             param_grid={
-                "model__estimator__C": [0.1, 1.0, 10.0],
-                "model__estimator__gamma": ["scale", 0.01, 0.1],
+                "model__C": [0.1, 1.0, 10.0],
+                "model__gamma": ["scale", 0.01, 0.1],
             },
         )
 
@@ -176,6 +170,30 @@ def _positive_scores(estimator: Any, features: Any) -> FloatArray:
     if probabilities.ndim != 2 or probabilities.shape[1] != 2:
         raise ValueError("binary classifier must return two probability columns")
     return np.asarray(probabilities[:, 1], dtype=float)
+
+
+def _fit_probability_estimator(
+    *,
+    model_name: str,
+    best_estimator: Any,
+    x_train: Any,
+    y_train: IntArray,
+    calibration_folds: int,
+) -> tuple[Any, str]:
+    """Fit probability estimation without changing the locked classifier prediction."""
+    if model_name != "rbf_svm":
+        return best_estimator, "native_predict_proba"
+
+    calibration_cv = max(2, min(3, calibration_folds))
+    calibrated = CalibratedClassifierCV(
+        estimator=clone(best_estimator),
+        method="sigmoid",
+        cv=calibration_cv,
+        ensemble=False,
+        n_jobs=1,
+    )
+    calibrated.fit(x_train, y_train)
+    return calibrated, f"sigmoid_cv_{calibration_cv}_fold_outer_training_only"
 
 
 def _json_safe_parameter(value: Any) -> Any:
@@ -419,9 +437,16 @@ def run_nested_cv(
             )
             started = time.perf_counter()
             search.fit(x_train, y_train)
-            fit_seconds = time.perf_counter() - started
             prediction = np.asarray(search.predict(x_test), dtype=int)
-            score = _positive_scores(search, x_test)
+            probability_estimator, probability_score_source = _fit_probability_estimator(
+                model_name=model_name,
+                best_estimator=search.best_estimator_,
+                x_train=x_train,
+                y_train=y_train,
+                calibration_folds=config.inner_folds,
+            )
+            score = _positive_scores(probability_estimator, x_test)
+            fit_seconds = time.perf_counter() - started
             metrics = evaluate_binary_classifier(y_test, prediction, score)
             fold_predictions[model_name] = prediction
 
@@ -449,6 +474,7 @@ def run_nested_cv(
                     "inner_best_mean": float(search.best_score_),
                     "inner_best_std": float(search.cv_results_["std_test_score"][best_index]),
                     "candidate_count": len(search.cv_results_["params"]),
+                    "probability_score_source": probability_score_source,
                     "fit_seconds": float(fit_seconds),
                     **metrics,
                 }
@@ -516,6 +542,9 @@ def run_nested_cv(
             "outer_test_usage": "single_final_evaluation_after_inner_selection",
             "grid_search_refit": True,
             "grid_search_n_jobs": 1,
+            "classification_prediction_source": "selected_inner_search_pipeline",
+            "svm_probability_calibration": "sigmoid_cv_on_outer_training_after_selection",
+            "svm_calibration_changes_class_predictions": False,
             "model_search_spaces": {
                 model: {key: list(values) for key, values in spec.param_grid.items()}
                 for model, spec in search_spaces.items()
