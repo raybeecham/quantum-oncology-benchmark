@@ -55,7 +55,7 @@ class ExperimentConfig:
         return asdict(self)
 
     @classmethod
-    def from_yaml(cls, path: str | Path) -> "ExperimentConfig":
+    def from_yaml(cls, path: str | Path) -> ExperimentConfig:
         """Load a configuration from YAML."""
         payload = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
         if not isinstance(payload, dict):
