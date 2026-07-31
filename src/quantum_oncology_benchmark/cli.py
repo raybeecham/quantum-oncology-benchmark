@@ -116,21 +116,28 @@ def _benchmark_config(args: argparse.Namespace) -> ExperimentConfig:
 
 def _nested_cv_config(args: argparse.Namespace) -> NestedCVConfig:
     config = NestedCVConfig.from_yaml(args.config) if args.config else NestedCVConfig()
-    replacements: dict[str, object | None] = {
-        "dataset": args.dataset,
-        "csv_path": args.csv_path,
-        "target_column": args.target_column,
-        "positive_label": args.positive_label,
-        "features": args.features,
-        "seed": args.seed,
-        "outer_folds": args.outer_folds,
-        "inner_folds": args.inner_folds,
-        "models": None if args.models is None else tuple(args.models),
-        "max_samples": args.max_samples,
-        "output_dir": args.output_dir,
-    }
-    specified = {key: value for key, value in replacements.items() if value is not None}
-    config = replace(config, **specified)
+    if args.dataset is not None:
+        config = replace(config, dataset=str(args.dataset))
+    if args.csv_path is not None:
+        config = replace(config, csv_path=str(args.csv_path))
+    if args.target_column is not None:
+        config = replace(config, target_column=str(args.target_column))
+    if args.positive_label is not None:
+        config = replace(config, positive_label=args.positive_label)
+    if args.features is not None:
+        config = replace(config, features=int(args.features))
+    if args.seed is not None:
+        config = replace(config, seed=int(args.seed))
+    if args.outer_folds is not None:
+        config = replace(config, outer_folds=int(args.outer_folds))
+    if args.inner_folds is not None:
+        config = replace(config, inner_folds=int(args.inner_folds))
+    if args.models is not None:
+        config = replace(config, models=tuple(str(model) for model in args.models))
+    if args.max_samples is not None:
+        config = replace(config, max_samples=int(args.max_samples))
+    if args.output_dir is not None:
+        config = replace(config, output_dir=str(args.output_dir))
     config.validate()
     return config
 
