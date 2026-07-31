@@ -12,6 +12,11 @@ All notable changes to this project will be documented here.
 - Statistical evaluation methods documentation and regression tests.
 - Self-contained pairwise test-partition hashes, sample counts, and descriptive direction fields.
 - Separate descriptive direction counts and statistically favored counts in pairwise summaries.
+- A separate `qob nested-cv` mode for classical nested cross-validation.
+- Locked five-outer-fold, three-inner-fold reference configuration with balanced accuracy as the primary endpoint.
+- Fold-level predictions, inner-search results, selected parameters, selected features, and partition provenance.
+- A seven-file nested cross-validation artifact package and methodology report.
+- Nested cross-validation reproducibility normalization and regression tests.
 
 ### Changed
 
