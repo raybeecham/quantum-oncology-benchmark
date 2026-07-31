@@ -15,7 +15,7 @@ The reference configuration is `configs/nested-classical.yaml`:
 - Outer splitter: five-fold stratified cross-validation with shuffling.
 - Inner splitter: three-fold stratified cross-validation with shuffling.
 - Feature count: eight.
-- Models: logistic regression, calibrated RBF SVM, random forest, and histogram gradient boosting.
+- Models: logistic regression, RBF SVM with separately calibrated probability scores, random forest, and histogram gradient boosting.
 - Parallelism: one job for deterministic execution and bounded resource use.
 
 The CLI permits a smaller model subset for development and targeted studies, but the reference configuration includes all four classical comparators.
@@ -30,10 +30,12 @@ For each outer fold:
 4. Keep median imputation, standardization, univariate feature selection, and the estimator inside one scikit-learn pipeline.
 5. Select parameters using inner-fold balanced accuracy.
 6. Refit the selected pipeline on the complete outer training partition.
-7. Evaluate the refitted pipeline once on the outer test partition.
-8. Store fold-level metrics, predictions, selected features, parameters, partition hashes, and inner-search results.
+7. For the RBF SVM only, clone the selected pipeline and fit sigmoid calibration by cross-validation using only the complete outer training partition.
+8. Generate class predictions from the selected classifier pipeline and probability scores from the training-only calibrated SVM or the model's native `predict_proba` implementation.
+9. Evaluate once on the outer test partition.
+10. Store fold-level metrics, predictions, selected features, parameters, probability-score source, partition hashes, and inner-search results.
 
-The outer test data is never passed to `fit`, `GridSearchCV`, preprocessing, feature selection, or parameter selection.
+The outer test data is never passed to `fit`, `GridSearchCV`, preprocessing, feature selection, calibration, or parameter selection.
 
 ## Bounded search spaces
 
@@ -43,12 +45,12 @@ The outer test data is never passed to `fit`, `GridSearchCV`, preprocessing, fea
 
 Fixed controls include class balancing, the `liblinear` solver, and a 5,000-iteration limit.
 
-### Calibrated RBF SVM
+### RBF SVM with training-only score calibration
 
 - `C`: `0.1`, `1.0`, `10.0`
 - `gamma`: `scale`, `0.01`, `0.1`
 
-The base SVM does not use the deprecated internal probability mode. Sigmoid calibration is fitted only within training data through `CalibratedClassifierCV`.
+The primary classification endpoint is tuned and evaluated from the selected SVM pipeline without using the deprecated internal probability mode. After inner selection, a clone of the complete selected pipeline, including imputation, scaling, and feature selection, is wrapped by `CalibratedClassifierCV` and fitted only on the outer training partition. The calibrated clone supplies probability scores for ROC AUC, average precision, Brier score, and log loss. It does not replace the selected classifier's class predictions used for balanced accuracy, sensitivity, specificity, F1, or paired McNemar comparisons.
 
 ### Random forest
 
@@ -71,7 +73,7 @@ These grids are intentionally limited. They support a fair, reproducible compari
 Every completed run writes:
 
 - `nested_experiment.json`: complete structured experiment record.
-- `outer_fold_results.csv`: selected configuration, provenance, and final metrics for each model and outer fold.
+- `outer_fold_results.csv`: selected configuration, provenance, probability-score source, and final metrics for each model and outer fold.
 - `outer_fold_predictions.csv`: hashed sample identifier, truth, prediction, and positive-class score.
 - `inner_search_results.csv`: every bounded candidate score and selected-candidate flag.
 - `nested_summary.csv`: aggregate outer-fold metrics and descriptive intervals.
@@ -101,7 +103,8 @@ Nested cross-validation estimates performance of the configured model-selection 
 - selected features,
 - selected parameters,
 - inner candidate scores,
-- outer predictions and metrics,
+- outer predictions and probability scores,
+- probability-score source,
 - pairwise comparisons,
 - evidence statements,
 - environment provenance.
