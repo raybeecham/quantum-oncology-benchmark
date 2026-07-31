@@ -12,7 +12,7 @@ from quantum_oncology_benchmark.nested_reporting import (
 )
 
 
-def test_nested_model_specs_keep_preprocessing_inside_locked_pipelines() -> None:
+def test_nested_model_specs_keep_reference_profile_immutable() -> None:
     specs = build_nested_model_specs(
         seed=42,
         feature_count=4,
@@ -23,6 +23,7 @@ def test_nested_model_specs_keep_preprocessing_inside_locked_pipelines() -> None
             "hist_gradient_boosting",
         ),
         calibration_folds=3,
+        search_profile="reference-v1",
     )
 
     assert list(specs) == [
@@ -36,37 +37,66 @@ def test_nested_model_specs_keep_preprocessing_inside_locked_pipelines() -> None
         assert list(spec.estimator.named_steps) == ["imputer", "scaler", "selector", "model"]
 
     assert specs["logistic_regression"].param_grid == {"model__C": [0.1, 1.0, 10.0]}
-    assert len(specs["rbf_svm"].param_grid["model__C"]) == 3
-    assert len(specs["rbf_svm"].param_grid["model__gamma"]) == 3
+    assert specs["rbf_svm"].param_grid["model__C"] == [0.1, 1.0, 10.0]
+    assert specs["rbf_svm"].param_grid["model__gamma"] == ["scale", 0.01, 0.1]
     assert specs["random_forest"].param_grid["model__n_estimators"] == [200, 500]
     assert specs["hist_gradient_boosting"].param_grid["model__max_leaf_nodes"] == [15, 31]
 
 
-def test_nested_cv_writes_complete_fold_level_artifacts(tmp_path) -> None:
+def test_nested_sensitivity_profile_expands_only_boundary_grids() -> None:
+    specs = build_nested_model_specs(
+        seed=42,
+        feature_count=4,
+        models=(
+            "logistic_regression",
+            "rbf_svm",
+            "random_forest",
+            "hist_gradient_boosting",
+        ),
+        calibration_folds=3,
+        search_profile="sensitivity-v1",
+    )
+
+    assert specs["logistic_regression"].param_grid == {"model__C": [0.1, 1.0, 10.0]}
+    assert specs["rbf_svm"].param_grid["model__C"] == [1.0, 10.0, 100.0]
+    assert specs["rbf_svm"].param_grid["model__gamma"] == ["scale", 0.01, 0.1]
+    assert specs["random_forest"].param_grid["model__n_estimators"] == [200, 500]
+    assert specs["hist_gradient_boosting"].param_grid["model__max_leaf_nodes"] == [7, 15, 31]
+
+
+def test_nested_cv_writes_complete_diagnostic_artifacts(tmp_path) -> None:
     output = tmp_path / "nested"
     config = NestedCVConfig(
         features=4,
         outer_folds=2,
         inner_folds=2,
         models=("logistic_regression", "hist_gradient_boosting"),
+        calibration_bins=5,
         max_samples=80,
         output_dir=str(output),
     )
 
     payload = run_nested_cv(config)
 
-    assert payload["schema_version"] == "nested-cv-1.0"
+    assert payload["schema_version"] == "nested-cv-1.1"
     assert payload["methodology"]["primary_endpoint_locked"] is True
+    assert payload["methodology"]["search_profile"] == "reference-v1"
     assert payload["methodology"]["outer_test_usage"] == (
         "single_final_evaluation_after_inner_selection"
     )
+    assert payload["methodology"]["calibration_diagnostics"][
+        "each_sample_predicted_once_per_model"
+    ] is True
     assert len(payload["outer_fold_results"]) == 4
     assert len(payload["summary"]) == 2
     assert len(payload["pairwise_comparisons"]) == 2
     assert len(payload["pairwise_summary"]) == 1
     assert len(payload["inner_search_results"]) == 14
+    assert len(payload["calibration_summary"]) == 2
+    assert len(payload["probability_distribution"]) == 20
 
     for row in payload["outer_fold_results"]:
+        assert row["search_profile"] == "reference-v1"
         assert len(row["train_index_hash"]) == 64
         assert len(row["test_index_hash"]) == 64
         assert row["train_index_hash"] != row["test_index_hash"]
@@ -81,19 +111,38 @@ def test_nested_cv_writes_complete_fold_level_artifacts(tmp_path) -> None:
         assert len(model_predictions) == 80
         assert len({row["sample_index_hash"] for row in model_predictions}) == 80
 
+        reliability_rows = [
+            row for row in payload["calibration_bins"] if row["model"] == model
+        ]
+        assert sum(row["samples"] for row in reliability_rows) == 80
+
+    expected_errors = sum(
+        row["false_positive_count"] + row["false_negative_count"]
+        for row in payload["calibration_summary"]
+    )
+    assert len(payload["classification_errors"]) == expected_errors
+
     selected_candidates = [row for row in payload["inner_search_results"] if row["selected"]]
     assert len(selected_candidates) == config.outer_folds * len(config.models)
 
-    assert (output / "nested_experiment.json").exists()
-    assert (output / "outer_fold_results.csv").exists()
-    assert (output / "outer_fold_predictions.csv").exists()
-    assert (output / "inner_search_results.csv").exists()
-    assert (output / "nested_summary.csv").exists()
-    assert (output / "nested_pairwise_comparisons.csv").exists()
-    assert (output / "NESTED_CV_REPORT.md").exists()
+    expected_files = (
+        "nested_experiment.json",
+        "outer_fold_results.csv",
+        "outer_fold_predictions.csv",
+        "inner_search_results.csv",
+        "nested_summary.csv",
+        "nested_pairwise_comparisons.csv",
+        "calibration_summary.csv",
+        "calibration_bins.csv",
+        "probability_distribution.csv",
+        "classification_errors.csv",
+        "NESTED_CV_REPORT.md",
+    )
+    assert all((output / name).exists() for name in expected_files)
 
     report = (output / "NESTED_CV_REPORT.md").read_text(encoding="utf-8")
     assert "## Locked Evaluation Protocol" in report
+    assert "## Out-of-Fold Calibration Diagnostics" in report
     assert "single_final_evaluation_after_inner_selection" in report
     assert "No pooled p-value" in report
 
@@ -104,6 +153,7 @@ def test_nested_svm_calibrates_scores_only_on_outer_training(tmp_path) -> None:
         outer_folds=2,
         inner_folds=2,
         models=("rbf_svm",),
+        calibration_bins=5,
         max_samples=80,
         output_dir=str(tmp_path / "svm"),
     )
@@ -119,6 +169,7 @@ def test_nested_svm_calibrates_scores_only_on_outer_training(tmp_path) -> None:
         for row in payload["outer_fold_results"]
     )
     assert len(payload["outer_fold_predictions"]) == 80
+    assert payload["calibration_summary"][0]["samples"] == 80
 
 
 def test_nested_cv_same_configuration_reproduces_scientific_results(tmp_path) -> None:
@@ -127,6 +178,7 @@ def test_nested_cv_same_configuration_reproduces_scientific_results(tmp_path) ->
         outer_folds=2,
         inner_folds=2,
         models=("logistic_regression",),
+        calibration_bins=5,
         max_samples=80,
         output_dir=str(tmp_path / "unused"),
     )
