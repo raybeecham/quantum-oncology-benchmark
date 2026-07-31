@@ -15,6 +15,7 @@ from .experiment import run_benchmark
 from .gdc import GDCManifestQuery, fetch_manifest_metadata, write_manifest_artifacts
 from .models.quantum_kernel import quantum_dependencies_available
 from .nested_cv import run_nested_cv
+from .profile_comparison import compare_nested_profiles
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -73,6 +74,14 @@ def _parser() -> argparse.ArgumentParser:
     )
     nested.add_argument("--max-samples", type=int)
     nested.add_argument("--output", dest="output_dir")
+
+    compare_profiles = subparsers.add_parser(
+        "compare-profiles",
+        help="compare two completed nested-CV profiles and produce a protocol-freeze report",
+    )
+    compare_profiles.add_argument("--reference", type=Path, required=True)
+    compare_profiles.add_argument("--candidate", type=Path, required=True)
+    compare_profiles.add_argument("--output", type=Path, required=True)
 
     doctor = subparsers.add_parser("doctor", help="check optional capabilities")
     doctor.add_argument("--json", action="store_true", dest="as_json")
@@ -229,6 +238,18 @@ def main(argv: Sequence[str] | None = None) -> int:
                     f"- {row['model']}: outer-fold balanced accuracy "
                     f"{row['balanced_accuracy_mean']:.3f}"
                 )
+            return 0
+
+        if args.command == "compare-profiles":
+            payload = compare_nested_profiles(args.reference, args.candidate, args.output)
+            print("Profile comparison complete.")
+            print(f"Reference profile: {payload['reference_profile']}")
+            print(f"Candidate profile: {payload['candidate_profile']}")
+            print(f"Output directory: {args.output}")
+            print(
+                "Primary classical comparator: "
+                f"{payload['protocol_freeze']['primary_classical_comparator']}"
+            )
             return 0
     except (FileNotFoundError, ValueError, RuntimeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
