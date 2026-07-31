@@ -50,6 +50,7 @@ def environment_metadata() -> dict[str, Any]:
             "numpy": package_version("numpy"),
             "pandas": package_version("pandas"),
             "scikit-learn": package_version("scikit-learn"),
+            "scipy": package_version("scipy"),
             "qiskit": package_version("qiskit"),
             "qiskit-machine-learning": package_version("qiskit-machine-learning"),
         },
@@ -125,6 +126,10 @@ def write_artifacts(payload: dict[str, Any], output_dir: str | Path) -> dict[str
     runs_path = destination / "runs.csv"
     runs.to_csv(runs_path, index=False)
 
+    pairwise_rows = payload.get("statistical_analysis", {}).get("pairwise_comparisons", [])
+    pairwise_path = destination / "pairwise_comparisons.csv"
+    pd.DataFrame(pairwise_rows).to_csv(pairwise_path, index=False)
+
     report_path = destination / "REPORT.md"
     report_path.write_text(render_markdown_report(payload), encoding="utf-8")
 
@@ -132,8 +137,18 @@ def write_artifacts(payload: dict[str, Any], output_dir: str | Path) -> dict[str
         "json": json_path,
         "summary_csv": csv_path,
         "runs_csv": runs_path,
+        "pairwise_csv": pairwise_path,
         "report": report_path,
     }
+
+
+def _format_interval(row: dict[str, Any], metric: str) -> str:
+    mean = float(row[f"{metric}_mean"])
+    low = row.get(f"{metric}_ci_low")
+    high = row.get(f"{metric}_ci_high")
+    if low is None or high is None:
+        return f"{mean:.3f} (CI not estimated)"
+    return f"{mean:.3f} [{float(low):.3f}, {float(high):.3f}]"
 
 
 def render_markdown_report(payload: dict[str, Any]) -> str:
@@ -142,6 +157,10 @@ def render_markdown_report(payload: dict[str, Any]) -> str:
     config = payload["config"]
     summary = payload["summary"]
     selected = payload.get("selected_features", [])
+    statistical = payload.get("statistical_analysis", {})
+    confidence = statistical.get("confidence_intervals", {})
+    pairwise_summary = statistical.get("pairwise_summary", [])
+    evidence = payload.get("evidence_statement", {})
 
     lines = [
         "# Quantum Oncology Benchmark Report",
@@ -161,20 +180,61 @@ def render_markdown_report(payload: dict[str, Any]) -> str:
         "",
         "## Aggregate Results",
         "",
-        "| Model | Balanced accuracy | Sensitivity | Specificity | F1 | ROC AUC | Time (s) |",
+        "Intervals are bootstrap confidence intervals over repeat-level metric means.",
+        "",
+        "| Model | Balanced accuracy (95% CI) | Sensitivity | Specificity | F1 | ROC AUC (95% CI) | Time (s) |",
         "|---|---:|---:|---:|---:|---:|---:|",
     ]
     for row in summary:
         lines.append(
-            "| {model} | {balanced_accuracy_mean:.3f} ± {balanced_accuracy_std:.3f} | "
-            "{sensitivity_mean:.3f} ± {sensitivity_std:.3f} | "
-            "{specificity_mean:.3f} ± {specificity_std:.3f} | "
-            "{f1_mean:.3f} ± {f1_std:.3f} | "
-            "{roc_auc_mean:.3f} ± {roc_auc_std:.3f} | {elapsed_seconds_mean:.3f} |".format(**row)
+            f"| {row['model']} | {_format_interval(row, 'balanced_accuracy')} | "
+            f"{float(row['sensitivity_mean']):.3f} ± {float(row['sensitivity_std']):.3f} | "
+            f"{float(row['specificity_mean']):.3f} ± {float(row['specificity_std']):.3f} | "
+            f"{float(row['f1_mean']):.3f} ± {float(row['f1_std']):.3f} | "
+            f"{_format_interval(row, 'roc_auc')} | "
+            f"{float(row['elapsed_seconds_mean']):.3f} |"
         )
 
     lines.extend(
         [
+            "",
+            "## Statistical Evaluation",
+            "",
+            f"- Confidence level: **{float(confidence.get('confidence_level', 0.95)):.0%}**",
+            f"- Bootstrap resamples: **{confidence.get('bootstrap_resamples', 'not recorded')}**",
+            f"- Resampling unit: `{confidence.get('resampling_unit', 'not recorded')}`",
+            "- Paired classifier test: exact McNemar test within each shared test partition.",
+            "- No pooled repeated-holdout p-value is reported because observations may be reused.",
+            "- These intervals and tests are descriptive benchmark evidence, not external validation.",
+        ]
+    )
+
+    if pairwise_summary:
+        lines.extend(
+            [
+                "",
+                "### Pairwise Comparison Summary",
+                "",
+                "| Model A | Model B | Significant repeats | A favored | B favored | Minimum p |",
+                "|---|---|---:|---:|---:|---:|",
+            ]
+        )
+        for row in pairwise_summary:
+            lines.append(
+                f"| {row['model_a']} | {row['model_b']} | "
+                f"{row['significant_repeats']}/{row['repeats']} | "
+                f"{row['model_a_favored_repeats']} | {row['model_b_favored_repeats']} | "
+                f"{float(row['minimum_exact_p_value']):.4f} |"
+            )
+
+    lines.extend(
+        [
+            "",
+            "## Evidence Statement",
+            "",
+            str(evidence.get("statement", "No evidence statement was generated.")),
+            "",
+            f"**Claim boundary:** {evidence.get('claim_boundary', 'No claim boundary recorded.')}",
             "",
             "## Feature Selection",
             "",
@@ -226,8 +286,7 @@ def render_markdown_report(payload: dict[str, Any]) -> str:
             "- A quantum model appearing in this table does not establish quantum advantage.",
             "- The built-in dataset is a small educational benchmark, not a prospective clinical cohort.",
             "- Hyperparameter search is intentionally limited in version 0.1.0.",
-            "- Any scientific claim requires repeated validation, external cohorts, uncertainty analysis,",
-            "  and independent replication.",
+            "- Any scientific claim requires external cohorts and independent replication.",
             "",
             "## Reproduction",
             "",
