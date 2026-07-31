@@ -9,11 +9,12 @@ from collections.abc import Sequence
 from dataclasses import replace
 from pathlib import Path
 
-from .config import ExperimentConfig
+from .config import ExperimentConfig, NestedCVConfig
 from .data import load_csv_dataset
 from .experiment import run_benchmark
 from .gdc import GDCManifestQuery, fetch_manifest_metadata, write_manifest_artifacts
 from .models.quantum_kernel import quantum_dependencies_available
+from .nested_cv import run_nested_cv
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -38,6 +39,34 @@ def _parser() -> argparse.ArgumentParser:
     benchmark.add_argument("--quantum-reps", type=int)
     benchmark.add_argument("--quantum-shots", type=int)
     benchmark.add_argument("--output", dest="output_dir")
+
+    nested = subparsers.add_parser(
+        "nested-cv",
+        help="run classical nested cross-validation with a locked primary endpoint",
+    )
+    nested.add_argument("--config", type=Path, help="YAML configuration file")
+    nested.add_argument("--dataset", choices=["breast-cancer", "csv"])
+    nested.add_argument("--csv-path")
+    nested.add_argument("--target-column")
+    nested.add_argument("--positive-label")
+    nested.add_argument("--features", type=int)
+    nested.add_argument("--seed", type=int)
+    nested.add_argument("--outer-folds", type=int)
+    nested.add_argument("--inner-folds", type=int)
+    nested.add_argument(
+        "--model",
+        action="append",
+        dest="models",
+        choices=[
+            "logistic_regression",
+            "rbf_svm",
+            "random_forest",
+            "hist_gradient_boosting",
+        ],
+        help="classical model to include; repeat to select multiple models",
+    )
+    nested.add_argument("--max-samples", type=int)
+    nested.add_argument("--output", dest="output_dir")
 
     doctor = subparsers.add_parser("doctor", help="check optional capabilities")
     doctor.add_argument("--json", action="store_true", dest="as_json")
@@ -77,6 +106,27 @@ def _benchmark_config(args: argparse.Namespace) -> ExperimentConfig:
         "max_samples": args.max_samples,
         "quantum_reps": args.quantum_reps,
         "quantum_shots": args.quantum_shots,
+        "output_dir": args.output_dir,
+    }
+    specified = {key: value for key, value in replacements.items() if value is not None}
+    config = replace(config, **specified)
+    config.validate()
+    return config
+
+
+def _nested_cv_config(args: argparse.Namespace) -> NestedCVConfig:
+    config = NestedCVConfig.from_yaml(args.config) if args.config else NestedCVConfig()
+    replacements: dict[str, object | None] = {
+        "dataset": args.dataset,
+        "csv_path": args.csv_path,
+        "target_column": args.target_column,
+        "positive_label": args.positive_label,
+        "features": args.features,
+        "seed": args.seed,
+        "outer_folds": args.outer_folds,
+        "inner_folds": args.inner_folds,
+        "models": None if args.models is None else tuple(args.models),
+        "max_samples": args.max_samples,
         "output_dir": args.output_dir,
     }
     specified = {key: value for key, value in replacements.items() if value is not None}
@@ -147,6 +197,18 @@ def main(argv: Sequence[str] | None = None) -> int:
             for row in payload["summary"]:
                 print(
                     f"- {row['model']}: balanced accuracy "
+                    f"{row['balanced_accuracy_mean']:.3f}"
+                )
+            return 0
+
+        if args.command == "nested-cv":
+            nested_config = _nested_cv_config(args)
+            payload = run_nested_cv(nested_config)
+            print("Nested cross-validation complete.")
+            print(f"Output directory: {nested_config.output_dir}")
+            for row in payload["summary"]:
+                print(
+                    f"- {row['model']}: outer-fold balanced accuracy "
                     f"{row['balanced_accuracy_mean']:.3f}"
                 )
             return 0
