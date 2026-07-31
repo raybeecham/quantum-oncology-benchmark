@@ -203,13 +203,7 @@ def render_nested_cv_report(payload: dict[str, Any]) -> str:
             "",
             "```bash",
             "python -m pip install -e '.[dev]'",
-            "qob nested-cv \\",
-            f"  --dataset {config['dataset']} \\",
-            f"  --features {config['features']} \\",
-            f"  --seed {config['seed']} \\",
-            f"  --outer-folds {config['outer_folds']} \\",
-            f"  --inner-folds {config['inner_folds']} \\",
-            f"  --output {config['output_dir']}",
+            "qob nested-cv --config configs/nested-classical.yaml",
             "```",
             "",
         ]
@@ -248,9 +242,10 @@ def write_nested_artifacts(
     pd.DataFrame(payload["outer_fold_predictions"]).to_csv(predictions_path, index=False)
 
     inner_path = destination / "inner_search_results.csv"
-    pd.DataFrame(
-        _flatten_rows(payload["inner_search_results"], ("params",))
-    ).to_csv(inner_path, index=False)
+    pd.DataFrame(_flatten_rows(payload["inner_search_results"], ("params",))).to_csv(
+        inner_path,
+        index=False,
+    )
 
     summary_path = destination / "nested_summary.csv"
     pd.DataFrame(payload["summary"]).to_csv(summary_path, index=False)
