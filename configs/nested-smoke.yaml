@@ -1,0 +1,11 @@
+dataset: breast-cancer
+features: 4
+seed: 42
+outer_folds: 2
+inner_folds: 2
+models:
+  - logistic_regression
+  - rbf_svm
+primary_metric: balanced_accuracy
+max_samples: 80
+output_dir: reports/nested-smoke
