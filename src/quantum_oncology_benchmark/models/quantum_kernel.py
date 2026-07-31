@@ -52,7 +52,6 @@ class QuantumKernelClassifier:
         return SVC(
             kernel="precomputed",
             class_weight="balanced",
-            probability=False,
             random_state=self.seed,
         )
 
