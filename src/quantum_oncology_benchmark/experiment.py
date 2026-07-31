@@ -17,6 +17,12 @@ from .models.classical import build_classical_models
 from .models.quantum_kernel import QuantumKernelClassifier
 from .preprocessing import prepare_split
 from .reporting import environment_metadata, utc_now, write_artifacts
+from .statistical import (
+    attach_bootstrap_intervals,
+    build_evidence_statement,
+    compare_repeat_predictions,
+    summarize_pairwise_comparisons,
+)
 
 FloatArray = NDArray[np.float64]
 IntArray = NDArray[np.int_]
@@ -34,6 +40,10 @@ _METRIC_NAMES = (
     "log_loss",
     "elapsed_seconds",
 )
+
+_CONFIDENCE_LEVEL = 0.95
+_BOOTSTRAP_RESAMPLES = 5000
+_SIGNIFICANCE_LEVEL = 0.05
 
 
 def _positive_scores(model: Any, x_test: FloatArray) -> FloatArray:
@@ -73,6 +83,7 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
 
     run_rows: list[dict[str, Any]] = []
     split_provenance: list[dict[str, Any]] = []
+    pairwise_rows: list[dict[str, Any]] = []
     selected_features: tuple[str, ...] = ()
     quantum_resources: dict[str, Any] | None = None
 
@@ -102,6 +113,7 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
             }
         )
 
+        repeat_predictions: dict[str, IntArray] = {}
         if config.model_set in {"classical", "all"}:
             for model_name, model in build_classical_models(repeat_seed).items():
                 started = time.perf_counter()
@@ -110,6 +122,7 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
                 score = _positive_scores(model, split.x_test_classical)
                 elapsed = time.perf_counter() - started
                 metrics = evaluate_binary_classifier(split.y_test, prediction, score)
+                repeat_predictions[model_name] = prediction
                 run_rows.append(
                     {
                         "repeat": repeat_index,
@@ -132,6 +145,7 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
             prediction, score = quantum_model.predict_with_scores(split.x_test_quantum)
             elapsed = time.perf_counter() - started
             metrics = evaluate_binary_classifier(split.y_test, prediction, score)
+            repeat_predictions["quantum_fidelity_svm"] = prediction
             run_rows.append(
                 {
                     "repeat": repeat_index,
@@ -145,9 +159,28 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
             if quantum_resources is None:
                 quantum_resources = quantum_model.resource_summary()
 
+        pairwise_rows.extend(
+            compare_repeat_predictions(
+                split.y_test,
+                repeat_predictions,
+                repeat=repeat_index,
+                seed=repeat_seed,
+                alpha=_SIGNIFICANCE_LEVEL,
+            )
+        )
+
     summary = _aggregate_runs(run_rows)
+    summary = attach_bootstrap_intervals(
+        summary,
+        run_rows,
+        confidence_level=_CONFIDENCE_LEVEL,
+        n_resamples=_BOOTSTRAP_RESAMPLES,
+        seed=config.seed,
+    )
+    pairwise_summary = summarize_pairwise_comparisons(pairwise_rows)
+    evidence_statement = build_evidence_statement(summary, pairwise_summary)
     payload: dict[str, Any] = {
-        "schema_version": "1.1",
+        "schema_version": "1.2",
         "project_version": "0.1.0",
         "generated_at": utc_now(),
         "research_use_only": True,
@@ -166,6 +199,26 @@ def run_benchmark(config: ExperimentConfig, *, write_output: bool = True) -> dic
         "split_provenance": split_provenance,
         "runs": run_rows,
         "summary": summary,
+        "statistical_analysis": {
+            "confidence_intervals": {
+                "confidence_level": _CONFIDENCE_LEVEL,
+                "bootstrap_resamples": _BOOTSTRAP_RESAMPLES,
+                "resampling_unit": "repeat_level_metric",
+                "default_method": "BCa",
+                "limitation": (
+                    "Repeat-level intervals are descriptive and do not replace external validation."
+                ),
+            },
+            "paired_tests": {
+                "method": "exact_mcnemar_binomial",
+                "alpha": _SIGNIFICANCE_LEVEL,
+                "unit": "shared_test_partition_within_repeat",
+                "pooled_repeated_holdout_p_value_reported": False,
+            },
+            "pairwise_comparisons": pairwise_rows,
+            "pairwise_summary": pairwise_summary,
+        },
+        "evidence_statement": evidence_statement,
         "quantum_resources": quantum_resources,
         "environment": environment_metadata(),
     }

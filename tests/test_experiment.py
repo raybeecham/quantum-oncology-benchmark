@@ -19,7 +19,7 @@ def test_classical_benchmark_writes_complete_artifacts(tmp_path) -> None:
 
     payload = run_benchmark(config)
 
-    assert payload["schema_version"] == "1.1"
+    assert payload["schema_version"] == "1.2"
     assert payload["quantum_advantage_claimed"] is False
     assert len(payload["summary"]) == 4
     assert len(payload["selected_features"]) == 4
@@ -27,6 +27,7 @@ def test_classical_benchmark_writes_complete_artifacts(tmp_path) -> None:
     assert (output / "experiment.json").exists()
     assert (output / "summary.csv").exists()
     assert (output / "runs.csv").exists()
+    assert (output / "pairwise_comparisons.csv").exists()
     assert (output / "REPORT.md").exists()
 
     saved = json.loads((output / "experiment.json").read_text(encoding="utf-8"))

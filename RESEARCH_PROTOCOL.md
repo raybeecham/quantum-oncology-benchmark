@@ -143,3 +143,15 @@ An experiment should stop or be downgraded to exploratory status when:
 - Results cannot be reproduced.
 - Protected data handling is uncertain.
 - The quantum execution mode cannot be independently verified.
+
+## 12. Statistical evaluation layer
+
+The benchmark reports repeat-level BCa bootstrap confidence intervals for model metric means and exact McNemar tests for paired predictions within each shared test partition.
+
+- The repeat-level metric is the bootstrap resampling unit.
+- At least two repeat values are required to estimate an interval.
+- Paired tests use only predictions generated on the same test partition.
+- Repeated-holdout p-values are not pooled because observations can recur across test partitions.
+- Statistical outputs are exploratory benchmark evidence and do not establish external validity, clinical utility, or quantum advantage.
+
+See `docs/STATISTICAL_EVALUATION.md` for implementation details and deferred methods.

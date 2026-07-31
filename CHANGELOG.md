@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented here.
 
+## Unreleased
+
+### Added
+
+- Repeat-level BCa bootstrap confidence intervals for model metrics.
+- Exact paired McNemar comparisons within shared test partitions.
+- Pairwise comparison CSV output and bounded evidence statements.
+- Statistical evaluation methods documentation and regression tests.
+
 ## 0.1.0, 2026-07-30
 
 ### Added
