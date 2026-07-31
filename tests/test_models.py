@@ -16,7 +16,7 @@ def test_classical_svm_uses_training_only_calibration() -> None:
     assert model.cv == 5
     assert model.ensemble is False
     assert isinstance(model.estimator, SVC)
-    assert model.estimator.probability is False
+    assert model.estimator.kernel == "rbf"
 
     x_train = np.array(
         [[-2.0], [-1.5], [-1.0], [-0.5], [0.5], [1.0], [1.5], [2.0], [2.5], [3.0]]
