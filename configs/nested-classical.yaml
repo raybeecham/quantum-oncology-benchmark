@@ -1,0 +1,13 @@
+dataset: breast-cancer
+features: 8
+seed: 42
+outer_folds: 5
+inner_folds: 3
+models:
+  - logistic_regression
+  - rbf_svm
+  - random_forest
+  - hist_gradient_boosting
+primary_metric: balanced_accuracy
+max_samples: null
+output_dir: reports/nested-classical
