@@ -1,0 +1,22 @@
+specification:
+  protocol_version: quantum-protocol-v1
+  profile_name: statevector-smoke-v1
+  backend_id: qiskit-fidelity-statevector
+  feature_map: zz
+  feature_map_repetitions: 2
+  entanglement: linear
+  shots: null
+  seed: 42
+  enforce_psd: true
+  primary_metric: balanced_accuracy
+  classical_comparator: logistic_regression
+budget:
+  max_features: 4
+  max_train_samples: 120
+  max_test_samples: 40
+  max_feature_map_repetitions: 2
+  max_kernel_entries: 20000
+  max_shots_per_kernel_entry: 4096
+  max_total_shots: 20000000
+  max_circuits_per_job: 300
+  hardware_execution_allowed: false
