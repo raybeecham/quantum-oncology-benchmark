@@ -4,9 +4,9 @@ import numpy as np
 import pytest
 
 from quantum_oncology_benchmark.quantum_execution import (
+    QiskitStatevectorKernelBackend,
     QuantumKernelSpecification,
     QuantumResourceBudget,
-    QiskitStatevectorKernelBackend,
     validate_result,
 )
 
