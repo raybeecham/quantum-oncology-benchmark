@@ -6,7 +6,7 @@ import hashlib
 import json
 import math
 import time
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from importlib import import_module
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
@@ -106,8 +106,10 @@ class QuantumKernelSpecification:
 class QuantumProtocolConfig:
     """Serializable quantum protocol profile."""
 
-    specification: QuantumKernelSpecification = QuantumKernelSpecification()
-    budget: QuantumResourceBudget = QuantumResourceBudget()
+    specification: QuantumKernelSpecification = field(
+        default_factory=QuantumKernelSpecification
+    )
+    budget: QuantumResourceBudget = field(default_factory=QuantumResourceBudget)
 
     def validate(self) -> None:
         """Validate the protocol profile and budget together."""
@@ -357,10 +359,10 @@ class QiskitStatevectorKernelBackend:
                 "Qiskit dependencies are required; install with pip install -e '.[quantum]'"
             ) from exc
 
-        algorithm_globals = getattr(utilities, "algorithm_globals")
+        algorithm_globals = utilities.algorithm_globals
         algorithm_globals.random_seed = specification.seed
-        zz_feature_map = getattr(circuit_library, "zz_feature_map")
-        kernel_type = getattr(kernels, "FidelityStatevectorKernel")
+        zz_feature_map = circuit_library.zz_feature_map
+        kernel_type = kernels.FidelityStatevectorKernel
         feature_map = zz_feature_map(
             feature_dimension=request["feature_count"],
             reps=specification.feature_map_repetitions,
