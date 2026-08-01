@@ -21,6 +21,10 @@ All notable changes to this project will be documented here.
 - Out-of-fold calibration summary, reliability-bin, probability-distribution, and hashed classification-error artifacts.
 - Calibration-in-the-large, uniform-bin ECE and MCE, pooled Brier score and log loss, and false-positive/false-negative diagnostics.
 - Calibration diagnostics methodology documentation and regression tests.
+- A standalone `qob compare-profiles` command for paired comparison of completed nested-CV profiles.
+- Cross-profile prediction, parameter-boundary, protocol-freeze JSON, CSV, and Markdown artifacts.
+- Compatibility checks for dataset, endpoint, folds, models, sample hashes, truth labels, and outer-fold assignments.
+- A documented resource and provenance boundary for future simulator and physical-QPU profile comparisons.
 
 ### Changed
 

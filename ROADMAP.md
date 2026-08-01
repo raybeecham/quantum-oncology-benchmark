@@ -2,9 +2,9 @@
 
 ## Current focus
 
-The benchmark foundation, statistical evaluation layer, reproducibility contract, classical nested cross-validation engine, and full classical reference baseline are complete.
+The benchmark foundation, statistical evaluation layer, reproducibility contract, classical nested cross-validation engine, full classical reference baseline, grid-boundary sensitivity run, and out-of-fold calibration diagnostics are complete.
 
-The immediate next milestone is to run and review the versioned `sensitivity-v1` profile, determine whether the expanded SVM and boosting grids change the classical conclusions, and assess pooled out-of-fold calibration diagnostics before designing a matched quantum nested-CV protocol.
+The immediate milestone is to produce and review the paired cross-profile comparison, freeze the classical comparator protocol, and preserve the resulting evidence package before designing a matched, resource-bounded quantum nested-CV protocol.
 
 ## Version 0.1, benchmark foundation
 
@@ -35,7 +35,9 @@ The immediate next milestone is to run and review the versioned `sensitivity-v1`
 - [x] Versioned classical reference and grid-boundary sensitivity profiles.
 - [x] Pooled out-of-fold calibration summary and reliability-bin artifacts.
 - [x] Probability-distribution and hashed classification-error artifacts.
-- [ ] Run and review the full `sensitivity-v1` profile.
+- [x] Full `sensitivity-v1` execution and review.
+- [x] Cross-profile paired comparison and parameter-boundary artifact implementation.
+- [ ] Execute the cross-profile comparison and approve the classical protocol freeze.
 - [ ] Calibration and reliability figures generated from the diagnostic CSV contract.
 - [ ] Repeated outer cross-validation.
 - [ ] Subject-grouped and site-grouped splitting.
