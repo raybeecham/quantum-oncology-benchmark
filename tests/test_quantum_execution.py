@@ -6,10 +6,10 @@ import numpy as np
 import pytest
 
 from quantum_oncology_benchmark.quantum_execution import (
+    QiskitStatevectorKernelBackend,
     QuantumKernelSpecification,
     QuantumProtocolConfig,
     QuantumResourceBudget,
-    QiskitStatevectorKernelBackend,
     ResourceBudgetExceeded,
     built_in_quantum_backends,
     validate_resource_request,
