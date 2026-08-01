@@ -2,9 +2,9 @@
 
 ## Current focus
 
-The benchmark foundation, statistical evaluation layer, reproducibility contract, classical nested cross-validation engine, full classical reference baseline, grid-boundary sensitivity run, and out-of-fold calibration diagnostics are complete.
+The benchmark foundation, statistical evaluation layer, reproducibility contract, classical nested cross-validation, grid-boundary sensitivity analysis, out-of-fold calibration diagnostics, and paired classical protocol freeze are complete.
 
-The immediate milestone is to produce and review the paired cross-profile comparison, freeze the classical comparator protocol, and preserve the resulting evidence package before designing a matched, resource-bounded quantum nested-CV protocol.
+The current engineering milestone is `quantum-protocol-v1`: enforce a resource-bounded, backend-neutral execution contract and validate a local fidelity-statevector adapter before adding matched quantum-versus-classical orchestration. Physical-QPU integration remains deferred until the simulator protocol, artifacts, and comparison boundaries are stable.
 
 ## Version 0.1, benchmark foundation
 
@@ -36,8 +36,8 @@ The immediate milestone is to produce and review the paired cross-profile compar
 - [x] Pooled out-of-fold calibration summary and reliability-bin artifacts.
 - [x] Probability-distribution and hashed classification-error artifacts.
 - [x] Full `sensitivity-v1` execution and review.
-- [x] Cross-profile paired comparison and parameter-boundary artifact implementation.
-- [ ] Execute the cross-profile comparison and approve the classical protocol freeze.
+- [x] Cross-profile paired comparison and parameter-boundary artifacts.
+- [x] Execute the cross-profile comparison and approve the classical protocol freeze.
 - [ ] Calibration and reliability figures generated from the diagnostic CSV contract.
 - [ ] Repeated outer cross-validation.
 - [ ] Subject-grouped and site-grouped splitting.
@@ -57,13 +57,21 @@ The immediate milestone is to produce and review the paired cross-profile compar
 
 ## Version 0.4, quantum and hardware evaluation
 
-- [ ] Resource-bounded quantum nested-CV protocol.
+- [x] Formal `quantum-protocol-v1` resource and evidence specification.
+- [x] Backend-neutral quantum-kernel execution interface.
+- [x] Pre-execution limits for features, samples, kernel entries, repetitions, shots, and total shots.
+- [x] Local Qiskit fidelity-statevector adapter.
+- [x] Simulator resource records with circuit depth, size, two-qubit gates, timing, and fingerprints.
+- [x] Exact and finite-shot simulator capability declaration.
+- [ ] Q0 command and artifact package for contract-smoke execution.
+- [ ] Q1 matched simulator benchmark with rerun frozen classical controls.
 - [ ] Matched classical and quantum tuning budgets.
-- [ ] Backend-neutral execution interface.
-- [ ] IBM Runtime adapter.
-- [ ] Backend property snapshot.
+- [ ] Q2 finite-shot sensitivity analysis.
+- [ ] Backend-neutral remote job lifecycle interface.
+- [ ] Physical-QPU provider adapter.
+- [ ] Backend property and calibration snapshot.
 - [ ] Transpilation and physical-qubit accounting.
-- [ ] Shot, queue, execution, and cost records.
+- [ ] Shot, queue, execution, retry, and cost records.
 - [ ] Noise and mitigation experiments.
 - [ ] Simulator-versus-hardware comparison.
 

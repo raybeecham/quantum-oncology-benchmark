@@ -25,6 +25,13 @@ All notable changes to this project will be documented here.
 - Cross-profile prediction, parameter-boundary, protocol-freeze JSON, CSV, and Markdown artifacts.
 - Compatibility checks for dataset, endpoint, folds, models, sample hashes, truth labels, and outer-fold assignments.
 - A documented resource and provenance boundary for future simulator and physical-QPU profile comparisons.
+- Formal `quantum-protocol-v1` specification with a locked balanced-accuracy endpoint and logistic-regression comparator.
+- Backend-neutral `QuantumKernelBackend` execution interface and immutable kernel-result contract.
+- Hard pre-execution budgets for features, samples, feature-map repetitions, kernel entries, shots, total shots, and circuits per job.
+- Local Qiskit fidelity-statevector adapter supporting exact and finite-shot simulation modes.
+- Simulator resource records for logical qubits, circuit depth and size, two-qubit gates, execution timing, and SHA-256 fingerprints.
+- Quantum-kernel validation for fidelity bounds, symmetry, unit diagonal, finite values, and matrix shapes.
+- Staged Q0 through Q3 resource-bounded quantum evaluation protocol documentation and regression tests.
 
 ### Changed
 
