@@ -32,6 +32,9 @@ jobs:
       - name: Nested cross-validation CLI smoke
         if: matrix.python-version == '3.12'
         run: qob nested-cv --config configs/nested-smoke.yaml
+      - name: Evolution simulator CLI smoke
+        if: matrix.python-version == '3.12'
+        run: qob evolve --config configs/evolution-smoke.yaml
 
   quantum:
     name: Quantum smoke test

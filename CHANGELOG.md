@@ -32,12 +32,20 @@ All notable changes to this project will be documented here.
 - Simulator resource records for logical qubits, circuit depth and size, two-qubit gates, execution timing, and SHA-256 fingerprints.
 - Quantum-kernel validation for fidelity bounds, symmetry, unit diagonal, finite values, and matrix shapes.
 - Staged Q0 through Q3 resource-bounded quantum evaluation protocol documentation and regression tests.
+- Versioned `evolution-protocol-v1` deterministic two-clone tumor evolution model.
+- `qob evolve` command with no-treatment, continuous, fixed-intermittent, and burden-adaptive policies.
+- Explicit sensitive and resistant growth, competition, drug-kill, carrying-capacity, and optional transition assumptions.
+- Piecewise SciPy integration with time-resolved treatment schedules and policy transition events.
+- Tumor-burden, resistant-dominance, progression, diversity, dose, control-time, and cycle metrics.
+- Evolution experiment JSON, population trajectory, treatment schedule, strategy summary, event, and Markdown report artifacts.
+- Evolution simulation fingerprint, replay normalization, reference profile, smoke profile, documentation, tests, and CI execution.
 
 ### Changed
 
 - Reproducibility normalization now canonicalizes finite floats to 12 decimal places for equality checks while preserving the original stored artifacts.
 - Experiment artifact schema advanced to `1.3` for the expanded pairwise statistical contract.
 - Nested cross-validation artifact schema advanced to `nested-cv-1.1` for search-profile identity and calibration diagnostics.
+- The project roadmap now separates classification, quantum execution, evolutionary tumor dynamics, and broader oncology workloads.
 
 ## 0.1.0, 2026-07-30
 
