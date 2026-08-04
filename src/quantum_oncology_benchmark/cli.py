@@ -12,6 +12,7 @@ from pathlib import Path
 from .config import ExperimentConfig, NestedCVConfig
 from .data import load_csv_dataset
 from .evolution import EvolutionConfig, run_evolution_simulation
+from .evolution_cohort import EvolutionCohortConfig, run_evolution_cohort
 from .experiment import run_benchmark
 from .gdc import GDCManifestQuery, fetch_manifest_metadata, write_manifest_artifacts
 from .models.quantum_kernel import quantum_dependencies_available
@@ -96,6 +97,22 @@ def _parser() -> argparse.ArgumentParser:
     )
     evolve.add_argument("--output", type=Path, help="override the configured output directory")
 
+    evolve_cohort = subparsers.add_parser(
+        "evolve-cohort",
+        help="run a deterministic virtual-tumor cohort and parameter-sensitivity study",
+    )
+    evolve_cohort.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/evolution-virtual-cohort.yaml"),
+        help="versioned virtual-cohort YAML profile",
+    )
+    evolve_cohort.add_argument(
+        "--output",
+        type=Path,
+        help="override the configured cohort output directory",
+    )
+
     doctor = subparsers.add_parser("doctor", help="check optional capabilities")
     doctor.add_argument("--json", action="store_true", dest="as_json")
 
@@ -176,6 +193,14 @@ def _nested_cv_config(args: argparse.Namespace) -> NestedCVConfig:
 
 def _evolution_config(args: argparse.Namespace) -> EvolutionConfig:
     config = EvolutionConfig.from_yaml(args.config)
+    if args.output is not None:
+        config = replace(config, output_dir=str(args.output))
+    config.validate()
+    return config
+
+
+def _evolution_cohort_config(args: argparse.Namespace) -> EvolutionCohortConfig:
+    config = EvolutionCohortConfig.from_yaml(args.config)
     if args.output is not None:
         config = replace(config, output_dir=str(args.output))
     config.validate()
@@ -287,6 +312,28 @@ def main(argv: Sequence[str] | None = None) -> int:
                     f"resistant dominance {dominance_text}; "
                     f"dose-days {row['cumulative_dose_days']:.1f}"
                 )
+            return 0
+
+        if args.command == "evolve-cohort":
+            cohort_config = _evolution_cohort_config(args)
+            payload = run_evolution_cohort(cohort_config)
+            paired = payload["paired_robustness_summary"]
+            print("Evolution cohort complete.")
+            print(f"Profile: {cohort_config.profile_name}")
+            print(f"Virtual tumors: {cohort_config.virtual_tumors}")
+            print(f"Output directory: {cohort_config.output_dir}")
+            print(
+                f"- {cohort_config.candidate_strategy} delayed resistant dominance in "
+                f"{paired['candidate_delayed_resistant_dominance_fraction']:.1%} of tumors"
+            )
+            print(
+                f"- {cohort_config.candidate_strategy} reduced burden AUC in "
+                f"{paired['candidate_lower_burden_auc_fraction']:.1%} of tumors"
+            )
+            print(
+                f"- median resistance-control difference: "
+                f"{paired['resistance_control_delta_days_median']:+.1f} days"
+            )
             return 0
     except (FileNotFoundError, ValueError, RuntimeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
