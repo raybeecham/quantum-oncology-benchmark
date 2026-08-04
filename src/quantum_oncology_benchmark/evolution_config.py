@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Literal, cast
+from typing import Any, Literal
 
 import yaml
 
@@ -135,7 +135,7 @@ class EvolutionConfig:
         loaded = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
         if not isinstance(loaded, dict):
             raise ValueError("evolution configuration root must be a mapping")
-        payload = cast(dict[str, Any], loaded)
+        payload: dict[str, Any] = {str(key): value for key, value in loaded.items()}
         raw_sensitive = payload.pop("sensitive", {})
         raw_resistant = payload.pop("resistant", {})
         raw_competition = payload.pop("competition", {})
