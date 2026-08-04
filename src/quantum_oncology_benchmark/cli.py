@@ -11,6 +11,7 @@ from pathlib import Path
 
 from .config import ExperimentConfig, NestedCVConfig
 from .data import load_csv_dataset
+from .evolution import EvolutionConfig, run_evolution_simulation
 from .experiment import run_benchmark
 from .gdc import GDCManifestQuery, fetch_manifest_metadata, write_manifest_artifacts
 from .models.quantum_kernel import quantum_dependencies_available
@@ -21,7 +22,7 @@ from .profile_comparison import compare_nested_profiles
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="qob",
-        description="Reproducible classical and quantum oncology benchmarks.",
+        description="Reproducible classical, quantum, and evolutionary oncology research tools.",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -82,6 +83,18 @@ def _parser() -> argparse.ArgumentParser:
     compare_profiles.add_argument("--reference", type=Path, required=True)
     compare_profiles.add_argument("--candidate", type=Path, required=True)
     compare_profiles.add_argument("--output", type=Path, required=True)
+
+    evolve = subparsers.add_parser(
+        "evolve",
+        help="simulate two-clone tumor evolution under treatment strategies",
+    )
+    evolve.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/evolution-two-clone.yaml"),
+        help="versioned evolution YAML profile",
+    )
+    evolve.add_argument("--output", type=Path, help="override the configured output directory")
 
     doctor = subparsers.add_parser("doctor", help="check optional capabilities")
     doctor.add_argument("--json", action="store_true", dest="as_json")
@@ -157,6 +170,14 @@ def _nested_cv_config(args: argparse.Namespace) -> NestedCVConfig:
         config = replace(config, max_samples=int(args.max_samples))
     if args.output_dir is not None:
         config = replace(config, output_dir=str(args.output_dir))
+    config.validate()
+    return config
+
+
+def _evolution_config(args: argparse.Namespace) -> EvolutionConfig:
+    config = EvolutionConfig.from_yaml(args.config)
+    if args.output is not None:
+        config = replace(config, output_dir=str(args.output))
     config.validate()
     return config
 
@@ -250,6 +271,22 @@ def main(argv: Sequence[str] | None = None) -> int:
                 "Primary classical comparator: "
                 f"{payload['protocol_freeze']['primary_classical_comparator']}"
             )
+            return 0
+
+        if args.command == "evolve":
+            evolution_config = _evolution_config(args)
+            payload = run_evolution_simulation(evolution_config)
+            print("Evolution simulation complete.")
+            print(f"Profile: {evolution_config.profile_name}")
+            print(f"Output directory: {evolution_config.output_dir}")
+            for row in payload["strategy_summary"]:
+                dominance = row["resistant_dominance_day"]
+                dominance_text = "not reached" if dominance is None else f"day {dominance:.1f}"
+                print(
+                    f"- {row['strategy']}: final burden {row['final_total_burden']:.0f}; "
+                    f"resistant dominance {dominance_text}; "
+                    f"dose-days {row['cumulative_dose_days']:.1f}"
+                )
             return 0
     except (FileNotFoundError, ValueError, RuntimeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
