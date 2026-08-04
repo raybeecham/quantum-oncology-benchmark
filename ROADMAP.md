@@ -2,9 +2,9 @@
 
 ## Current focus
 
-The benchmark foundation, statistical evaluation layer, reproducibility contract, classical nested cross-validation, grid-boundary sensitivity analysis, out-of-fold calibration diagnostics, and paired classical protocol freeze are complete.
+The benchmark foundation, statistical evaluation layer, reproducibility contract, classical nested cross-validation, grid-boundary sensitivity analysis, out-of-fold calibration diagnostics, paired classical protocol freeze, and resource-bounded quantum execution foundation are complete.
 
-The current engineering milestone is `quantum-protocol-v1`: enforce a resource-bounded, backend-neutral execution contract and validate a local fidelity-statevector adapter before adding matched quantum-versus-classical orchestration. Physical-QPU integration remains deferred until the simulator protocol, artifacts, and comparison boundaries are stable.
+The current computational milestone is `evolution-protocol-v1`: add a transparent two-clone tumor ecosystem model, compare explicit treatment policies under fixed assumptions, and produce trajectory, schedule, event, summary, and reproducibility artifacts. This track remains separate from quantum execution until a strong classical simulator and policy-optimization baseline exist.
 
 ## Version 0.1, benchmark foundation
 
@@ -75,7 +75,26 @@ The current engineering milestone is `quantum-protocol-v1`: enforce a resource-b
 - [ ] Noise and mitigation experiments.
 - [ ] Simulator-versus-hardware comparison.
 
-## Version 0.5, broader oncology workloads
+## Version 0.5, evolutionary tumor dynamics
+
+- [x] Versioned deterministic two-clone protocol and YAML profile.
+- [x] Competitive sensitive and resistant population dynamics.
+- [x] No-treatment, continuous, fixed-intermittent, and burden-adaptive policies.
+- [x] Piecewise SciPy integration with explicit treatment schedules.
+- [x] Burden, resistance, diversity, progression, dose, and cycle metrics.
+- [x] Trajectory, schedule, summary, event, JSON, and Markdown artifacts.
+- [x] Deterministic replay normalization and CI smoke profile.
+- [ ] Parameter-sensitivity analysis.
+- [ ] Virtual-patient parameter cohorts.
+- [ ] One-way acquired-resistance sensitivity profile.
+- [ ] Reversible drug-tolerant state model.
+- [ ] Stochastic branching or Gillespie model.
+- [ ] Multi-clone and multi-drug dynamics.
+- [ ] Spatial or agent-based tumor ecosystem.
+- [ ] Classical treatment-policy optimization benchmark.
+- [ ] Matched hybrid or quantum optimization benchmark.
+
+## Version 0.6, broader oncology workloads
 
 - [ ] Drug-response classification.
 - [ ] Survival-analysis research adapter.
