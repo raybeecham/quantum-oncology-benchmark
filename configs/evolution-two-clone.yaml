@@ -1,0 +1,41 @@
+protocol_version: evolution-protocol-v1
+profile_name: two-clone-selection-v1
+
+sensitive_initial: 990000.0
+resistant_initial: 10000.0
+carrying_capacity: 10000000.0
+
+sensitive:
+  growth_rate_per_day: 0.03
+  drug_kill_rate_per_day: 0.08
+
+resistant:
+  growth_rate_per_day: 0.015
+  drug_kill_rate_per_day: 0.0
+
+competition:
+  resistant_effect_on_sensitive: 1.0
+  sensitive_effect_on_resistant: 1.0
+
+# Set above zero in a separate sensitivity profile to study acquired transitions.
+sensitive_to_resistant_rate_per_day: 0.0
+
+horizon_days: 365.0
+time_step_days: 1.0
+
+strategies:
+  - no_treatment
+  - continuous
+  - fixed_intermittent
+  - burden_adaptive
+
+intermittent_on_days: 14.0
+intermittent_off_days: 14.0
+
+# Thresholds are fractions of the initial total burden.
+adaptive_stop_fraction: 0.50
+adaptive_restart_fraction: 1.00
+
+resistant_dominance_fraction: 0.50
+progression_burden_multiple: 1.20
+output_dir: reports/evolution-two-clone
