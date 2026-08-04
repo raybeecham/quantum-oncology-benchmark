@@ -265,7 +265,7 @@ def summarize_strategy_robustness(outcomes: list[Row]) -> list[Row]:
     for strategy, group in frame.groupby("strategy", sort=True):
         row: Row = {
             "strategy": str(strategy),
-            "virtual_tumors": int(len(group)),
+            "virtual_tumors": len(group),
             "resistant_dominance_reached_fraction": float(
                 group["resistant_dominance_reached"].mean()
             ),
@@ -358,7 +358,11 @@ def parameter_sensitivity_rows(
     rows.sort(
         key=lambda row: (
             str(row["outcome"]),
-            -(float(row["absolute_spearman_rho"]) if row["absolute_spearman_rho"] is not None else -1.0),
+            -(
+                float(row["absolute_spearman_rho"])
+                if row["absolute_spearman_rho"] is not None
+                else -1.0
+            ),
             str(row["parameter"]),
         )
     )
