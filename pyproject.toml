@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "quantum-oncology-benchmark"
 version = "0.1.0"
-description = "Reproducible classical and quantum machine-learning benchmarks for cancer classification research."
+description = "Reproducible classical, quantum, and evolutionary computational oncology research benchmarks."
 readme = "README.md"
 requires-python = ">=3.10,<3.14"
 license = {text = "Apache-2.0"}
@@ -17,6 +17,8 @@ keywords = [
   "quantum-machine-learning",
   "oncology",
   "cancer-research",
+  "tumor-evolution",
+  "adaptive-therapy",
   "benchmarking",
   "reproducibility"
 ]
@@ -89,6 +91,9 @@ target-version = "py310"
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/quantum_oncology_benchmark/evolution.py" = ["B023"]
 
 [tool.mypy]
 python_version = "3.10"
