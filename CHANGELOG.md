@@ -39,6 +39,13 @@ All notable changes to this project will be documented here.
 - Tumor-burden, resistant-dominance, progression, diversity, dose, control-time, and cycle metrics.
 - Evolution experiment JSON, population trajectory, treatment schedule, strategy summary, event, and Markdown report artifacts.
 - Evolution simulation fingerprint, replay normalization, reference profile, smoke profile, documentation, tests, and CI execution.
+- Versioned `evolution-cohort-v1` deterministic virtual-tumor cohort protocol.
+- Seeded Latin-hypercube sampling across declared biological scenario bounds.
+- Matched continuous-versus-burden-adaptive outcomes for every virtual tumor.
+- Horizon-capped resistance and burden-threshold control summaries for events not reached during simulation.
+- Strategy robustness quantiles, paired outcome-direction fractions, and descriptive Spearman sensitivity associations.
+- Cohort JSON, virtual-tumor, outcome, paired-comparison, robustness, sensitivity, and Markdown report artifacts.
+- Cohort fingerprinting, methodology documentation, regression tests, and end-to-end CLI smoke execution.
 
 ### Changed
 
@@ -46,6 +53,7 @@ All notable changes to this project will be documented here.
 - Experiment artifact schema advanced to `1.3` for the expanded pairwise statistical contract.
 - Nested cross-validation artifact schema advanced to `nested-cv-1.1` for search-profile identity and calibration diagnostics.
 - The project roadmap now separates classification, quantum execution, evolutionary tumor dynamics, and broader oncology workloads.
+- Evolution model configuration may omit an output path for in-memory execution; an output path remains mandatory when artifacts are written.
 
 ## 0.1.0, 2026-07-30
 

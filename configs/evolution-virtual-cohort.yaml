@@ -1,0 +1,42 @@
+protocol_version: evolution-cohort-v1
+profile_name: two-clone-virtual-cohort-v1
+base_profile: evolution-two-clone.yaml
+virtual_tumors: 128
+seed: 42
+sampling_method: latin_hypercube
+reference_strategy: continuous
+candidate_strategy: burden_adaptive
+
+# These are scenario bounds for robustness analysis, not fitted patient distributions.
+# Treatment-policy thresholds remain fixed in the base profile.
+parameter_ranges:
+  initial_resistant_fraction:
+    minimum: 0.001
+    maximum: 0.10
+    scale: log10
+  sensitive_growth_rate_per_day:
+    minimum: 0.020
+    maximum: 0.040
+    scale: linear
+  resistant_growth_rate_per_day:
+    minimum: 0.008
+    maximum: 0.025
+    scale: linear
+  sensitive_drug_kill_rate_per_day:
+    minimum: 0.050
+    maximum: 0.120
+    scale: linear
+  resistant_drug_kill_rate_per_day:
+    minimum: 0.0
+    maximum: 0.015
+    scale: linear
+  resistant_effect_on_sensitive:
+    minimum: 0.50
+    maximum: 1.50
+    scale: linear
+  sensitive_effect_on_resistant:
+    minimum: 0.50
+    maximum: 1.50
+    scale: linear
+
+output_dir: reports/evolution-virtual-cohort

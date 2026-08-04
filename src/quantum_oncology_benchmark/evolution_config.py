@@ -78,7 +78,7 @@ class EvolutionConfig:
     output_dir: str = "reports/evolution-two-clone"
 
     def validate(self) -> None:
-        """Validate biological assumptions, policies, and output settings."""
+        """Validate biological assumptions and treatment policies."""
         if self.protocol_version != "evolution-protocol-v1":
             raise ValueError("protocol_version must be 'evolution-protocol-v1'")
         if not self.profile_name:
@@ -115,8 +115,6 @@ class EvolutionConfig:
             raise ValueError("resistant_dominance_fraction must be between 0 and 1")
         if self.progression_burden_multiple <= 1:
             raise ValueError("progression_burden_multiple must be greater than 1")
-        if not self.output_dir:
-            raise ValueError("output_dir is required")
 
     @property
     def initial_total_burden(self) -> float:

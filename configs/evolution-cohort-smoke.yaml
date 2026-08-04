@@ -1,0 +1,24 @@
+protocol_version: evolution-cohort-v1
+profile_name: two-clone-virtual-cohort-smoke-v1
+base_profile: evolution-smoke.yaml
+virtual_tumors: 6
+seed: 7
+sampling_method: latin_hypercube
+reference_strategy: continuous
+candidate_strategy: burden_adaptive
+
+parameter_ranges:
+  initial_resistant_fraction:
+    minimum: 0.005
+    maximum: 0.05
+    scale: log10
+  resistant_growth_rate_per_day:
+    minimum: 0.010
+    maximum: 0.020
+    scale: linear
+  sensitive_drug_kill_rate_per_day:
+    minimum: 0.060
+    maximum: 0.100
+    scale: linear
+
+output_dir: reports/evolution-cohort-smoke

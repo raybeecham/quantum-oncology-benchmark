@@ -27,6 +27,8 @@ def run_evolution_simulation(
 ) -> dict[str, Any]:
     """Run all configured two-clone treatment strategies."""
     config.validate()
+    if write_output and not config.output_dir:
+        raise ValueError("output_dir is required when write_output=True")
     trajectories: list[dict[str, Any]] = []
     schedules: list[dict[str, Any]] = []
     summaries: list[dict[str, Any]] = []

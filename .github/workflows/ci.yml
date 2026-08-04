@@ -35,6 +35,9 @@ jobs:
       - name: Evolution simulator CLI smoke
         if: matrix.python-version == '3.12'
         run: qob evolve --config configs/evolution-smoke.yaml
+      - name: Evolution virtual cohort CLI smoke
+        if: matrix.python-version == '3.12'
+        run: qob evolve-cohort --config configs/evolution-cohort-smoke.yaml
 
   quantum:
     name: Quantum smoke test
