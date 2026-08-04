@@ -2,9 +2,9 @@
 
 ## Current focus
 
-The benchmark foundation, statistical evaluation layer, reproducibility contract, classical nested cross-validation, grid-boundary sensitivity analysis, out-of-fold calibration diagnostics, paired classical protocol freeze, and resource-bounded quantum execution foundation are complete.
+The benchmark foundation, statistical evaluation layer, reproducibility contract, classical nested cross-validation, grid-boundary sensitivity analysis, out-of-fold calibration diagnostics, paired classical protocol freeze, resource-bounded quantum execution foundation, and deterministic two-clone evolution simulator are complete.
 
-The current computational milestone is `evolution-protocol-v1`: add a transparent two-clone tumor ecosystem model, compare explicit treatment policies under fixed assumptions, and produce trajectory, schedule, event, summary, and reproducibility artifacts. This track remains separate from quantum execution until a strong classical simulator and policy-optimization baseline exist.
+The current computational milestone is `evolution-cohort-v1`: test treatment-policy robustness across deterministic virtual tumors, separate biological uncertainty from policy optimization, and identify which declared assumptions most strongly track paired outcome changes. This track remains separate from quantum execution until the classical simulator, uncertainty model, and policy objective are stable.
 
 ## Version 0.1, benchmark foundation
 
@@ -84,9 +84,13 @@ The current computational milestone is `evolution-protocol-v1`: add a transparen
 - [x] Burden, resistance, diversity, progression, dose, and cycle metrics.
 - [x] Trajectory, schedule, summary, event, JSON, and Markdown artifacts.
 - [x] Deterministic replay normalization and CI smoke profile.
-- [ ] Parameter-sensitivity analysis.
-- [ ] Virtual-patient parameter cohorts.
+- [x] Deterministic Latin-hypercube parameter-sensitivity analysis.
+- [x] Virtual-tumor parameter cohorts with matched policy comparisons.
+- [x] Strategy robustness quantiles and horizon-capped event summaries.
+- [x] Descriptive Spearman sensitivity artifacts and cohort fingerprinting.
+- [ ] Execute and review the full 128-tumor reference cohort.
 - [ ] One-way acquired-resistance sensitivity profile.
+- [ ] Policy-threshold sensitivity separated from biological uncertainty.
 - [ ] Reversible drug-tolerant state model.
 - [ ] Stochastic branching or Gillespie model.
 - [ ] Multi-clone and multi-drug dynamics.
