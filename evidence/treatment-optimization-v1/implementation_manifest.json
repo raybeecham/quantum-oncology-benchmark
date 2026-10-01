@@ -1,0 +1,32 @@
+{
+  "implementation_source_files_sha256": {
+    "src/quantum_oncology_benchmark/__init__.py": "382fb5bd4f5a6aa971f6950ab88f8bf5f693700b04c1ad07729a37648b183bd6",
+    "src/quantum_oncology_benchmark/__main__.py": "9411d99c2fc4e2e1d732e008c989a92dc567f8ae8240ed555a574fdaae975f20",
+    "src/quantum_oncology_benchmark/calibration.py": "ab97f421ec7110bbc5d48063236c998bfcbef91e3bc3ff7aedf25fa80e020844",
+    "src/quantum_oncology_benchmark/cli.py": "bc0da9f31759ee9c69ab47b7ceb63fd3d0bef9d2076283d09f61d4fbcf6a558f",
+    "src/quantum_oncology_benchmark/config.py": "8c42da07ab15f7be9c788c81fc1ea3826ac404ace4b34023f1c0b342d9bf9ddd",
+    "src/quantum_oncology_benchmark/data.py": "f2bc7d655f02c2840ab496163cafbdb9b7407a2e399a7ffc18192485c1d5d12a",
+    "src/quantum_oncology_benchmark/evolution.py": "546da0c5600c3e3a75502f34e541873a9b36b37faaf21b17ec3a18e570931b7e",
+    "src/quantum_oncology_benchmark/evolution_cohort.py": "778134ba34ff8485720eb4ce4e9ab842c28e3a2b3fe56edf70a23623626411b9",
+    "src/quantum_oncology_benchmark/evolution_cohort_config.py": "5900a284af4bdd5e2b23efd8f4f3d407551968298d2d3c033efc7f57a9c6f3db",
+    "src/quantum_oncology_benchmark/evolution_config.py": "7398eb2fff9582f788b06f13378da701e4b9c912505fcbcd70a62d174275e694",
+    "src/quantum_oncology_benchmark/evolution_model.py": "39b01ad1dcdf140d0966ff94b0b0ba96742d88f305234d38f4282b9d2a9ea028",
+    "src/quantum_oncology_benchmark/evolution_reporting.py": "cafed87296888b87f4018711e2586d4d88d91da043a2c353f340ff55b08344c7",
+    "src/quantum_oncology_benchmark/evolution_sensitivity.py": "86068b0ea3045842ec3a25720ae49b982e2a1f51667d2e709a489e92cd76141f",
+    "src/quantum_oncology_benchmark/experiment.py": "a331b7e9e84a7b453c4e959ac5960c8f1f9a9f794316cc04277cef1deaaea613",
+    "src/quantum_oncology_benchmark/gdc.py": "8ba9b7955002a37adb7c10fb4bd8703ef89a69af6b87909e8d92563063aba2ee",
+    "src/quantum_oncology_benchmark/metrics.py": "82beaac73840da423f222641393264a11d26aaab4eea21840a6922d09d1f5815",
+    "src/quantum_oncology_benchmark/nested_cv.py": "bbcf717edb7e8b1cd8d4aaa4aea190f09d2e85ed4b32ea591079cb69937c711b",
+    "src/quantum_oncology_benchmark/nested_reporting.py": "c303f17551cc36bf1388dc284499e08a4ad1dd2bbdb2ac4d68105a68f5ead5d1",
+    "src/quantum_oncology_benchmark/preprocessing.py": "39b450f828668fa34c897b977b651e6cf5c8c0eda86f7fd4f7635b43910214f5",
+    "src/quantum_oncology_benchmark/profile_comparison.py": "8ef717c4b59218102d4d2b5c8a7aebad6ff7822eda2de10ead6ebd066e2e48f1",
+    "src/quantum_oncology_benchmark/quantum_execution.py": "66df82debf5aaf99dfe55fa6a3363f68f104c8fdf248314961ece6c7ab79bae1",
+    "src/quantum_oncology_benchmark/reporting.py": "a868c8f7ebc47c3120762efc46a3563adc17420e20a186b1053290a7bffbe31c",
+    "src/quantum_oncology_benchmark/statistical.py": "da73643747e1d167d59b7219a90400fd9a5058d53283464586c565a10981dc55",
+    "src/quantum_oncology_benchmark/treatment_config.py": "212d4f3d9d74c546c0a7ecf4b784dc3ebce90449952e862d7d39f89f116a4025",
+    "src/quantum_oncology_benchmark/treatment_dirac.py": "59678cb4f69efee35d75d3159d126f9ab8099ffbfa6fff0fde805cfb529853a6",
+    "src/quantum_oncology_benchmark/treatment_optimization.py": "c8bb65a1fd4365a12459e6520063265b1634d9c94b2da9845af156f76f7ba7cb",
+    "src/quantum_oncology_benchmark/treatment_search.py": "3b927a34945be40481dc5fe307dc62108a0ece01c9a5f18cfc397837a494d376"
+  },
+  "provenance_note": "Runs were generated from the implementation working tree; environment git_commit records the preceding local checkpoint. This manifest pins source contents included in the accompanying Git commit."
+}

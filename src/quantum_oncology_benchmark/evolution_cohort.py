@@ -73,7 +73,7 @@ def generate_virtual_tumors(config: EvolutionCohortConfig) -> list[Row]:
     return rows
 
 
-def _build_virtual_config(
+def build_virtual_config(
     base: EvolutionConfig,
     cohort: EvolutionCohortConfig,
     row: Row,
@@ -481,7 +481,7 @@ def run_evolution_cohort(
     outcomes: list[Row] = []
     pairs: list[Row] = []
     for tumor in tumors:
-        virtual_config = _build_virtual_config(base, config, tumor)
+        virtual_config = build_virtual_config(base, config, tumor)
         simulation = run_evolution_simulation(virtual_config, write_output=False)
         tumor_outcomes = _outcome_rows(
             str(tumor["virtual_tumor_id"]),
@@ -552,6 +552,7 @@ def run_evolution_cohort(
 __all__ = [
     "EvolutionCohortConfig",
     "ParameterRange",
+    "build_virtual_config",
     "generate_virtual_tumors",
     "parameter_sensitivity_rows",
     "render_cohort_report",

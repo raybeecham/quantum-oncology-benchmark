@@ -1,0 +1,8 @@
+protocol_version: evolution-sensitivity-v1
+base_profile: evolution-smoke.yaml
+# Illustrative scenario values, not fitted mutation rates.
+# The transition operates continuously, including during drug holidays.
+transition_rates_per_day: [0.0, 0.001]
+adaptive_stop_fractions: [0.50]
+adaptive_restart_fractions: [1.00]
+output_dir: reports/evolution-sensitivity-smoke

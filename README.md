@@ -2,7 +2,7 @@
 
 # Quantum Oncology Benchmark
 
-### Reproducible evaluation of classical and quantum machine learning for oncology research
+### Reproducible classical, quantum and evolutionary computational oncology research
 
 [![CI](https://github.com/raybeecham/quantum-oncology-benchmark/actions/workflows/ci.yml/badge.svg)](https://github.com/raybeecham/quantum-oncology-benchmark/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
@@ -25,7 +25,7 @@
 
 ## Overview
 
-The **Quantum Oncology Benchmark** is an open, reproducible framework for evaluating classical machine-learning models and quantum-kernel methods on binary cancer-classification tasks.
+The **Quantum Oncology Benchmark** evaluates classical and quantum methods for oncology research, with separate protocols for binary classification, deterministic tumor evolution, and constrained treatment-schedule optimization.
 
 The project is organized around a narrow, falsifiable question:
 
@@ -48,6 +48,9 @@ The benchmark treats negative and inconclusive results as useful evidence. It is
 | Full sensitivity execution | Next | Run and compare `sensitivity-v1` against the immutable `reference-v1` result |
 | Quantum nested cross-validation | Planned | Design a resource-bounded protocol after the classical sensitivity conclusions are settled |
 | External oncology cohorts | Planned | Add documented cohorts, grouped splitting, external validation, and independent replication |
+| Evolution and virtual-tumor cohorts | Executed | Competitive two-clone dynamics, 128-scenario reference review, acquired-transition and policy-threshold sweeps |
+| Classical schedule optimization | Executed | Exact finite-grid oracle, random search, annealing with restarts, hard schedule limits and disjoint evaluation scenarios |
+| Dirac treatment representation | Offline only | Quadratic surrogate validation, constrained integer-polynomial export and strict sample import with simulator re-evaluation |
 
 The current benchmark supports **exploratory and methodological evidence**. It does not support clinical utility, external validity, statistical superiority across independent cohorts, or quantum-advantage claims.
 
@@ -188,6 +191,35 @@ See:
 - [Classical Nested Cross-Validation Protocol](docs/NESTED_CROSS_VALIDATION.md)
 - [Out-of-Fold Calibration Diagnostics](docs/CALIBRATION_DIAGNOSTICS.md)
 - [Statistical Evaluation](docs/STATISTICAL_EVALUATION.md)
+
+## Evolutionary oncology and schedule optimization
+
+```bash
+qob evolve-cohort --config configs/evolution-virtual-cohort.yaml
+qob evolve-sensitivity --config configs/evolution-sensitivity.yaml
+qob optimize-treatment --config configs/treatment-optimization-smoke.yaml
+qob optimize-treatment --config configs/treatment-optimization-reference.yaml
+qob optimize-treatment --config configs/treatment-optimization-robust.yaml
+```
+
+The schedule objective retains tumor-burden AUC, absolute resistant burden and treatment
+exposure. Exact search provides a numerical optimum on a bounded binary schedule grid;
+random search and annealing receive equal maximum unique-evaluation budgets. Frozen
+schedules are evaluated on disjoint designed virtual tumors.
+
+For the offline Dirac formulation:
+
+```bash
+qob compile-dirac-treatment \
+  --experiment reports/treatment-optimization-reference/treatment_optimization_experiment.json \
+  --output reports/dirac-treatment-reference
+```
+
+This validates a surrogate and writes an integer-polynomial payload. It does not submit
+hardware jobs. Simulation outcomes are not therapeutic-benefit evidence. See the
+[optimization protocol](docs/TREATMENT_OPTIMIZATION.md),
+[experiment review](docs/TREATMENT_OPTIMIZATION_REVIEW.md), and
+[128-tumor cohort review](docs/EVOLUTION_REFERENCE_REVIEW.md).
 
 ## Current capabilities
 

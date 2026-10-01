@@ -1,0 +1,148 @@
+{
+  "claim_boundary": "Imported counts describe this supplied sample file, not verified hardware provenance or an independent estimate of success probability. No repair, clinical or quantum-advantage claim.",
+  "compiled_fingerprint": "39de62f6ea65790c0a431c9e5952db5a4d376714a2fcbe7a90634a87925e9623",
+  "execution_origin": "local_test_samples",
+  "fingerprint": "686dcbe498a533ef3537d28639837cd35086000ada6507bec29a28cc4a7a01d6",
+  "hardware_submission_performed": false,
+  "raw_result": {
+    "fixture_kind": "local_decoder_validation_only",
+    "results": {
+      "counts": [
+        3,
+        2,
+        1
+      ],
+      "solutions": [
+        [
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1.4,
+          1.4,
+          1.4,
+          1.4,
+          1.4,
+          1.4,
+          1.4,
+          1.4,
+          1.4,
+          1.4,
+          1.4,
+          1.4,
+          1.4
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    }
+  },
+  "samples": [
+    {
+      "absolute_oracle_gap": 0.09835526585077714,
+      "count": 3,
+      "evaluation_objective": 1.8759846406434528,
+      "oracle_hit": false,
+      "raw_solution": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "reported_energy": null,
+      "restored_polynomial_energy": 3.5917449497471807,
+      "sample_index": 0,
+      "schedule": "110101001111",
+      "search_objective": 3.697581466128861,
+      "valid": true
+    },
+    {
+      "count": 2,
+      "raw_solution": [
+        1.4,
+        1.4,
+        1.4,
+        1.4,
+        1.4,
+        1.4,
+        1.4,
+        1.4,
+        1.4,
+        1.4,
+        1.4,
+        1.4,
+        1.4
+      ],
+      "rejection_reason": "sample must contain finite integer values",
+      "reported_energy": null,
+      "sample_index": 1,
+      "valid": false
+    },
+    {
+      "count": 1,
+      "raw_solution": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "rejection_reason": "infeasible integer sample",
+      "reported_energy": null,
+      "sample_index": 2,
+      "valid": false
+    }
+  ],
+  "schema_version": "dirac-treatment-sample-import-1.0",
+  "summary": {
+    "observed_oracle_hit_fraction_all_samples": 0.0,
+    "observed_oracle_hit_fraction_valid_samples": 0.0,
+    "sample_count": 6,
+    "simulator_evaluations": 17,
+    "unique_valid_schedules": 1,
+    "valid_fraction": 0.5,
+    "valid_sample_count": 3
+  },
+  "verified_hardware_execution": false
+}

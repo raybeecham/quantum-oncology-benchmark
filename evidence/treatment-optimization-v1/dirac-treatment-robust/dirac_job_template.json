@@ -1,0 +1,20 @@
+{
+  "job_type": "sample-hamiltonian-integer",
+  "polynomial_file_id": "REQUIRES_UPLOAD_FILE_ID",
+  "job_params": {
+    "device_type": "dirac-3",
+    "num_samples": 10,
+    "relaxation_schedule": 1,
+    "num_levels": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      7
+    ]
+  }
+}

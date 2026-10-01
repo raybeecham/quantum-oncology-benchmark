@@ -4,7 +4,7 @@
 
 The benchmark foundation, statistical evaluation layer, reproducibility contract, classical nested cross-validation, grid-boundary sensitivity analysis, out-of-fold calibration diagnostics, paired classical protocol freeze, resource-bounded quantum execution foundation, and deterministic two-clone evolution simulator are complete.
 
-The current computational milestone is `evolution-cohort-v1`: test treatment-policy robustness across deterministic virtual tumors, separate biological uncertainty from policy optimization, and identify which declared assumptions most strongly track paired outcome changes. This track remains separate from quantum execution until the classical simulator, uncertainty model, and policy objective are stable.
+The `evolution-cohort-v1` reference cohort and separated sensitivity sweeps have been executed and reviewed. The active track is `treatment-optimization-v1`: constrained binary schedules, classical finite-grid oracles and budgeted search, disjoint virtual-tumor evaluation, and an offline Dirac surrogate/encoding study. Physical hardware comparison remains pending; model calibration and independent biological validation are not established.
 
 ## Version 0.1, benchmark foundation
 
@@ -88,14 +88,15 @@ The current computational milestone is `evolution-cohort-v1`: test treatment-pol
 - [x] Virtual-tumor parameter cohorts with matched policy comparisons.
 - [x] Strategy robustness quantiles and horizon-capped event summaries.
 - [x] Descriptive Spearman sensitivity artifacts and cohort fingerprinting.
-- [ ] Execute and review the full 128-tumor reference cohort.
-- [ ] One-way acquired-resistance sensitivity profile.
-- [ ] Policy-threshold sensitivity separated from biological uncertainty.
+- [x] Execute and review the full 128-tumor reference cohort.
+- [x] One-way acquired-resistance sensitivity profile.
+- [x] Policy-threshold sensitivity separated from biological uncertainty (base-tumor grid).
 - [ ] Reversible drug-tolerant state model.
 - [ ] Stochastic branching or Gillespie model.
 - [ ] Multi-clone and multi-drug dynamics.
 - [ ] Spatial or agent-based tumor ecosystem.
-- [ ] Classical treatment-policy optimization benchmark.
+- [x] Classical treatment-policy optimization benchmark (exact, random, annealing, disjoint evaluation).
+- [x] Offline Dirac surrogate validation, native integer constraint encoding, and strict sample import.
 - [ ] Matched hybrid or quantum optimization benchmark.
 
 ## Version 0.6, broader oncology workloads

@@ -1,0 +1,20 @@
+protocol_version: treatment-optimization-v1
+profile_name: binary-schedule-robust-cohort-v1
+base_profile: evolution-two-clone.yaml
+cohort_profile: evolution-virtual-cohort.yaml
+intervals: 8
+max_treated_intervals: 6
+max_consecutive_treated: 3
+search_tumors: 8
+evaluation_tumors: 32
+cohort_seed: 2718
+repeats: 3
+seed: 42
+evaluation_budget: 64
+exact_search: true
+weights:
+  burden_auc: 1.0
+  terminal_resistant: 1.0
+  dose: 0.25
+risk_aversion: 0.25
+output_dir: reports/treatment-optimization-robust

@@ -39,6 +39,14 @@ jobs:
         if: matrix.python-version == '3.12'
         run: qob evolve-cohort --config configs/evolution-cohort-smoke.yaml
 
+      - name: Evolution sensitivity CLI smoke
+        if: matrix.python-version == '3.12'
+        run: qob evolve-sensitivity --config configs/evolution-sensitivity-smoke.yaml
+
+      - name: Treatment scheduling CLI smoke
+        if: matrix.python-version == '3.12'
+        run: qob optimize-treatment --config configs/treatment-optimization-smoke.yaml
+
   quantum:
     name: Quantum smoke test
     runs-on: ubuntu-latest
