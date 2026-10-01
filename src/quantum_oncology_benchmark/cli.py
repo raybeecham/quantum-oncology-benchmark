@@ -13,6 +13,7 @@ from .config import ExperimentConfig, NestedCVConfig
 from .data import load_csv_dataset
 from .evolution import EvolutionConfig, run_evolution_simulation
 from .evolution_cohort import EvolutionCohortConfig, run_evolution_cohort
+from .evolution_sensitivity import run_evolution_sensitivity
 from .experiment import run_benchmark
 from .gdc import GDCManifestQuery, fetch_manifest_metadata, write_manifest_artifacts
 from .models.quantum_kernel import quantum_dependencies_available
@@ -112,6 +113,10 @@ def _parser() -> argparse.ArgumentParser:
         type=Path,
         help="override the configured cohort output directory",
     )
+
+    sensitivity = subparsers.add_parser("evolve-sensitivity", help="run separate transition and policy-threshold sweeps")
+    sensitivity.add_argument("--config", type=Path, default=Path("configs/evolution-sensitivity.yaml"))
+    sensitivity.add_argument("--output", type=Path)
 
     doctor = subparsers.add_parser("doctor", help="check optional capabilities")
     doctor.add_argument("--json", action="store_true", dest="as_json")
@@ -312,6 +317,12 @@ def main(argv: Sequence[str] | None = None) -> int:
                     f"resistant dominance {dominance_text}; "
                     f"dose-days {row['cumulative_dose_days']:.1f}"
                 )
+            return 0
+
+        if args.command == "evolve-sensitivity":
+            payload = run_evolution_sensitivity(args.config, output_dir=args.output)
+            print("Evolution sensitivity complete.")
+            print(f"Fingerprint: {payload['fingerprint']}")
             return 0
 
         if args.command == "evolve-cohort":

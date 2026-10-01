@@ -144,3 +144,7 @@ The cohort remains a deterministic two-clone abstraction. It does not include:
 Robustness within a declared parameter box is not universal robustness. Results may change when the ranges, omitted biology, policy rules, or model family change.
 
 No quantum algorithm is used in `evolution-cohort-v1`. Quantum or hybrid optimization remains deferred until the classical simulator, uncertainty model, and policy objective are stable.
+
+## Executed reference and follow-up
+
+See [reference review](EVOLUTION_REFERENCE_REVIEW.md) and [separate sensitivity sweeps](EVOLUTION_SENSITIVITY.md). Frozen run artifacts are under `evidence/evolution-v1/`.

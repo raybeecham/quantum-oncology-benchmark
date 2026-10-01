@@ -88,9 +88,9 @@ The current computational milestone is `evolution-cohort-v1`: test treatment-pol
 - [x] Virtual-tumor parameter cohorts with matched policy comparisons.
 - [x] Strategy robustness quantiles and horizon-capped event summaries.
 - [x] Descriptive Spearman sensitivity artifacts and cohort fingerprinting.
-- [ ] Execute and review the full 128-tumor reference cohort.
-- [ ] One-way acquired-resistance sensitivity profile.
-- [ ] Policy-threshold sensitivity separated from biological uncertainty.
+- [x] Execute and review the full 128-tumor reference cohort.
+- [x] One-way acquired-resistance sensitivity profile.
+- [x] Policy-threshold sensitivity separated from biological uncertainty (base-tumor grid).
 - [ ] Reversible drug-tolerant state model.
 - [ ] Stochastic branching or Gillespie model.
 - [ ] Multi-clone and multi-drug dynamics.
