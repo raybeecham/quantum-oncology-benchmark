@@ -19,6 +19,9 @@ from .gdc import GDCManifestQuery, fetch_manifest_metadata, write_manifest_artif
 from .models.quantum_kernel import quantum_dependencies_available
 from .nested_cv import run_nested_cv
 from .profile_comparison import compare_nested_profiles
+from .treatment_config import TreatmentOptimizationConfig
+from .treatment_dirac import compile_dirac_treatment, import_dirac_treatment_samples
+from .treatment_optimization import run_treatment_optimization
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -117,6 +120,20 @@ def _parser() -> argparse.ArgumentParser:
     sensitivity = subparsers.add_parser("evolve-sensitivity", help="run separate transition and policy-threshold sweeps")
     sensitivity.add_argument("--config", type=Path, default=Path("configs/evolution-sensitivity.yaml"))
     sensitivity.add_argument("--output", type=Path)
+
+    optimize = subparsers.add_parser("optimize-treatment", help="benchmark classical binary treatment schedule search")
+    optimize.add_argument("--config", type=Path, default=Path("configs/treatment-optimization-reference.yaml"))
+    optimize.add_argument("--output", type=Path)
+
+    compile_dirac = subparsers.add_parser("compile-dirac-treatment", help="validate a treatment surrogate and export an offline Dirac integer payload")
+    compile_dirac.add_argument("--experiment", type=Path, required=True)
+    compile_dirac.add_argument("--output", type=Path, required=True)
+
+    import_dirac = subparsers.add_parser("import-dirac-treatment", help="validate and simulator-score a supplied Dirac sample file")
+    import_dirac.add_argument("--compiled", type=Path, required=True)
+    import_dirac.add_argument("--results", type=Path, required=True)
+    import_dirac.add_argument("--output", type=Path, required=True)
+    import_dirac.add_argument("--origin", choices=["unverified_external_samples", "local_test_samples"], default="unverified_external_samples")
 
     doctor = subparsers.add_parser("doctor", help="check optional capabilities")
     doctor.add_argument("--json", action="store_true", dest="as_json")
@@ -317,6 +334,27 @@ def main(argv: Sequence[str] | None = None) -> int:
                     f"resistant dominance {dominance_text}; "
                     f"dose-days {row['cumulative_dose_days']:.1f}"
                 )
+            return 0
+
+        if args.command == "import-dirac-treatment":
+            payload = import_dirac_treatment_samples(args.compiled, args.results, args.output, origin=args.origin)
+            print(f"Sample import complete: {payload['summary']}")
+            return 0
+
+        if args.command == "compile-dirac-treatment":
+            payload = compile_dirac_treatment(args.experiment, args.output)
+            print("Offline Dirac surrogate compilation complete.")
+            print(f"Validation: {payload['validation']}")
+            return 0
+
+        if args.command == "optimize-treatment":
+            treatment_config = TreatmentOptimizationConfig.from_yaml(args.config)
+            if args.output is not None:
+                treatment_config = replace(treatment_config, output_dir=str(args.output))
+            payload = run_treatment_optimization(treatment_config)
+            print("Treatment optimization complete.")
+            print(f"Fingerprint: {payload['fingerprint']}")
+            print(f"Output directory: {treatment_config.output_dir}")
             return 0
 
         if args.command == "evolve-sensitivity":

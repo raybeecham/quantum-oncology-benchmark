@@ -1,0 +1,4 @@
+sample_index,count,raw_solution,reported_energy,valid,schedule,restored_polynomial_energy,search_objective,evaluation_objective,absolute_oracle_gap,oracle_hit,rejection_reason
+0,3,"[1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1]",,True,110101001111,3.5917449497471807,3.697581466128861,1.8759846406434528,0.09835526585077714,False,
+1,2,"[1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4]",,False,,,,,,,sample must contain finite integer values
+2,1,"[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]",,False,,,,,,,infeasible integer sample

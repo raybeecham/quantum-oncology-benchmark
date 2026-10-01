@@ -72,3 +72,15 @@ Cancer labels and health data can produce serious harms if models are misused. D
 ## Interpretation rule
 
 A quantum model that scores higher than a classical model on one run has generated a result, not established an advantage.
+
+## Evolutionary optimization extension
+
+The repository also includes deterministic two-clone scenario simulations and constrained
+binary schedule benchmarks. These use synthetic parameter designs, not patient observations.
+Outputs include numerical oracle gaps, frozen-schedule evaluation on disjoint scenarios,
+absolute resistant burden, burden AUC and exposure. The objective has declared methodological
+weights and does not model toxicity, pharmacokinetics, spatial biology or clinical utility.
+
+Dirac treatment functionality is offline surrogate compilation and strict import/re-evaluation
+of supplied samples. A compiled payload is not hardware execution, and imported external
+files do not establish verified hardware provenance. See `docs/TREATMENT_OPTIMIZATION.md`.

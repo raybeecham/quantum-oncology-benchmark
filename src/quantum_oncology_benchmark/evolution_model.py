@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+from bisect import bisect_right
 from collections.abc import Callable
 from functools import partial
 from typing import Any
@@ -108,8 +109,18 @@ def _first_crossing(
 def simulate_strategy(
     strategy: TreatmentStrategy,
     config: EvolutionConfig,
+    *,
+    explicit_schedule: tuple[int, ...] | None = None,
 ) -> tuple[list[Row], list[Row], list[Row]]:
-    """Simulate one treatment strategy over the configured time horizon."""
+    """Simulate a policy or an explicit binary schedule on equal-duration intervals."""
+    config.validate()
+    if explicit_schedule is not None:
+        if not explicit_schedule or any(type(v) is not int or v not in (0, 1) for v in explicit_schedule):
+            raise ValueError("explicit_schedule must be a nonempty tuple of binary integers")
+        boundaries = np.linspace(0.0, config.horizon_days, len(explicit_schedule) + 1).tolist()
+    else:
+        boundaries = []
+    label = "scheduled" if explicit_schedule is not None else strategy
     trajectory: list[Row] = []
     schedule: list[Row] = []
     policy_events: list[Row] = []
@@ -126,7 +137,7 @@ def simulate_strategy(
         resistant_fraction = 0.0 if total <= 0 else resistant / total
         trajectory.append(
             {
-                "strategy": strategy,
+                "strategy": label,
                 "time_days": time_days,
                 "sensitive_cells": sensitive,
                 "resistant_cells": resistant,
@@ -140,20 +151,23 @@ def simulate_strategy(
     append_trajectory_row()
     while time_days < config.horizon_days - 1e-12:
         total = sensitive + resistant
-        intensity, adaptive_on, adaptive_event = _policy_intensity(
-            strategy,
-            time_days,
-            total,
-            adaptive_on,
-            config,
-        )
+        next_boundary = config.horizon_days
+        if explicit_schedule is None:
+            intensity, adaptive_on, adaptive_event = _policy_intensity(
+                strategy, time_days, total, adaptive_on, config,
+            )
+        else:
+            index = min(bisect_right(boundaries, time_days + 1e-12) - 1, len(explicit_schedule) - 1)
+            intensity = float(explicit_schedule[index])
+            adaptive_event = None
+            next_boundary = boundaries[index + 1]
         is_on = intensity > 0
         if previous_on is None:
             if is_on:
                 treatment_cycle = 1
                 policy_events.append(
                     {
-                        "strategy": strategy,
+                        "strategy": label,
                         "time_days": time_days,
                         "event_type": "treatment_started",
                         "total_burden": total,
@@ -166,7 +180,7 @@ def simulate_strategy(
                 treatment_cycle += 1
             policy_events.append(
                 {
-                    "strategy": strategy,
+                    "strategy": label,
                     "time_days": time_days,
                     "event_type": adaptive_event or event_type,
                     "total_burden": total,
@@ -175,10 +189,10 @@ def simulate_strategy(
             )
         previous_on = is_on
 
-        duration = min(config.time_step_days, config.horizon_days - time_days)
+        duration = min(config.time_step_days, next_boundary - time_days, config.horizon_days - time_days)
         schedule.append(
             {
-                "strategy": strategy,
+                "strategy": label,
                 "interval_start_days": time_days,
                 "interval_end_days": time_days + duration,
                 "duration_days": duration,
@@ -211,7 +225,7 @@ def simulate_strategy(
 
 
 def summarize_strategy(
-    strategy: TreatmentStrategy,
+    strategy: str,
     trajectory: list[Row],
     schedule: list[Row],
     config: EvolutionConfig,

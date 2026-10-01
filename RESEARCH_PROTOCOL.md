@@ -174,3 +174,59 @@ The `qob nested-cv` mode provides a stronger classical model-selection baseline 
 The first implementation is classical-only. Quantum nested cross-validation requires a separate, resource-bounded protocol.
 
 See `docs/NESTED_CROSS_VALIDATION.md` for search spaces, artifacts, reproducibility controls, and limitations.
+
+## 14. Evolutionary schedule optimization layer
+
+`treatment-optimization-v1` is a separate computational methods protocol. Its research
+question is how closely budgeted schedule searches recover a finite-grid numerical optimum
+and how frozen schedules behave under declared biological scenario variation. Classification
+endpoints, splits and model-comparison protocols are unaffected.
+
+The primary search endpoint is a declared dimensionless weighted combination of burden AUC,
+absolute terminal resistant burden and cumulative exposure, aggregated as mean plus a
+population-standard-deviation risk penalty where configured. Component endpoints, progression
+diagnostics and computational costs remain reported separately. Weights are research
+preferences and are not fitted clinical utilities.
+
+Binary schedules obey hard total-treatment and consecutive-treatment constraints. Exact
+enumeration supplies a numerical oracle on the declared grid and search tumors only. Random
+search and annealing have private caches and equal maximum unique-evaluation budgets.
+Annealing uses fixed restart rules after novelty plateaus. Runs stopping early are identified.
+Search repeats are computational seeds, not independent biological samples.
+
+A designed parameter cohort is partitioned before optimization. Evaluation scenarios cannot
+choose schedules, weights, temperatures or methods. A scenario-robust result is conditional
+on the declared ranges and does not establish clinical benefit. Frozen-winner step-resolution
+and weight diagnostics are reported without claiming a finer-grid oracle or reoptimization.
+
+## 15. Offline Dirac representation and imported results
+
+The simulator objective is not automatically quadratic. The offline compiler fits a
+quadratic surrogate to precomputed oracle labels, with a disjoint fit/validation schedule
+partition. It reports prediction/rank error, true selection regret, label-acquisition cost
+and original-simulator re-evaluation. Native integer slack and polynomial run penalties
+encode hard constraints; exact-arithmetic correctness does not guarantee analog precision.
+
+No hardware submission is made. Integer sample import retains raw counts and invalid samples,
+rejects violations without repair, records unique simulator evaluations and reports observed
+count-weighted feasibility and oracle hits. External file provenance remains unverified.
+Neither local encoding nor imported files support a quantum-execution or advantage claim.
+
+See `docs/TREATMENT_OPTIMIZATION.md` for complete protocol settings and the experiment review
+for observed limitations. Methodology review is tracked in GitHub issue #19.
+
+## 16. Migration and rationale
+
+The new commands and `treatment-optimization-1.0`, `dirac-treatment-surrogate-1.0`, and
+`dirac-treatment-sample-import-1.0` schemas are additive. Existing classification and
+evolution artifact schemas remain in place. Explicit schedules add switching boundaries
+to their own time grid; older feedback-policy simulation rules are preserved. A coarse-grid
+schedule objective and a finer-grid diagnostic are separate numerical results.
+
+Primary research provides precedent for simulation-based comparison of schedules with
+evolving resistance, and for optimizing evolutionary treatment policies. It does not
+validate this repository's parameters, weights or biological outcomes:
+
+- [Yin et al., 2022, Anti-cancer treatment schedule optimization based on tumor dynamics modelling incorporating evolving resistance](https://www.nature.com/articles/s41598-022-08012-7). Uses a different, data-informed resistance model and states that prospective validation remains necessary.
+- [Gluzman et al., Optimizing adaptive cancer therapy: dynamic programming and evolutionary game theory](https://arxiv.org/abs/1812.01805). Provides an optimal-control precedent using a different evolutionary model.
+- [QCi Dirac-3 Developer Beginner Guide](https://quantumcomputinginc.com/learn/developer-resources/entropy-quantum-optimization/dirac-3-developer-beginner-guide), checked October 1, 2026. Documents integer polynomial jobs, variable levels and result solutions/counts/energies. Cloud acceptance and Dirac-3S compatibility are not tested here.

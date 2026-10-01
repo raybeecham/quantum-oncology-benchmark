@@ -1,0 +1,361 @@
+{
+  "fingerprint": "0520ea1652ff7aac1c3f577a5ceea34953f9d3dd626a67f32e461d49fba908d7",
+  "preference_checks": [
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.1,
+      "mean_loss": 0.6787349957161977,
+      "objective": 0.8697533048538213,
+      "resistant_weight": 0.5,
+      "schedule": "11101101",
+      "std_loss": 0.7640732365504943,
+      "tumors": 8,
+      "worst_loss": 2.595838535860432
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.25,
+      "mean_loss": 0.7912349957161976,
+      "objective": 0.9822533048538211,
+      "resistant_weight": 0.5,
+      "schedule": "11101101",
+      "std_loss": 0.7640732365504942,
+      "tumors": 8,
+      "worst_loss": 2.708338535860432
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.5,
+      "mean_loss": 0.9787349957161976,
+      "objective": 1.1697533048538211,
+      "resistant_weight": 0.5,
+      "schedule": "11101101",
+      "std_loss": 0.7640732365504942,
+      "tumors": 8,
+      "worst_loss": 2.895838535860432
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.1,
+      "mean_loss": 1.0324487598273313,
+      "objective": 1.3613267396488467,
+      "resistant_weight": 1.0,
+      "schedule": "11101101",
+      "std_loss": 1.3155119192860611,
+      "tumors": 8,
+      "worst_loss": 4.322463675593423
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.25,
+      "mean_loss": 1.1449487598273314,
+      "objective": 1.4738267396488467,
+      "resistant_weight": 1.0,
+      "schedule": "11101101",
+      "std_loss": 1.3155119192860611,
+      "tumors": 8,
+      "worst_loss": 4.434963675593423
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.5,
+      "mean_loss": 1.3324487598273314,
+      "objective": 1.6613267396488467,
+      "resistant_weight": 1.0,
+      "schedule": "11101101",
+      "std_loss": 1.3155119192860611,
+      "tumors": 8,
+      "worst_loss": 4.622463675593423
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.1,
+      "mean_loss": 1.739876288049599,
+      "objective": 2.3447555708462233,
+      "resistant_weight": 2.0,
+      "schedule": "11101101",
+      "std_loss": 2.419517131186497,
+      "tumors": 8,
+      "worst_loss": 7.775713955059404
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.25,
+      "mean_loss": 1.8523762880495989,
+      "objective": 2.457255570846223,
+      "resistant_weight": 2.0,
+      "schedule": "11101101",
+      "std_loss": 2.419517131186497,
+      "tumors": 8,
+      "worst_loss": 7.8882139550594035
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.5,
+      "mean_loss": 2.039876288049599,
+      "objective": 2.644755570846223,
+      "resistant_weight": 2.0,
+      "schedule": "11101101",
+      "std_loss": 2.4195171311864967,
+      "tumors": 8,
+      "worst_loss": 8.075713955059403
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.1,
+      "mean_loss": 0.6942059052628686,
+      "objective": 0.8831784224954947,
+      "resistant_weight": 0.5,
+      "schedule": "11101011",
+      "std_loss": 0.7558900689305044,
+      "tumors": 8,
+      "worst_loss": 2.589457771231982
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.25,
+      "mean_loss": 0.8067059052628686,
+      "objective": 0.9956784224954947,
+      "resistant_weight": 0.5,
+      "schedule": "11101011",
+      "std_loss": 0.7558900689305043,
+      "tumors": 8,
+      "worst_loss": 2.701957771231982
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.5,
+      "mean_loss": 0.9942059052628686,
+      "objective": 1.1831784224954947,
+      "resistant_weight": 0.5,
+      "schedule": "11101011",
+      "std_loss": 0.7558900689305043,
+      "tumors": 8,
+      "worst_loss": 2.889457771231982
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.1,
+      "mean_loss": 1.0420795523260826,
+      "objective": 1.3663607275077698,
+      "resistant_weight": 1.0,
+      "schedule": "11101011",
+      "std_loss": 1.2971247007267488,
+      "tumors": 8,
+      "worst_loss": 4.286310387129348
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.25,
+      "mean_loss": 1.1545795523260827,
+      "objective": 1.4788607275077699,
+      "resistant_weight": 1.0,
+      "schedule": "11101011",
+      "std_loss": 1.2971247007267488,
+      "tumors": 8,
+      "worst_loss": 4.398810387129348
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.5,
+      "mean_loss": 1.3420795523260827,
+      "objective": 1.6663607275077699,
+      "resistant_weight": 1.0,
+      "schedule": "11101011",
+      "std_loss": 1.2971247007267488,
+      "tumors": 8,
+      "worst_loss": 4.586310387129348
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.1,
+      "mean_loss": 1.7378268464525108,
+      "objective": 2.3331655495269006,
+      "resistant_weight": 2.0,
+      "schedule": "11101011",
+      "std_loss": 2.3813548122975594,
+      "tumors": 8,
+      "worst_loss": 7.680015618924082
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.25,
+      "mean_loss": 1.8503268464525109,
+      "objective": 2.445665549526901,
+      "resistant_weight": 2.0,
+      "schedule": "11101011",
+      "std_loss": 2.3813548122975594,
+      "tumors": 8,
+      "worst_loss": 7.792515618924082
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.5,
+      "mean_loss": 2.0378268464525107,
+      "objective": 2.6331655495269004,
+      "resistant_weight": 2.0,
+      "schedule": "11101011",
+      "std_loss": 2.3813548122975594,
+      "tumors": 8,
+      "worst_loss": 7.980015618924082
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.1,
+      "mean_loss": 0.698629931072109,
+      "objective": 0.8871618432769859,
+      "resistant_weight": 0.5,
+      "schedule": "11011101",
+      "std_loss": 0.7541276488195077,
+      "tumors": 8,
+      "worst_loss": 2.5929426544024565
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.25,
+      "mean_loss": 0.811129931072109,
+      "objective": 0.9996618432769859,
+      "resistant_weight": 0.5,
+      "schedule": "11011101",
+      "std_loss": 0.7541276488195077,
+      "tumors": 8,
+      "worst_loss": 2.7054426544024563
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.5,
+      "mean_loss": 0.998629931072109,
+      "objective": 1.187161843276986,
+      "resistant_weight": 0.5,
+      "schedule": "11011101",
+      "std_loss": 0.7541276488195077,
+      "tumors": 8,
+      "worst_loss": 2.8929426544024563
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.1,
+      "mean_loss": 1.0503344310199776,
+      "objective": 1.3758561021623852,
+      "resistant_weight": 1.0,
+      "schedule": "11011101",
+      "std_loss": 1.3020866845696306,
+      "tumors": 8,
+      "worst_loss": 4.310611864893889
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.25,
+      "mean_loss": 1.1628344310199776,
+      "objective": 1.4883561021623852,
+      "resistant_weight": 1.0,
+      "schedule": "11011101",
+      "std_loss": 1.3020866845696306,
+      "tumors": 8,
+      "worst_loss": 4.4231118648938885
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.5,
+      "mean_loss": 1.3503344310199776,
+      "objective": 1.6758561021623852,
+      "resistant_weight": 1.0,
+      "schedule": "11011101",
+      "std_loss": 1.3020866845696306,
+      "tumors": 8,
+      "worst_loss": 4.6106118648938885
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.1,
+      "mean_loss": 1.7537434309157143,
+      "objective": 2.3537736169461168,
+      "resistant_weight": 2.0,
+      "schedule": "11011101",
+      "std_loss": 2.400120744121609,
+      "tumors": 8,
+      "worst_loss": 7.745950285876752
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.25,
+      "mean_loss": 1.8662434309157143,
+      "objective": 2.4662736169461166,
+      "resistant_weight": 2.0,
+      "schedule": "11011101",
+      "std_loss": 2.4001207441216086,
+      "tumors": 8,
+      "worst_loss": 7.858450285876752
+    },
+    {
+      "burden_weight": 1.0,
+      "dose_weight": 0.5,
+      "mean_loss": 2.0537434309157145,
+      "objective": 2.6537736169461166,
+      "resistant_weight": 2.0,
+      "schedule": "11011101",
+      "std_loss": 2.400120744121609,
+      "tumors": 8,
+      "worst_loss": 8.045950285876753
+    }
+  ],
+  "resolution_checks": [
+    {
+      "base_objective": 1.4738267396488467,
+      "half_step_objective": 1.4738159139231923,
+      "max_absolute_auc_delta": 6134.509444072843,
+      "max_absolute_terminal_burden_delta": 9.98261384665966e-07,
+      "objective_delta": -1.0825725654362017e-05,
+      "partition": "search",
+      "schedule": "11101101"
+    },
+    {
+      "base_objective": 3.213228996506153,
+      "half_step_objective": 3.2132155389447203,
+      "max_absolute_auc_delta": 7730.508607149124,
+      "max_absolute_terminal_burden_delta": 5.59631735086441e-06,
+      "objective_delta": -1.3457561432783649e-05,
+      "partition": "evaluation",
+      "schedule": "11101101"
+    },
+    {
+      "base_objective": 1.4788607275077699,
+      "half_step_objective": 1.4788495454402664,
+      "max_absolute_auc_delta": 5979.7599353045225,
+      "max_absolute_terminal_burden_delta": 8.272763807326555e-07,
+      "objective_delta": -1.1182067503501258e-05,
+      "partition": "search",
+      "schedule": "11101011"
+    },
+    {
+      "base_objective": 3.1946106136177357,
+      "half_step_objective": 3.1945971167613827,
+      "max_absolute_auc_delta": 7712.348930120468,
+      "max_absolute_terminal_burden_delta": 5.601905286312103e-06,
+      "objective_delta": -1.349685635299025e-05,
+      "partition": "evaluation",
+      "schedule": "11101011"
+    },
+    {
+      "base_objective": 1.4883561021623852,
+      "half_step_objective": 1.488344263301681,
+      "max_absolute_auc_delta": 6131.656213238835,
+      "max_absolute_terminal_burden_delta": 8.364149834960699e-07,
+      "objective_delta": -1.1838860704216358e-05,
+      "partition": "search",
+      "schedule": "11011101"
+    },
+    {
+      "base_objective": 3.214355196284391,
+      "half_step_objective": 3.2143413680658917,
+      "max_absolute_auc_delta": 7751.696978151798,
+      "max_absolute_terminal_burden_delta": 4.6193599700927734e-06,
+      "objective_delta": -1.382821849915672e-05,
+      "partition": "evaluation",
+      "schedule": "11011101"
+    }
+  ],
+  "schema_version": "treatment-review-1.0",
+  "scope": "Frozen winners only; no reoptimization, evaluation-based selection, or verification of the entire oracle ranking at finer resolution.",
+  "source_fingerprint": "dcfc9347fc5ed91feda5fdf09f06a6abb744bc3ca0522f6ea6c712f8cb24f77e"
+}

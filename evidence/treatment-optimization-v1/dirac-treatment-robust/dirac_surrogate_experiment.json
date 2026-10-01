@@ -1,0 +1,2760 @@
+{
+  "claim_boundary": "Approximate surrogate, offline integer encoding; no hardware execution, clinical claim or quantum advantage.",
+  "compiled": {
+    "coefficient_scale": 270.9517445166933,
+    "constraint_contract": "P*(sum(x)+slack-budget)^2 + P*sum(forbidden consecutive products)",
+    "energy_offset": 820.3473662596127,
+    "hardware_compatibility_verified": false,
+    "hardware_submission_enabled": false,
+    "job_template": {
+      "job_params": {
+        "device_type": "dirac-3",
+        "num_levels": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          7
+        ],
+        "num_samples": 10,
+        "relaxation_schedule": 1
+      },
+      "job_type": "sample-hamiltonian-integer",
+      "polynomial_file_id": "REQUIRES_UPLOAD_FILE_ID"
+    },
+    "penalty": 22.579312043057772,
+    "polynomial_file": {
+      "file_config": {
+        "polynomial": {
+          "data": [
+            {
+              "idx": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "val": -0.9236709292753377
+            },
+            {
+              "idx": [
+                0,
+                0,
+                1,
+                2
+              ],
+              "val": 0.16870800828623383
+            },
+            {
+              "idx": [
+                1,
+                2,
+                3,
+                4
+              ],
+              "val": 0.08333333333333333
+            },
+            {
+              "idx": [
+                0,
+                0,
+                1,
+                3
+              ],
+              "val": 0.16877158818930404
+            },
+            {
+              "idx": [
+                0,
+                0,
+                1,
+                4
+              ],
+              "val": 0.16859330593472838
+            },
+            {
+              "idx": [
+                0,
+                0,
+                1,
+                5
+              ],
+              "val": 0.16790310894329574
+            },
+            {
+              "idx": [
+                0,
+                0,
+                1,
+                6
+              ],
+              "val": 0.16751962833091782
+            },
+            {
+              "idx": [
+                0,
+                0,
+                1,
+                7
+              ],
+              "val": 0.16701448022750928
+            },
+            {
+              "idx": [
+                0,
+                0,
+                1,
+                8
+              ],
+              "val": 0.16636504255645754
+            },
+            {
+              "idx": [
+                0,
+                0,
+                1,
+                9
+              ],
+              "val": 0.16666666666666666
+            },
+            {
+              "idx": [
+                0,
+                0,
+                0,
+                2
+              ],
+              "val": -0.9238247555298131
+            },
+            {
+              "idx": [
+                0,
+                0,
+                2,
+                3
+              ],
+              "val": 0.1688083172457366
+            },
+            {
+              "idx": [
+                2,
+                3,
+                4,
+                5
+              ],
+              "val": 0.08333333333333333
+            },
+            {
+              "idx": [
+                0,
+                0,
+                2,
+                4
+              ],
+              "val": 0.16861400260721593
+            },
+            {
+              "idx": [
+                0,
+                0,
+                2,
+                5
+              ],
+              "val": 0.16785752914512542
+            },
+            {
+              "idx": [
+                0,
+                0,
+                2,
+                6
+              ],
+              "val": 0.16768166358691045
+            },
+            {
+              "idx": [
+                0,
+                0,
+                2,
+                7
+              ],
+              "val": 0.16708118639214972
+            },
+            {
+              "idx": [
+                0,
+                0,
+                2,
+                8
+              ],
+              "val": 0.16633685200691056
+            },
+            {
+              "idx": [
+                0,
+                0,
+                2,
+                9
+              ],
+              "val": 0.16666666666666666
+            },
+            {
+              "idx": [
+                0,
+                0,
+                0,
+                3
+              ],
+              "val": -0.9244575724689423
+            },
+            {
+              "idx": [
+                0,
+                0,
+                3,
+                4
+              ],
+              "val": 0.16867828822254363
+            },
+            {
+              "idx": [
+                3,
+                4,
+                5,
+                6
+              ],
+              "val": 0.08333333333333333
+            },
+            {
+              "idx": [
+                0,
+                0,
+                3,
+                5
+              ],
+              "val": 0.1682379432993683
+            },
+            {
+              "idx": [
+                0,
+                0,
+                3,
+                6
+              ],
+              "val": 0.16787205661233984
+            },
+            {
+              "idx": [
+                0,
+                0,
+                3,
+                7
+              ],
+              "val": 0.16751872076556254
+            },
+            {
+              "idx": [
+                0,
+                0,
+                3,
+                8
+              ],
+              "val": 0.16665460106633512
+            },
+            {
+              "idx": [
+                0,
+                0,
+                3,
+                9
+              ],
+              "val": 0.16666666666666666
+            },
+            {
+              "idx": [
+                0,
+                0,
+                0,
+                4
+              ],
+              "val": -0.9241914643076521
+            },
+            {
+              "idx": [
+                0,
+                0,
+                4,
+                5
+              ],
+              "val": 0.16830656871259084
+            },
+            {
+              "idx": [
+                4,
+                5,
+                6,
+                7
+              ],
+              "val": 0.08333333333333333
+            },
+            {
+              "idx": [
+                0,
+                0,
+                4,
+                6
+              ],
+              "val": 0.1678821002162673
+            },
+            {
+              "idx": [
+                0,
+                0,
+                4,
+                7
+              ],
+              "val": 0.16760887796078844
+            },
+            {
+              "idx": [
+                0,
+                0,
+                4,
+                8
+              ],
+              "val": 0.16666134580210099
+            },
+            {
+              "idx": [
+                0,
+                0,
+                4,
+                9
+              ],
+              "val": 0.16666666666666666
+            },
+            {
+              "idx": [
+                0,
+                0,
+                0,
+                5
+              ],
+              "val": -0.9234518997370715
+            },
+            {
+              "idx": [
+                0,
+                0,
+                5,
+                6
+              ],
+              "val": 0.16807264770750197
+            },
+            {
+              "idx": [
+                5,
+                6,
+                7,
+                8
+              ],
+              "val": 0.08333333333333333
+            },
+            {
+              "idx": [
+                0,
+                0,
+                5,
+                7
+              ],
+              "val": 0.16783381402234376
+            },
+            {
+              "idx": [
+                0,
+                0,
+                5,
+                8
+              ],
+              "val": 0.16688666196363663
+            },
+            {
+              "idx": [
+                0,
+                0,
+                5,
+                9
+              ],
+              "val": 0.16666666666666666
+            },
+            {
+              "idx": [
+                0,
+                0,
+                0,
+                6
+              ],
+              "val": -0.9227076379039649
+            },
+            {
+              "idx": [
+                0,
+                0,
+                6,
+                7
+              ],
+              "val": 0.167868383270808
+            },
+            {
+              "idx": [
+                0,
+                0,
+                6,
+                8
+              ],
+              "val": 0.16720288076234718
+            },
+            {
+              "idx": [
+                0,
+                0,
+                6,
+                9
+              ],
+              "val": 0.16666666666666666
+            },
+            {
+              "idx": [
+                0,
+                0,
+                0,
+                7
+              ],
+              "val": -0.9214668166228484
+            },
+            {
+              "idx": [
+                0,
+                0,
+                7,
+                8
+              ],
+              "val": 0.16737647354765905
+            },
+            {
+              "idx": [
+                0,
+                0,
+                7,
+                9
+              ],
+              "val": 0.16666666666666666
+            },
+            {
+              "idx": [
+                0,
+                0,
+                0,
+                8
+              ],
+              "val": -0.9186578355512716
+            },
+            {
+              "idx": [
+                0,
+                0,
+                8,
+                9
+              ],
+              "val": 0.16666666666666666
+            },
+            {
+              "idx": [
+                0,
+                0,
+                0,
+                9
+              ],
+              "val": -1.0
+            },
+            {
+              "idx": [
+                0,
+                0,
+                9,
+                9
+              ],
+              "val": 0.08333333333333333
+            }
+          ],
+          "max_degree": 4,
+          "min_degree": 1,
+          "num_variables": 9
+        }
+      },
+      "file_name": "qob_treatment_integer_surrogate"
+    },
+    "schedule_variables": 8,
+    "slack_variable_index": 9,
+    "source_interface": "user-supplied Dirac-3 Developer Beginner Guide notebook, integer example"
+  },
+  "config": {
+    "annealing_end_temperature": 0.001,
+    "annealing_start_temperature": 0.25,
+    "base_profile": "configs/evolution-two-clone.yaml",
+    "cohort_profile": "configs/evolution-virtual-cohort.yaml",
+    "cohort_seed": 2718,
+    "evaluation_budget": 64,
+    "evaluation_tumors": 32,
+    "exact_search": true,
+    "intervals": 8,
+    "max_consecutive_treated": 3,
+    "max_treated_intervals": 6,
+    "output_dir": "reports/treatment-optimization-robust",
+    "profile_name": "binary-schedule-robust-cohort-v1",
+    "protocol_version": "treatment-optimization-v1",
+    "repeats": 3,
+    "risk_aversion": 0.25,
+    "search_tumors": 8,
+    "seed": 42,
+    "weights": {
+      "burden_auc": 1.0,
+      "dose": 0.25,
+      "terminal_resistant": 1.0
+    }
+  },
+  "cost_boundary": {
+    "additional_replay_tumor_simulations": 40,
+    "label_source": "precomputed exhaustive oracle, not a budget-matched solver comparison",
+    "source_label_tumor_simulations": 1664
+  },
+  "evaluation_outcomes": [
+    {
+      "control_time_below_initial_days": 285.25,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 2207985.222018246,
+      "final_resistant_fraction": 0.9999999915959249,
+      "final_sensitive_cells": 0.01855607381972915,
+      "final_total_burden": 2207985.24057432,
+      "initial_total_burden": 1000000.0,
+      "loss": 2.9799281482615,
+      "maximum_resistant_fraction": 0.9999999915959249,
+      "maximum_total_burden": 2207985.24057432,
+      "mean_shannon_diversity": 0.10294911871307177,
+      "minimum_total_burden": 70750.84264752702,
+      "nadir_day": 63.625,
+      "normalized_burden_auc": 0.584442926243254,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 2.207985222018246,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 42.0,
+      "strategy": "scheduled",
+      "time_to_progression_days": 302.75,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 213321668.0787877
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 27060.062767619453,
+      "final_resistant_fraction": 0.711619552775984,
+      "final_sensitive_cells": 10965.962040242863,
+      "final_total_burden": 38026.02480786231,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.3505400319605383,
+      "maximum_resistant_fraction": 0.711619552775984,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.43368300548466926,
+      "minimum_total_burden": 24875.622631197424,
+      "nadir_day": 136.875,
+      "normalized_burden_auc": 0.1359799691929188,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.027060062767619453,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 337.375,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 49632688.755415365
+    },
+    {
+      "control_time_below_initial_days": 219.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 6811742.117496174,
+      "final_resistant_fraction": 0.9999996420219945,
+      "final_sensitive_cells": 2.4384547299150388,
+      "final_total_burden": 6811744.555950903,
+      "initial_total_burden": 1000000.0,
+      "loss": 8.69010300972225,
+      "maximum_resistant_fraction": 0.9999996420219945,
+      "maximum_total_burden": 6811744.555950903,
+      "mean_shannon_diversity": 0.12076119851102957,
+      "minimum_total_burden": 59565.79400828702,
+      "nadir_day": 73.625,
+      "normalized_burden_auc": 1.6908608922260764,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 6.811742117496173,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 61.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": 229.125,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 617164225.6625179
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 8202.186732573558,
+      "final_resistant_fraction": 0.9999999967703446,
+      "final_sensitive_cells": 2.6490237331758503e-05,
+      "final_total_burden": 8202.186759063796,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.22944099062544737,
+      "maximum_resistant_fraction": 0.9999999967703446,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.0937428616098469,
+      "minimum_total_burden": 3843.5631510917933,
+      "nadir_day": 122.25,
+      "normalized_burden_auc": 0.033738803892873814,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.008202186732573558,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 58.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 12314663.420898942
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 66248.51411037294,
+      "final_resistant_fraction": 0.9969397999541113,
+      "final_sensitive_cells": 203.35601601014793,
+      "final_total_burden": 66451.87012638309,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.3416862809206148,
+      "maximum_resistant_fraction": 0.9969397999541113,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.36040871357718435,
+      "minimum_total_burden": 9508.396487067546,
+      "nadir_day": 136.875,
+      "normalized_burden_auc": 0.08793776681024186,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.06624851411037294,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 130.25,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 32097284.88573828
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 114684.95040199465,
+      "final_resistant_fraction": 0.9998522213512056,
+      "final_sensitive_cells": 16.950491928264338,
+      "final_total_burden": 114701.90089392291,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.42760175163994385,
+      "maximum_resistant_fraction": 0.9998522213512056,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.2126479494835612,
+      "minimum_total_burden": 41563.0584282329,
+      "nadir_day": 136.875,
+      "normalized_burden_auc": 0.1254168012379492,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.11468495040199465,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 66.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 45777132.45185146
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 24678.972867346198,
+      "final_resistant_fraction": 0.9756798557811547,
+      "final_sensitive_cells": 615.1568834290417,
+      "final_total_burden": 25294.12975077524,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.3012240861981024,
+      "maximum_resistant_fraction": 0.9756798557811547,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.38927168406673135,
+      "minimum_total_burden": 10644.467043872926,
+      "nadir_day": 136.875,
+      "normalized_burden_auc": 0.08904511333075622,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.0246789728673462,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 220.5,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 32501466.365726024
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 177991.98908211288,
+      "final_resistant_fraction": 0.9999999989795216,
+      "final_sensitive_cells": 0.00018163698341104736,
+      "final_total_burden": 177991.98926374986,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.43201560339209355,
+      "maximum_resistant_fraction": 0.9999999989795216,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.08898450336404122,
+      "minimum_total_burden": 3275.1174992528963,
+      "nadir_day": 86.625,
+      "normalized_burden_auc": 0.06652361430998063,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.1779919890821129,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 67.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 24281119.22314293
+    },
+    {
+      "control_time_below_initial_days": 258.625,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 2951855.0612648698,
+      "final_resistant_fraction": 0.9999999718073334,
+      "final_sensitive_cells": 0.08322066816935722,
+      "final_total_burden": 2951855.144485538,
+      "initial_total_burden": 1000000.0,
+      "loss": 3.928473495538655,
+      "maximum_resistant_fraction": 0.9999999718073334,
+      "maximum_total_burden": 2951855.144485538,
+      "mean_shannon_diversity": 0.10817320230494007,
+      "minimum_total_burden": 92751.47910859596,
+      "nadir_day": 62.625,
+      "normalized_burden_auc": 0.7891184342737849,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 2.9518550612648697,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 42.0,
+      "strategy": "scheduled",
+      "time_to_progression_days": 272.125,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 288028228.5099315
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 217105.73129742907,
+      "final_resistant_fraction": 0.8769662845589766,
+      "final_sensitive_cells": 30458.781865823054,
+      "final_total_burden": 247564.51316325212,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.6506953401059254,
+      "maximum_resistant_fraction": 0.8769662845589766,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.49888987990329164,
+      "minimum_total_burden": 68890.42362640763,
+      "nadir_day": 136.875,
+      "normalized_burden_auc": 0.2460896088084964,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.21710573129742908,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 227.5,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 89822707.21510118
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 415343.6407894613,
+      "final_resistant_fraction": 0.9999307683847134,
+      "final_sensitive_cells": 28.756902037664492,
+      "final_total_burden": 415372.397691499,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.8331889627944412,
+      "maximum_resistant_fraction": 0.9999307683847134,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.18612537883838237,
+      "minimum_total_burden": 88998.601581169,
+      "nadir_day": 101.25,
+      "normalized_burden_auc": 0.23034532200497984,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.41534364078946134,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 57.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 84076042.53181764
+    },
+    {
+      "control_time_below_initial_days": 305.25,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 1664350.279425921,
+      "final_resistant_fraction": 0.9906179766717835,
+      "final_sensitive_cells": 15762.860674464946,
+      "final_total_burden": 1680113.1401003858,
+      "initial_total_burden": 1000000.0,
+      "loss": 2.370397474945861,
+      "maximum_resistant_fraction": 0.9906179766717835,
+      "maximum_total_burden": 1680113.1401003858,
+      "mean_shannon_diversity": 0.4290345486534028,
+      "minimum_total_burden": 76510.43695817042,
+      "nadir_day": 136.875,
+      "normalized_burden_auc": 0.5185471955199399,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 1.6643502794259208,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 126.25,
+      "strategy": "scheduled",
+      "time_to_progression_days": 328.375,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 189269726.36477804
+    },
+    {
+      "control_time_below_initial_days": 278.25,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 4457853.758594755,
+      "final_resistant_fraction": 0.9999999827106241,
+      "final_sensitive_cells": 0.0770735111796751,
+      "final_total_burden": 4457853.835668266,
+      "initial_total_burden": 1000000.0,
+      "loss": 5.391598350926757,
+      "maximum_resistant_fraction": 0.9999999827106241,
+      "maximum_total_burden": 4457853.835668266,
+      "mean_shannon_diversity": 0.10375845955667552,
+      "minimum_total_burden": 16084.397617936767,
+      "nadir_day": 82.625,
+      "normalized_burden_auc": 0.7462445923320022,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 4.457853758594755,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 71.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": 287.75,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 272379276.2011808
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 218484.6060931693,
+      "final_resistant_fraction": 0.9999994549006799,
+      "final_sensitive_cells": 0.11909587516550188,
+      "final_total_burden": 218484.72518904446,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.5226582181182566,
+      "maximum_resistant_fraction": 0.9999994549006799,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.12501033198235845,
+      "minimum_total_burden": 21341.217586270006,
+      "nadir_day": 97.25,
+      "normalized_burden_auc": 0.11667361202508733,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.2184846060931693,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 58.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 42585868.38915688
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 37329.55034595273,
+      "final_resistant_fraction": 0.9839526837664898,
+      "final_sensitive_cells": 608.8088473555171,
+      "final_total_burden": 37938.35919330825,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.31965723254585143,
+      "maximum_resistant_fraction": 0.9839526837664898,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.3953191187685859,
+      "minimum_total_burden": 13399.44129487763,
+      "nadir_day": 136.875,
+      "normalized_burden_auc": 0.0948276821998987,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.037329550345952735,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 211.5,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 34612104.00296303
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 758757.1684873261,
+      "final_resistant_fraction": 0.9999999840287527,
+      "final_sensitive_cells": 0.012118298567974974,
+      "final_total_burden": 758757.1806056247,
+      "initial_total_burden": 1000000.0,
+      "loss": 1.199344995870127,
+      "maximum_resistant_fraction": 0.9999999840287527,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.10538639804707145,
+      "minimum_total_burden": 37941.59803343035,
+      "nadir_day": 73.625,
+      "normalized_burden_auc": 0.25308782738280095,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.7587571684873261,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 47.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 92377056.99472235
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 119412.76944167876,
+      "final_resistant_fraction": 0.9999995138028535,
+      "final_sensitive_cells": 0.05805817598154207,
+      "final_total_burden": 119412.82749985474,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.37341240080979937,
+      "maximum_resistant_fraction": 0.9999995138028535,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.12149266464126714,
+      "minimum_total_burden": 4258.698418983492,
+      "nadir_day": 105.25,
+      "normalized_burden_auc": 0.0664996313681206,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.11941276944167875,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 79.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 24272365.44936402
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 305899.12000650336,
+      "final_resistant_fraction": 0.9999986511334179,
+      "final_sensitive_cells": 0.41261765703983866,
+      "final_total_burden": 305899.5326241604,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.6826114052831486,
+      "maximum_resistant_fraction": 0.9999986511334179,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.12576191621828697,
+      "minimum_total_burden": 67485.59466498451,
+      "nadir_day": 96.25,
+      "normalized_burden_auc": 0.18921228527664521,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.3058991200065034,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 42.0,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 69062484.1259755
+    },
+    {
+      "control_time_below_initial_days": 255.625,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 3632595.8837768235,
+      "final_resistant_fraction": 0.9999999749538642,
+      "final_sensitive_cells": 0.09098249227510763,
+      "final_total_burden": 3632595.9747593156,
+      "initial_total_burden": 1000000.0,
+      "loss": 4.682501726724365,
+      "maximum_resistant_fraction": 0.9999999749538642,
+      "maximum_total_burden": 3632595.9747593156,
+      "mean_shannon_diversity": 0.11027819413859709,
+      "minimum_total_burden": 69074.4462666736,
+      "nadir_day": 66.625,
+      "normalized_burden_auc": 0.8624058429475416,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 3.6325958837768235,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 48.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": 268.125,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 314778132.6758527
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 69009.17743587751,
+      "final_resistant_fraction": 0.9999999910469596,
+      "final_sensitive_cells": 0.0006178419526828912,
+      "final_total_burden": 69009.17805371947,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.33044438707281004,
+      "maximum_resistant_fraction": 0.9999999910469596,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.10189191165398936,
+      "minimum_total_burden": 25804.856277617215,
+      "nadir_day": 111.25,
+      "normalized_burden_auc": 0.07393520963693254,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.06900917743587752,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 43.0,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 26986351.517480373
+    },
+    {
+      "control_time_below_initial_days": 281.25,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 1711620.825254899,
+      "final_resistant_fraction": 0.999997356977821,
+      "final_sensitive_cells": 4.523863759926722,
+      "final_total_burden": 1711625.3491186588,
+      "initial_total_burden": 1000000.0,
+      "loss": 2.439568572909124,
+      "maximum_resistant_fraction": 0.999997356977821,
+      "maximum_total_burden": 1711625.3491186588,
+      "mean_shannon_diversity": 0.14625401148737435,
+      "minimum_total_burden": 77160.21733174706,
+      "nadir_day": 83.625,
+      "normalized_burden_auc": 0.5404477476542249,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 1.711620825254899,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 55.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": 308.75,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 197263427.8937921
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 911593.5012107193,
+      "final_resistant_fraction": 0.9999999982684602,
+      "final_sensitive_cells": 0.0015784603911605736,
+      "final_total_burden": 911593.5027891798,
+      "initial_total_burden": 1000000.0,
+      "loss": 1.397076767530458,
+      "maximum_resistant_fraction": 0.9999999982684602,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.09578766139422744,
+      "minimum_total_burden": 42255.325627881226,
+      "nadir_day": 67.625,
+      "normalized_burden_auc": 0.29798326631973865,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.9115935012107194,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 42.0,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 108763892.2067046
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 117729.39132565407,
+      "final_resistant_fraction": 0.9996208241153343,
+      "final_sensitive_cells": 44.65707899450128,
+      "final_total_burden": 117774.04840464857,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.3994252938591079,
+      "maximum_resistant_fraction": 0.9996208241153343,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.26112976889906037,
+      "minimum_total_burden": 16110.918734588575,
+      "nadir_day": 129.25,
+      "normalized_burden_auc": 0.09419590253345382,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.11772939132565408,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 98.25,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 34381504.424710646
+    },
+    {
+      "control_time_below_initial_days": 244.625,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 5022922.0898628505,
+      "final_resistant_fraction": 0.9999997946569872,
+      "final_sensitive_cells": 1.0314221671037265,
+      "final_total_burden": 5022923.121285018,
+      "initial_total_burden": 1000000.0,
+      "loss": 6.308010391526233,
+      "maximum_resistant_fraction": 0.9999997946569872,
+      "maximum_total_burden": 5022923.121285018,
+      "mean_shannon_diversity": 0.12342686552612027,
+      "minimum_total_burden": 61747.97294624162,
+      "nadir_day": 74.625,
+      "normalized_burden_auc": 1.0975883016633818,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 5.022922089862851,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 60.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": 255.125,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 400619730.10713434
+    },
+    {
+      "control_time_below_initial_days": 312.25,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 2350992.9501498244,
+      "final_resistant_fraction": 0.9999999462395724,
+      "final_sensitive_cells": 0.12639039288810658,
+      "final_total_burden": 2350993.0765402173,
+      "initial_total_burden": 1000000.0,
+      "loss": 2.9568941796546078,
+      "maximum_resistant_fraction": 0.9999999462395724,
+      "maximum_total_burden": 2350993.0765402173,
+      "mean_shannon_diversity": 0.10962684316306477,
+      "minimum_total_burden": 16638.03790857168,
+      "nadir_day": 84.625,
+      "normalized_burden_auc": 0.4184012295047834,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 2.3509929501498243,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 70.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": 323.375,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 152716448.76924595
+    },
+    {
+      "control_time_below_initial_days": 234.625,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 3225062.4002322634,
+      "final_resistant_fraction": 0.9999990340914814,
+      "final_sensitive_cells": 3.1151182542226987,
+      "final_total_burden": 3225065.515350518,
+      "initial_total_burden": 1000000.0,
+      "loss": 4.442253976569182,
+      "maximum_resistant_fraction": 0.9999990340914814,
+      "maximum_total_burden": 3225065.515350518,
+      "mean_shannon_diversity": 0.1246085633482477,
+      "minimum_total_burden": 155932.3696875529,
+      "nadir_day": 63.625,
+      "normalized_burden_auc": 1.0296915763369188,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 3.225062400232263,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 39.0,
+      "strategy": "scheduled",
+      "time_to_progression_days": 247.125,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 375837425.36297536
+    },
+    {
+      "control_time_below_initial_days": 275.25,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 3419749.9467767775,
+      "final_resistant_fraction": 0.9999999990714955,
+      "final_sensitive_cells": 0.0031752529896663844,
+      "final_total_burden": 3419749.9499520306,
+      "initial_total_burden": 1000000.0,
+      "loss": 4.283460647927381,
+      "maximum_resistant_fraction": 0.9999999990714955,
+      "maximum_total_burden": 3419749.9499520306,
+      "mean_shannon_diversity": 0.0918256327166523,
+      "minimum_total_burden": 22638.02774507161,
+      "nadir_day": 68.625,
+      "normalized_burden_auc": 0.6762107011506037,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 3.4197499467767773,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 53.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": 287.75,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 246816905.91997033
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 243635.80058000845,
+      "final_resistant_fraction": 0.9987170137168271,
+      "final_sensitive_cells": 312.9829430568159,
+      "final_total_burden": 243948.78352306527,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.5839408364378572,
+      "maximum_resistant_fraction": 0.9987170137168271,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.29625501124752907,
+      "minimum_total_burden": 39617.06614924458,
+      "nadir_day": 125.25,
+      "normalized_burden_auc": 0.15280503585784877,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.24363580058000844,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 83.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 55773838.088114806
+    },
+    {
+      "control_time_below_initial_days": 202.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 4449401.311024964,
+      "final_resistant_fraction": 0.9999952555554885,
+      "final_sensitive_cells": 21.110037785125026,
+      "final_total_burden": 4449422.421062749,
+      "initial_total_burden": 1000000.0,
+      "loss": 6.016846085897283,
+      "maximum_resistant_fraction": 0.9999952555554885,
+      "maximum_total_burden": 4449422.421062749,
+      "mean_shannon_diversity": 0.15474587710761456,
+      "minimum_total_burden": 249602.54732190646,
+      "nadir_day": 65.625,
+      "normalized_burden_auc": 1.3799447748723193,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 4.449401311024964,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 43.0,
+      "strategy": "scheduled",
+      "time_to_progression_days": 219.5,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 503679842.82839656
+    },
+    {
+      "control_time_below_initial_days": 365.0,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 6425.441382798158,
+      "final_resistant_fraction": 0.999999403448007,
+      "final_sensitive_cells": 0.003833112149792457,
+      "final_total_burden": 6425.4452159103075,
+      "initial_total_burden": 1000000.0,
+      "loss": 0.2327341730597017,
+      "maximum_resistant_fraction": 0.999999403448007,
+      "maximum_total_burden": 1000000.0,
+      "mean_shannon_diversity": 0.12463110456611551,
+      "minimum_total_burden": 2573.446164638516,
+      "nadir_day": 134.25,
+      "normalized_burden_auc": 0.03880873167690354,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 0.006425441382798158,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 77.625,
+      "strategy": "scheduled",
+      "time_to_progression_days": null,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 14165187.062069792
+    },
+    {
+      "control_time_below_initial_days": 268.625,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 4053104.301191037,
+      "final_resistant_fraction": 0.9999661283619097,
+      "final_sensitive_cells": 137.28993226706888,
+      "final_total_burden": 4053241.5911233043,
+      "initial_total_burden": 1000000.0,
+      "loss": 5.054479045442419,
+      "maximum_resistant_fraction": 0.9999661283619097,
+      "maximum_total_burden": 4053241.5911233043,
+      "mean_shannon_diversity": 0.19418983740438633,
+      "minimum_total_burden": 46642.0252551155,
+      "nadir_day": 106.25,
+      "normalized_burden_auc": 0.8138747442513827,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 4.053104301191037,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 95.25,
+      "strategy": "scheduled",
+      "time_to_progression_days": 277.75,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 297064281.6517547
+    },
+    {
+      "control_time_below_initial_days": 140.375,
+      "cumulative_dose_days": 273.75,
+      "final_resistant_cells": 7773192.558854881,
+      "final_resistant_fraction": 0.9999999900894104,
+      "final_sensitive_cells": 0.0770369218108847,
+      "final_total_burden": 7773192.635891803,
+      "initial_total_burden": 1000000.0,
+      "loss": 11.147044454624995,
+      "maximum_resistant_fraction": 0.9999999900894104,
+      "maximum_total_burden": 7773192.635891803,
+      "mean_shannon_diversity": 0.10291787006398435,
+      "minimum_total_burden": 248362.31267168376,
+      "nadir_day": 45.625,
+      "normalized_burden_auc": 3.1863518957701147,
+      "normalized_dose": 0.75,
+      "normalized_terminal_resistant": 7.7731925588548805,
+      "progression_threshold": 1200000.0,
+      "resistant_dominance_day": 31.0,
+      "strategy": "scheduled",
+      "time_to_progression_days": 149.875,
+      "treatment_cycles": 3,
+      "treatment_fraction": 0.75,
+      "tumor_burden_auc": 1163018441.956092
+    }
+  ],
+  "evaluation_summary": {
+    "mean_loss": 2.509351822465464,
+    "objective": 3.1946106136177357,
+    "std_loss": 2.7410351646090874,
+    "tumors": 32,
+    "worst_loss": 11.147044454624995
+  },
+  "fingerprint": "6b602ee9aad9d73cc09317f1d0f6feae09bbe463553b5df3e0d1ebba50194e25",
+  "fit": {
+    "coefficients": [
+      -1.8978171728724527,
+      -1.9394966648750516,
+      -2.1109595184918586,
+      -2.0388570479601102,
+      -1.8384707373785727,
+      -1.6368116953211473,
+      -1.300609004569167,
+      -0.5395106829110814,
+      0.5531050729762566,
+      0.5703321586293315,
+      0.5220262707356889,
+      0.33501619184684095,
+      0.2311114509347169,
+      0.09424069107687034,
+      -0.08172557884945857,
+      0.5802839605441916,
+      0.527634070251879,
+      0.3226662660178783,
+      0.2750151862191311,
+      0.1123148427562186,
+      -0.08936385742809153,
+      0.5450523698722531,
+      0.4257401447488323,
+      0.3266025086030305,
+      0.23086554451843735,
+      -0.003269195458470775,
+      0.44433432017964597,
+      0.32932384060841313,
+      0.25529379384562506,
+      -0.0014416975364049459,
+      0.3809530157717256,
+      0.3162406121287597,
+      0.05960810949948842,
+      0.32560721030677003,
+      0.14528814465907866,
+      0.19232341267484188
+    ],
+    "intercept": 7.492132709532925,
+    "ridge_alpha": 1e-06,
+    "seed": 31415,
+    "training_fraction": 0.7
+  },
+  "hardware_submission_enabled": false,
+  "label_predictions": [
+    {
+      "partition": "validation",
+      "predicted_objective": 7.492132709532925,
+      "schedule": "00000000",
+      "true_objective": 8.216698561869215
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 6.952622026621843,
+      "schedule": "00000001",
+      "true_objective": 7.409659057761928
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 6.191523704963758,
+      "schedule": "00000010",
+      "true_objective": 6.475836509773247
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 5.844336434727518,
+      "schedule": "00000011",
+      "true_objective": 6.267362758786758
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 5.8553210142117775,
+      "schedule": "00000100",
+      "true_objective": 5.912236440476715
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 5.4610984759597745,
+      "schedule": "00000101",
+      "true_objective": 5.47001225122251
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 4.880319219949381,
+      "schedule": "00000110",
+      "true_objective": 5.17531573125477
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 4.678420094372219,
+      "schedule": "00000111",
+      "true_objective": 5.092864544909331
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 5.653661972154352,
+      "schedule": "00001000",
+      "true_objective": 5.66859374408778
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 5.173759398742759,
+      "schedule": "00001001",
+      "true_objective": 5.045111872678801
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 4.669293579713945,
+      "schedule": "00001010",
+      "true_objective": 4.534924548048775
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.381714418977194,
+      "schedule": "00001011",
+      "true_objective": 4.356552236549007
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 4.39780329260493,
+      "schedule": "00001100",
+      "true_objective": 4.3481930103787985
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.063188863852416,
+      "schedule": "00001101",
+      "true_objective": 4.1057629393318775
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.739042110471293,
+      "schedule": "00001110",
+      "true_objective": 4.004937737601361
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 5.453275661572814,
+      "schedule": "00010000",
+      "true_objective": 5.590504033127994
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.912323281125328,
+      "schedule": "00010001",
+      "true_objective": 4.877815850495383
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.407960450849273,
+      "schedule": "00010010",
+      "true_objective": 4.242380787921543
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.059331483076628,
+      "schedule": "00010011",
+      "true_objective": 3.9905576841671517
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.14578780686008,
+      "schedule": "00010100",
+      "true_objective": 3.989435035009696
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.7501235710716725,
+      "schedule": "00010101",
+      "true_objective": 3.6044649896168295
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.4260798064433082,
+      "schedule": "00010110",
+      "true_objective": 3.4341012856993953
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.2227389833297426,
+      "schedule": "00010111",
+      "true_objective": 3.294787360306259
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.059139244373887,
+      "schedule": "00011000",
+      "true_objective": 3.9203670303172284
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.57779497342589,
+      "schedule": "00011001",
+      "true_objective": 3.4834762860420336
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.330064645779105,
+      "schedule": "00011010",
+      "true_objective": 3.2681985392632162
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.0410437875059495,
+      "schedule": "00011011",
+      "true_objective": 3.0893705357466406
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.132604405432879,
+      "schedule": "00011100",
+      "true_objective": 3.2056536253165575
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.79654827914396,
+      "schedule": "00011101",
+      "true_objective": 3.008531157849688
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 5.381173191041066,
+      "schedule": "00100000",
+      "true_objective": 5.570449347931402
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.8383933126715135,
+      "schedule": "00100001",
+      "true_objective": 4.828378490829551
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.311429730990337,
+      "schedule": "00100010",
+      "true_objective": 4.152589114125675
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.9609732652956264,
+      "schedule": "00100011",
+      "true_objective": 3.859355308930572
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.070964004322949,
+      "schedule": "00100100",
+      "true_objective": 3.912924081586219
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.673472270612476,
+      "schedule": "00100101",
+      "true_objective": 3.4254579757110397
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.3268277545789893,
+      "schedule": "00100110",
+      "true_objective": 3.235196259361357
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.1216594335433587,
+      "schedule": "00100111",
+      "true_objective": 3.016591478100111
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.9684425984113254,
+      "schedule": "00101000",
+      "true_objective": 3.867732081650031
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.4852708295412613,
+      "schedule": "00101001",
+      "true_objective": 3.2992815498333226
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.214939750489356,
+      "schedule": "00101010",
+      "true_objective": 3.0693116895537966
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.924091394294133,
+      "schedule": "00101011",
+      "true_objective": 2.753346311735562
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.0391864274649345,
+      "schedule": "00101100",
+      "true_objective": 2.998306562921914
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.701302803253949,
+      "schedule": "00101101",
+      "true_objective": 2.637729121587819
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.6112907898497344,
+      "schedule": "00101110",
+      "true_objective": 2.584022517738588
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.887368512953209,
+      "schedule": "00110000",
+      "true_objective": 3.8587256813347004
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.3431469370472513,
+      "schedule": "00110001",
+      "true_objective": 3.268359920318075
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.072918846748104,
+      "schedule": "00110010",
+      "true_objective": 3.0337758501688326
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.721020683516989,
+      "schedule": "00110011",
+      "true_objective": 2.6818942842499265
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.906483166843505,
+      "schedule": "00110100",
+      "true_objective": 2.960046696962493
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.507549735596627,
+      "schedule": "00110101",
+      "true_objective": 2.5468111359727796
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.41764071094517,
+      "schedule": "00110110",
+      "true_objective": 2.4772345602608397
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.211030692373134,
+      "schedule": "00110111",
+      "true_objective": 2.2584215817960533
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.9189722405031144,
+      "schedule": "00111000",
+      "true_objective": 2.942184510867664
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.434358774096646,
+      "schedule": "00111001",
+      "true_objective": 2.5095693725524484
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.42076318642677,
+      "schedule": "00111010",
+      "true_objective": 2.4288384139998724
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.1284731326951434,
+      "schedule": "00111011",
+      "true_objective": 2.1990045189522824
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 5.5526360446578735,
+      "schedule": "01000000",
+      "true_objective": 5.566136751975313
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 4.9237615043186995,
+      "schedule": "01000001",
+      "true_objective": 4.816311669809151
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.364341882844925,
+      "schedule": "01000010",
+      "true_objective": 4.132167795833142
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.9277907551805935,
+      "schedule": "01000011",
+      "true_objective": 3.823501105046855
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 4.190839535555856,
+      "schedule": "01000100",
+      "true_objective": 3.934137438967982
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.707253139875762,
+      "schedule": "01000101",
+      "true_objective": 3.392893798323997
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.328152584049678,
+      "schedule": "01000110",
+      "true_objective": 3.206685887671907
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.036889601044426,
+      "schedule": "01000111",
+      "true_objective": 2.9360111229640364
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.036831573297179,
+      "schedule": "01001000",
+      "true_objective": 3.9493448939563356
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.4675651424574943,
+      "schedule": "01001001",
+      "true_objective": 3.303219842659582
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.1647780236129908,
+      "schedule": "01001010",
+      "true_objective": 3.112185483270358
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.787835005448148,
+      "schedule": "01001011",
+      "true_objective": 2.6835306952471636
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.0559880799668875,
+      "schedule": "01001100",
+      "true_objective": 3.0589668704761612
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.632009793786282,
+      "schedule": "01001101",
+      "true_objective": 2.568528369695591
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.5095417405894693,
+      "schedule": "01001110",
+      "true_objective": 2.5163725361325433
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 4.041413066949642,
+      "schedule": "01010000",
+      "true_objective": 3.964513610665227
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.411096829074064,
+      "schedule": "01010001",
+      "true_objective": 3.290113441942945
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.1084126989823186,
+      "schedule": "01010010",
+      "true_objective": 3.1225146696823156
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.670419873781583,
+      "schedule": "01010011",
+      "true_objective": 2.63177713522001
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.008940398456039,
+      "schedule": "01010100",
+      "true_objective": 3.0891292748058214
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.5239123052395396,
+      "schedule": "01010101",
+      "true_objective": 2.512365473502442
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.4015472407954856,
+      "schedule": "01010110",
+      "true_objective": 2.445244935611839
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.1088425602538283,
+      "schedule": "01010111",
+      "true_objective": 2.1006039033858253
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.969942915768593,
+      "schedule": "01011000",
+      "true_objective": 3.0840275913482342
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.399234787392504,
+      "schedule": "01011001",
+      "true_objective": 2.4783782709865445
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.3531831599300297,
+      "schedule": "01011010",
+      "true_objective": 2.3925288901093458
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 1.9747984442287825,
+      "schedule": "01011011",
+      "true_objective": 2.0246674812627754
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.318423263046715,
+      "schedule": "01011100",
+      "true_objective": 2.371534877805387
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.8930032793297054,
+      "schedule": "01011101",
+      "true_objective": 1.990296054371909
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.021960486710206,
+      "schedule": "01100000",
+      "true_objective": 3.968296024952717
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.389816750912562,
+      "schedule": "01100001",
+      "true_objective": 3.28636849433489
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.0645318694156956,
+      "schedule": "01100010",
+      "true_objective": 3.126650447289399
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.624711546292893,
+      "schedule": "01100011",
+      "true_objective": 2.6192503646911116
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.98676648621122,
+      "schedule": "01100100",
+      "true_objective": 3.1018377174284897
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.499910895072655,
+      "schedule": "01100101",
+      "true_objective": 2.501626023917026
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.354945079223479,
+      "schedule": "01100110",
+      "true_objective": 2.42995932947179
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.060412900759756,
+      "schedule": "01100111",
+      "true_objective": 2.062960456913316
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.9318961600983435,
+      "schedule": "01101000",
+      "true_objective": 3.0999675592327196
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.3593605338001886,
+      "schedule": "01101001",
+      "true_objective": 2.467642245283659
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.2907081549325934,
+      "schedule": "01101010",
+      "true_objective": 2.3710635738785157
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.9104959413092795,
+      "schedule": "01101011",
+      "true_objective": 1.97487528732458
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.277655175371083,
+      "schedule": "01101100",
+      "true_objective": 2.345276717871501
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.8504076937320075,
+      "schedule": "01101101",
+      "true_objective": 1.9314196312803484
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.9620743805121021,
+      "schedule": "01101110",
+      "true_objective": 1.9213748835462698
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.0557898788742275,
+      "schedule": "01110000",
+      "true_objective": 3.1002986082416637
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.4222044455401797,
+      "schedule": "01110001",
+      "true_objective": 2.4594641799738888
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.3536550554253424,
+      "schedule": "01110010",
+      "true_objective": 2.355926765721133
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.9123930347661355,
+      "schedule": "01110011",
+      "true_objective": 1.9511703257929163
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.3499197189836547,
+      "schedule": "01110100",
+      "true_objective": 2.326822719713678
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.8616224303086852,
+      "schedule": "01110101",
+      "true_objective": 1.9019641910483676
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 1.9733921058415387,
+      "schedule": "01110110",
+      "true_objective": 1.8891816592717692
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.677418229841411,
+      "schedule": "01110111",
+      "true_objective": 1.6274116772673184
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 5.594315536660472,
+      "schedule": "10000000",
+      "true_objective": 5.5652587629122365
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.973079274899932,
+      "schedule": "10000001",
+      "true_objective": 4.8134584928491195
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.387947223168176,
+      "schedule": "10000010",
+      "true_objective": 4.127447054180862
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.9590343740824774,
+      "schedule": "10000011",
+      "true_objective": 3.814526375803003
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.188615292274042,
+      "schedule": "10000100",
+      "true_objective": 3.9460837961573434
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.7126671751725806,
+      "schedule": "10000101",
+      "true_objective": 3.3883276813336605
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.3078541890885145,
+      "schedule": "10000110",
+      "true_objective": 3.2054611006034417
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.0242294846618947,
+      "schedule": "10000111",
+      "true_objective": 2.9162649265492506
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.09086099112874,
+      "schedule": "10001000",
+      "true_objective": 3.991570608996527
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.5292328388676886,
+      "schedule": "10001001",
+      "true_objective": 3.3215535069082183
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.2007332897652034,
+      "schedule": "10001010",
+      "true_objective": 3.1537608112756246
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.8314285501789938,
+      "schedule": "10001011",
+      "true_objective": 2.677139283610723
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.0661137625140356,
+      "schedule": "10001100",
+      "true_objective": 3.111451612333538
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.6497737549120624,
+      "schedule": "10001101",
+      "true_objective": 2.566197056424661
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.501593271457268,
+      "schedule": "10001110",
+      "true_objective": 2.519195085315048
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 4.07748475943605,
+      "schedule": "10010000",
+      "true_objective": 4.021075698236748
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.4548068001391057,
+      "schedule": "10010001",
+      "true_objective": 3.321574093646091
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.1264102397893785,
+      "schedule": "10010010",
+      "true_objective": 3.19379928071192
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.696055693167276,
+      "schedule": "10010011",
+      "true_objective": 2.6405549129566723
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.001108355658033,
+      "schedule": "10010100",
+      "true_objective": 3.1856894765641552
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.523718541020167,
+      "schedule": "10010101",
+      "true_objective": 2.5380817979978834
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.3756410463181314,
+      "schedule": "10010110",
+      "true_objective": 2.482507749890699
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.090574644355107,
+      "schedule": "10010111",
+      "true_objective": 2.076618548174176
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.0183645340839647,
+      "schedule": "10011000",
+      "true_objective": 3.1895594152718987
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.4552946842865087,
+      "schedule": "10011001",
+      "true_objective": 2.5101947676000944
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.3835306265660527,
+      "schedule": "10011010",
+      "true_objective": 2.4350644743272665
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.0127841894434386,
+      "schedule": "10011011",
+      "true_objective": 1.9996643289905682
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.3229411460776728,
+      "schedule": "10011100",
+      "true_objective": 2.4178197440897065
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 1.9051594409392951,
+      "schedule": "10011101",
+      "true_objective": 1.9643180944034928
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 4.053688176797945,
+      "schedule": "10100000",
+      "true_objective": 4.028769736070016
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.4291827195789333,
+      "schedule": "10100001",
+      "true_objective": 3.3214325259714914
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.078185407824086,
+      "schedule": "10100010",
+      "true_objective": 3.206800966865901
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.6460033632799167,
+      "schedule": "10100011",
+      "true_objective": 2.6329054608031126
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.974590441014545,
+      "schedule": "10100100",
+      "true_objective": 3.2138663623729813
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.495373128454613,
+      "schedule": "10100101",
+      "true_objective": 2.5395059344328246
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.3246948823474556,
+      "schedule": "10100110",
+      "true_objective": 2.482708883851769
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.0378009824623655,
+      "schedule": "10100111",
+      "true_objective": 2.0465670971553864
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.9759737760150458,
+      "schedule": "10101000",
+      "true_objective": 3.2239269872099157
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.411076428295523,
+      "schedule": "10101001",
+      "true_objective": 2.515243339482346
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.3167116191699453,
+      "schedule": "10101010",
+      "true_objective": 2.4323769975887384
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 1.9441376841252653,
+      "schedule": "10101011",
+      "true_objective": 1.9578192036603896
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.2778290560033714,
+      "schedule": "10101100",
+      "true_objective": 2.4104298428369852
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.858219852942927,
+      "schedule": "10101101",
+      "true_objective": 1.910865638067381
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.9441741094650418,
+      "schedule": "10101110",
+      "true_objective": 1.9063438954991963
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.081909769445777,
+      "schedule": "10110000",
+      "true_objective": 3.2275947759685626
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.4559626146903613,
+      "schedule": "10110001",
+      "true_objective": 2.5095788366803
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.3617007943175423,
+      "schedule": "10110010",
+      "true_objective": 2.41901274186616
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 1.9280770522369686,
+      "schedule": "10110011",
+      "true_objective": 1.9327113719951066
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.33213587427079,
+      "schedule": "10110100",
+      "true_objective": 2.392710655696091
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 1.8514768641744528,
+      "schedule": "10110101",
+      "true_objective": 1.877106727060935
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.9375341094493255,
+      "schedule": "10110110",
+      "true_objective": 1.8681211381593577
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 1.649198512027831,
+      "schedule": "10110111",
+      "true_objective": 1.5444655618348646
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.448529688842523,
+      "schedule": "10111000",
+      "true_objective": 2.3893122271910507
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.882190643586596,
+      "schedule": "10111001",
+      "true_objective": 1.864867068358007
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.0445613258430484,
+      "schedule": "10111010",
+      "true_objective": 1.8537356066179103
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 1.670545693261964,
+      "schedule": "10111011",
+      "true_objective": 1.5254854102819735
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 4.207923944761677,
+      "schedule": "11000000",
+      "true_objective": 4.030395601299547
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.497323825573045,
+      "schedule": "11000001",
+      "true_objective": 3.3208867663857906
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.1138704740255987,
+      "schedule": "11000010",
+      "true_objective": 3.2092420884255293
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.5955937675118097,
+      "schedule": "11000011",
+      "true_objective": 2.629944991802991
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.077238886594378,
+      "schedule": "11000100",
+      "true_objective": 3.21998858135544
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.5119269120648244,
+      "schedule": "11000101",
+      "true_objective": 2.5386744885737746
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.3087926261650695,
+      "schedule": "11000110",
+      "true_objective": 2.4817946927461847
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.935804064310359,
+      "schedule": "11000111",
+      "true_objective": 2.03784627300029
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 3.0271356652478234,
+      "schedule": "11001000",
+      "true_objective": 3.231678517788037
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.37614365555868,
+      "schedule": "11001001",
+      "true_objective": 2.5153932559268806
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.249322806640505,
+      "schedule": "11001010",
+      "true_objective": 2.43081853813107
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 1.7906542096262035,
+      "schedule": "11001011",
+      "true_objective": 1.945870564049378
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.2774036228522494,
+      "schedule": "11001100",
+      "true_objective": 2.4075720688452953
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.7716997578221854,
+      "schedule": "11001101",
+      "true_objective": 1.895382654286614
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 1.8251979745517009,
+      "schedule": "11001110",
+      "true_objective": 1.8898224320629318
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.2187272377891345,
+      "schedule": "11010000",
+      "true_objective": 3.2358343553095743
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.5066854210640983,
+      "schedule": "11010001",
+      "true_objective": 2.509991820291933
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.379967560898681,
+      "schedule": "11010010",
+      "true_objective": 2.417053501779398
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.8602491568484876,
+      "schedule": "11010011",
+      "true_objective": 1.919318626232258
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.417366020230248,
+      "schedule": "11010100",
+      "true_objective": 2.3887770391435876
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.850612348164291,
+      "schedule": "11010101",
+      "true_objective": 1.8584186059216403
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.9042135536465654,
+      "schedule": "11010110",
+      "true_objective": 1.847026483125354
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 1.5297832942554495,
+      "schedule": "11010111",
+      "true_objective": 1.5146438861794314
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.482273278454927,
+      "schedule": "11011000",
+      "true_objective": 2.3849910486649093
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.8298395712293782,
+      "schedule": "11011001",
+      "true_objective": 1.8446583351294732
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 1.959754213693234,
+      "schedule": "11011010",
+      "true_objective": 1.830258388143306
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.4996439191425273,
+      "schedule": "11011011",
+      "true_objective": 1.4928463301552877
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.0618650766677664,
+      "schedule": "11011100",
+      "true_objective": 1.8316640389595293
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.554719514101297,
+      "schedule": "11011101",
+      "true_objective": 1.4883561021623852
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 3.2475805454433413,
+      "schedule": "11100000",
+      "true_objective": 3.2371914011517884
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 2.5337112307962393,
+      "schedule": "11100001",
+      "true_objective": 2.5087239665714476
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.384392619225701,
+      "schedule": "11100010",
+      "true_objective": 2.414134500873664
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.86284671725344,
+      "schedule": "11100011",
+      "true_objective": 1.9130410126640465
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.4434979958790723,
+      "schedule": "11100100",
+      "true_objective": 2.3847716460977173
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 1.8749168258910487,
+      "schedule": "11100101",
+      "true_objective": 1.8496685425428008
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.905917279968202,
+      "schedule": "11100110",
+      "true_objective": 1.8367920229555845
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.5296595226550203,
+      "schedule": "11100111",
+      "true_objective": 1.5020403455994389
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.4925324106783204,
+      "schedule": "11101000",
+      "true_objective": 2.3807255363301727
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.8382712055307069,
+      "schedule": "11101001",
+      "true_objective": 1.8351563722740236
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.945585096589439,
+      "schedule": "11101010",
+      "true_objective": 1.8188197633171885
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.4836473041166673,
+      "schedule": "11101011",
+      "true_objective": 1.4788607275077699
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 2.0694028768857766,
+      "schedule": "11101100",
+      "true_objective": 1.8197984250402215
+    },
+    {
+      "partition": "training",
+      "predicted_objective": 1.5604298163972414,
+      "schedule": "11101101",
+      "true_objective": 1.4738267396488467
+    },
+    {
+      "partition": "validation",
+      "predicted_objective": 1.848062773103666,
+      "schedule": "11101110",
+      "true_objective": 1.4828345749382856
+    }
+  ],
+  "quantum_algorithm_used": false,
+  "schema_version": "dirac-treatment-surrogate-1.0",
+  "simulation_design": {
+    "base_config": {
+      "adaptive_restart_fraction": 1.0,
+      "adaptive_stop_fraction": 0.5,
+      "carrying_capacity": 10000000.0,
+      "competition": {
+        "resistant_effect_on_sensitive": 1.0,
+        "sensitive_effect_on_resistant": 1.0
+      },
+      "horizon_days": 365.0,
+      "intermittent_off_days": 14.0,
+      "intermittent_on_days": 14.0,
+      "profile_name": "two-clone-selection-v1",
+      "progression_burden_multiple": 1.2,
+      "protocol_version": "evolution-protocol-v1",
+      "resistant": {
+        "drug_kill_rate_per_day": 0.0,
+        "growth_rate_per_day": 0.015
+      },
+      "resistant_dominance_fraction": 0.5,
+      "resistant_initial": 10000.0,
+      "sensitive": {
+        "drug_kill_rate_per_day": 0.08,
+        "growth_rate_per_day": 0.03
+      },
+      "sensitive_initial": 990000.0,
+      "sensitive_to_resistant_rate_per_day": 0.0,
+      "strategies": [
+        "no_treatment",
+        "continuous",
+        "fixed_intermittent",
+        "burden_adaptive"
+      ],
+      "time_step_days": 1.0
+    },
+    "cohort_definition": {
+      "candidate_strategy": "burden_adaptive",
+      "parameter_ranges": [
+        {
+          "maximum": 0.1,
+          "minimum": 0.001,
+          "name": "initial_resistant_fraction",
+          "scale": "log10"
+        },
+        {
+          "maximum": 0.04,
+          "minimum": 0.02,
+          "name": "sensitive_growth_rate_per_day",
+          "scale": "linear"
+        },
+        {
+          "maximum": 0.025,
+          "minimum": 0.008,
+          "name": "resistant_growth_rate_per_day",
+          "scale": "linear"
+        },
+        {
+          "maximum": 0.12,
+          "minimum": 0.05,
+          "name": "sensitive_drug_kill_rate_per_day",
+          "scale": "linear"
+        },
+        {
+          "maximum": 0.015,
+          "minimum": 0.0,
+          "name": "resistant_drug_kill_rate_per_day",
+          "scale": "linear"
+        },
+        {
+          "maximum": 1.5,
+          "minimum": 0.5,
+          "name": "resistant_effect_on_sensitive",
+          "scale": "linear"
+        },
+        {
+          "maximum": 1.5,
+          "minimum": 0.5,
+          "name": "sensitive_effect_on_resistant",
+          "scale": "linear"
+        }
+      ],
+      "profile_name": "two-clone-virtual-cohort-v1",
+      "protocol_version": "evolution-cohort-v1",
+      "reference_strategy": "continuous",
+      "sampling_method": "latin_hypercube",
+      "seed": 2718,
+      "virtual_tumors": 40
+    },
+    "evaluation_kind": "disjoint_virtual_tumor_scenarios",
+    "population_interpretation": "one designed LHS sample, not independent patient observations",
+    "split_rule": "first search_tumors rows search, remaining rows evaluation, fixed before optimization"
+  },
+  "simulator_replay": {
+    "mean_loss": 1.1545795523260827,
+    "objective": 1.4788607275077699,
+    "std_loss": 1.2971247007267488,
+    "tumors": 8,
+    "worst_loss": 4.398810387129348
+  },
+  "source_fingerprint": "dcfc9347fc5ed91feda5fdf09f06a6abb744bc3ca0522f6ea6c712f8cb24f77e",
+  "validation": {
+    "encoded_ground_energy": 1.4836473041168574,
+    "encoded_ground_feasible": true,
+    "linear_and_pairwise_features": 36,
+    "selected_predicted_objective": 1.4836473041166673,
+    "selected_schedule": "11101011",
+    "selected_schedule_partition": "training",
+    "selected_true_objective": 1.4788607275077699,
+    "selected_true_regret": 0.005033987858923172,
+    "training_design_rank": 37,
+    "training_schedules": 145,
+    "validation_design": "disjoint schedule labels, same search tumor objective",
+    "validation_mae": 0.12571081706496462,
+    "validation_normalized_rmse": 0.026079767960850014,
+    "validation_rmse": 0.17561761025908298,
+    "validation_schedules": 63,
+    "validation_spearman_rho": 0.9903513824884793
+  }
+}

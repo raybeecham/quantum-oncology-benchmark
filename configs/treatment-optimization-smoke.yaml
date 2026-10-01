@@ -1,0 +1,18 @@
+protocol_version: treatment-optimization-v1
+profile_name: binary-schedule-smoke-v1
+base_profile: evolution-smoke.yaml
+intervals: 4
+max_treated_intervals: 3
+max_consecutive_treated: 2
+search_tumors: 1
+evaluation_tumors: 1
+repeats: 2
+seed: 42
+evaluation_budget: 8
+exact_search: true
+weights:
+  burden_auc: 1.0
+  terminal_resistant: 1.0
+  dose: 0.25
+risk_aversion: 0.0
+output_dir: reports/treatment-optimization-smoke

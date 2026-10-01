@@ -68,3 +68,18 @@ Artifacts include:
 - No dynamic code execution is used for configuration.
 - The dashboard reads local generated artifacts and should not be exposed publicly without authentication and deployment review.
 - Future hardware credentials must be loaded from environment or approved secret storage, never configuration files.
+
+## Evolutionary schedule optimization
+
+`treatment_config.py` defines the objective, hard constraints and scenario/search budgets.
+`evolution_model.py` integrates explicit binary schedules at switching boundaries.
+`treatment_search.py` scores schedules with the unchanged biological derivatives and
+provides private-cache exact, random and annealing searches.
+`treatment_optimization.py` fixes the cohort partition, freezes search winners before
+evaluation, reports component outcomes and fingerprints scientific artifacts.
+
+`treatment_dirac.py` fits/validates a surrogate from completed oracle labels, compiles native
+integer constraints, verifies the bounded encoded ground state and imports sample files
+for strict decoding plus original-simulator re-evaluation. It does not depend on the QCi
+client, access tokens or remote execution. `scripts/review_treatment.py` supplies separate
+frozen-winner numerical-resolution, preference and plotting diagnostics.
